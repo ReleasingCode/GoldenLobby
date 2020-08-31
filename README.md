@@ -99,7 +99,3 @@ Permisos:
     </ul>
    </div>
  </h4>  
-
- <div>
- https://minecub.es
- </div>
