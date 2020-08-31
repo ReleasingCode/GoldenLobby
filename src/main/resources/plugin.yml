@@ -1,0 +1,5 @@
+name: LobbyMC
+main: us.minecub.lobbymc.LobbyMC
+author: Metrofico, Cookieblack - www.MineCub.es
+softdepend: [PlaceholderAPI]
+version: v1.45-RELEASE

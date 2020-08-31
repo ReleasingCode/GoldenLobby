@@ -1,0 +1,21 @@
+# Config para modificar la tienda del Lobby.
+shop-enabled: true
+
+comando: "Armamento" #Este comando abrirá el inventario de la tienda.
+nombre-tienda: "Tienda de Armamento"
+inventory-size: 18 # Siempre múltiplo de 9
+inventory-contents:
+  0: #Slot 0
+    name: "&aCasco de Hierro"
+    lore:
+      - " "
+      - "&7Click para comprar"
+      - "&7este casco de hierro"
+      - "&ePrecio: &a100 minecubos."
+      - " "
+    price: 100
+    material: "IRON_HELMET" # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html - Utilizar materiales de 1.8.
+    amount: 1
+    enchants:
+      - 'DURABILITY:3' # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html - Utilizar encantamientos de 1.8.
+

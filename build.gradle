@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+apply plugin: 'java'
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+archivesBaseName = 'GoldenLobby'
+version 'RELEASE'
+group 'us.minecub'
+configurations {
+    testCompile.extendsFrom compileOnly
+}
+
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = 'https://repo.aikar.co/content/groups/aikar/'
+    }
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
+    }
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+    maven {
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+
+}
+
+shadowJar {
+    relocate 'com.zaxxer', 'us.minecub.lobbymc.shadow.hikaricp'
+    relocate 'org.slf4j', 'us.minecub.lobbymc.shadow.org.slf4j'
+    relocate 'org.apache.commons', 'org.apache.commons'
+    relocate 'redis.clients', 'redis.clients'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+task cleanJar() {
+    delete shadowJar
+}
+dependencies {
+    compileOnly(name: 'spigot-1.11.2', ext: 'jar')
+    compileOnly(name: 'PaperSpigot-1.8.8-R0.1-SNAPSHOT', ext: 'jar')
+    compileOnly(name: 'PlaceholderAPI-2.10.6', ext: 'jar')
+    compileOnly(name: 'spigot-1.9-R0.1-SNAPSHOT', ext: 'jar')
+    compileOnly(name: 'spigot-1.9.4-R0.1-SNAPSHOT-latest', ext: 'jar')
+    compileOnly(name: 'spigot-1.10.2-R0.1-SNAPSHOT', ext: 'jar')
+    compileOnly(name: 'spigot-1.12.2', ext: 'jar')
+    compileOnly(name: 'spigot-1.13', ext: 'jar')
+    compileOnly(name: 'spigot-1.13.2', ext: 'jar')
+    compileOnly(name: 'spigot-1.14.2', ext: 'jar')
+    compileOnly(name: 'spigot-1.15', ext: 'jar')
+    compileOnly(name: 'spigot-1.15.2', ext: 'jar')
+    implementation group: 'redis.clients', name: 'jedis', version: '3.3.0'
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '2.6.1'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.8.0'
+}
+build.dependsOn shadowJar
