@@ -10,7 +10,7 @@ compileJava {
 }
 archivesBaseName = 'GoldenLobby'
 version 'RELEASE'
-group 'us.minecub'
+group 'com.releasingcode'
 configurations {
     testCompile.extendsFrom compileOnly
 }

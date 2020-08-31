@@ -1,5 +1,5 @@
-name: LobbyMC
-main: us.minecub.lobbymc.LobbyMC
-author: Metrofico, Cookieblack - www.MineCub.es
+name: GoldenLobby
+main: com.releasingcode.goldenlobby.LobbyMC
+author: Metrofico, Nexbor
 softdepend: [PlaceholderAPI]
-version: v1.45-RELEASE
+version: 1.1-BETA
