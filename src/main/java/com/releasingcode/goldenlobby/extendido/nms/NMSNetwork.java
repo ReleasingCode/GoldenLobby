@@ -2,7 +2,7 @@ package com.releasingcode.goldenlobby.extendido.nms;
 
 
 import com.releasingcode.goldenlobby.exception.IncompatibleMinecraftVersionException;
-import es.minecub.core.apis.reflection.Reflection;
+import com.releasingcode.goldenlobby.extendido.reflection.Reflection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

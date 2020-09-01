@@ -2,7 +2,7 @@ package com.releasingcode.goldenlobby.npc;
 
 import com.releasingcode.goldenlobby.LobbyMC;
 import com.releasingcode.goldenlobby.Utils;
-import es.minecub.core.apis.packetlistener.PacketListenerCore;
+import com.releasingcode.goldenlobby.extendido.packetlistener.PacketListenerCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

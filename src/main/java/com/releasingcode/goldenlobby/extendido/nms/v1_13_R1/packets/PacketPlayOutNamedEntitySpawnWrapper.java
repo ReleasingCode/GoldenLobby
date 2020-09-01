@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.extendido.nms.v1_13_R1.packets;
 
-import es.minecub.core.apis.reflection.Reflection;
+import com.releasingcode.goldenlobby.extendido.reflection.Reflection;
 import net.minecraft.server.v1_13_R1.DataWatcher;
 import net.minecraft.server.v1_13_R1.DataWatcherObject;
 import net.minecraft.server.v1_13_R1.DataWatcherRegistry;

@@ -24,7 +24,6 @@ import java.util.UUID;
 public class LobbyPlayer {
 
     private final UUID uuid;
-    private final int id;
     private final LobbyPlayerInventory inventory;
     private final LobbyPlayerBuilder npcBuilder;
     private final LobbyPlayerScoreboard lobbyplayerscoreboard;
@@ -38,10 +37,9 @@ public class LobbyPlayer {
     private StageOfCreation.Regions actualRegion = StageOfCreation.Regions.LOBBY;
     private LobbyCooldown lobbyCooldown;
 
-    LobbyPlayer(Player player, int id) {
+    LobbyPlayer(Player player) {
         this.name = player.getName();
         this.uuid = player.getUniqueId();
-        this.id = id;
         kills = 0;
         inventory = new LobbyPlayerInventory();
         npcBuilder = new LobbyPlayerBuilder();
@@ -142,7 +140,7 @@ public class LobbyPlayer {
     }
 
     public String toStringUUID() {
-        return id + "";
+        return getUUID().toString() + "";
     }
 
     public boolean getFlyer() {
@@ -185,9 +183,6 @@ public class LobbyPlayer {
         return "" + 0;
     }
 
-    public int getId() {
-        return this.id;
-    }
 
     public StageOfCreation.Regions getActualRegion() {
         return actualRegion;

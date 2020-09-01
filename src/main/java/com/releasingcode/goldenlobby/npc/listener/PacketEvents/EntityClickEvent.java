@@ -1,11 +1,11 @@
 package com.releasingcode.goldenlobby.npc.listener.PacketEvents;
 
 
-import es.minecub.core.apis.classaccess.reflection.ClassAccess;
-import es.minecub.core.apis.packetlistener.listener.PacketEvent;
-import es.minecub.core.apis.packetlistener.listener.PacketHandlerList;
-import es.minecub.core.apis.packetlistener.listener.PacketID;
-import es.minecub.core.apis.packetlistener.listener.PacketType;
+import com.releasingcode.goldenlobby.extendido.classaccess.reflection.ClassAccess;
+import com.releasingcode.goldenlobby.extendido.packetlistener.listener.PacketEvent;
+import com.releasingcode.goldenlobby.extendido.packetlistener.listener.PacketHandlerList;
+import com.releasingcode.goldenlobby.extendido.packetlistener.listener.PacketID;
+import com.releasingcode.goldenlobby.extendido.packetlistener.listener.PacketType;
 import io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 

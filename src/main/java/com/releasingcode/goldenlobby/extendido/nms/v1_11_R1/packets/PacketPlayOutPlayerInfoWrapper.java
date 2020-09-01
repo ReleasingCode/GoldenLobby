@@ -1,7 +1,7 @@
 package com.releasingcode.goldenlobby.extendido.nms.v1_11_R1.packets;
 
 import com.mojang.authlib.GameProfile;
-import es.minecub.core.apis.reflection.Reflection;
+import com.releasingcode.goldenlobby.extendido.reflection.Reflection;
 import net.minecraft.server.v1_11_R1.EnumGamemode;
 import net.minecraft.server.v1_11_R1.IChatBaseComponent;
 import net.minecraft.server.v1_11_R1.PacketPlayOutPlayerInfo;

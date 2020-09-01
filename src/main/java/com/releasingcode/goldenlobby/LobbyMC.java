@@ -1,6 +1,7 @@
 package com.releasingcode.goldenlobby;
 
 
+import com.releasingcode.goldenlobby.managers.VaultAPI;
 import org.bukkit.configuration.file.FileConfiguration;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
 import com.releasingcode.goldenlobby.connections.ServerInfo;
@@ -23,12 +24,10 @@ import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
 import com.releasingcode.goldenlobby.modulos.playerhider.PlayerHidePlugin;
 import com.releasingcode.goldenlobby.modulos.regions.RegionPlugin;
 import com.releasingcode.goldenlobby.modulos.regions.cuboid.CuboidPlayerManager;
-import com.releasingcode.goldenlobby.modulos.repartidor.RepartidorCorePlugin;
 import com.releasingcode.goldenlobby.modulos.scoreboard.ScoreboardPlugin;
 import com.releasingcode.goldenlobby.modulos.scoreboard.manager.SidebarScoreboard;
 import com.releasingcode.goldenlobby.modulos.setspawn.SpawnPointPlugin;
 import com.releasingcode.goldenlobby.modulos.spawn.SpawnPlugin;
-import com.releasingcode.goldenlobby.modulos.tragacubos.TragacubosPlugin;
 import com.releasingcode.goldenlobby.modulos.warps.WarpsPlugin;
 import com.releasingcode.goldenlobby.modulos.welcomemessage.WelcomeMessage;
 import com.releasingcode.goldenlobby.npc.NPCLib;
@@ -50,7 +49,7 @@ public class LobbyMC extends LobbyMCPlugin {
     private RedisManager redisManager;
     private boolean isNewVersion;
     private CuboidPlayerManager cuboidManager;
-    private TragacubosPlugin tragacubosPlugin;
+    private VaultAPI vaultAPI;
 
     public static LobbyMC getInstance() {
         return plugin;
@@ -77,6 +76,7 @@ public class LobbyMC extends LobbyMCPlugin {
     public boolean isMysqlEnable() {
         return mysqlEnable;
     }
+
 
     public void serversConnections() {
         if (serverManager != null) serverManager.stop();
@@ -129,11 +129,7 @@ public class LobbyMC extends LobbyMCPlugin {
     @Override
     public void onDisable() {
         npcLib.cancel();
-        if (tragacubosPlugin != null) {
-            tragacubosPlugin.onDisable();
-            tragacubosPlugin.stop();
-        }
-        Utils.log("Desabilitando complemento [www.MineCub.es]");
+        Utils.log("Desabilitando complemento");
     }
 
     public Database getDB() {
@@ -168,8 +164,14 @@ public class LobbyMC extends LobbyMCPlugin {
             ParticleEffect.ParticlePacket.PacketInstantiationException.fixFunction();
         }
         placeHolderAPI = getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
-
-        Utils.log("Iniciando complemento [www.MineCub.es]");
+        vaultAPI = new VaultAPI(this);
+        if (vaultAPI.setupEconomy()) {
+            Utils.log("Hook with Vault [Economy] [OK]");
+        }
+        if (vaultAPI.setupPermissions()) {
+            Utils.log("Hook with Vault [Permission] [OK]");
+        }
+        Utils.log("Iniciando complemento");
         CustomConfiguration dbConfigFile = new CustomConfiguration("DatabaseConfig", this);
         this.mysqlEnable = dbConfigFile.getConfig().getBoolean("MySQL.Enable", false);
         // Para cargar un componente se debe hacer de la siguiente manera
@@ -192,15 +194,10 @@ public class LobbyMC extends LobbyMCPlugin {
         cargarComponente(SpawnPlugin.class);
         cargarComponente(WelcomeMessage.class);
         cargarComponente(FlyPlugin.class);
-        cargarComponente(RegionPlugin.class);
         cargarComponente(PlayerHidePlugin.class);
         cargarComponente(CommandBlockerPlugin.class);
-        cargarComponente(LimboPlugin.class);
-        cargarComponente(RepartidorCorePlugin.class);
         cargarComponente(WarpsPlugin.class);
         cargarComponente(CooldownPlugin.class);
-
-        tragacubosPlugin = cargarComponente(TragacubosPlugin.class);
 
         if (mysqlEnable && dbConfigFile.getConfig() != null) {
             this.dbConfig = new DatabaseConfig(dbConfigFile.getConfig());
@@ -218,6 +215,9 @@ public class LobbyMC extends LobbyMCPlugin {
                 onRedisMessage.getChannels());
     }
 
+    public VaultAPI getVaultAPI() {
+        return vaultAPI;
+    }
 
     public CuboidPlayerManager getCuboidManager() {
         return cuboidManager;

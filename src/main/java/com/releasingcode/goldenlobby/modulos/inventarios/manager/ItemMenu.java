@@ -9,7 +9,6 @@ import com.releasingcode.goldenlobby.managers.ItemStackBuilder;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
 import com.releasingcode.goldenlobby.npc.internal.MinecraftVersion;
-import es.minecub.core.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -168,10 +167,6 @@ public class ItemMenu {
                     updateLore.remove(text);
                     ServerInfo managersv = ServerManager.getServerManager(serverName);
                     if (managersv != null) {
-                        try {
-                            updateLore.addAll(getServerDataMotd(managersv));
-                        } catch (Exception e) {
-                        }
                         return new ArrayList<>(updateLore);
                     }
                 }
@@ -187,11 +182,6 @@ public class ItemMenu {
                 updateLore.remove(text);
                 ServerInfo managersv = ServerManager.getServerManager(match_motd.group(1));
                 if (managersv != null) {
-                    try {
-                        updateLore.addAll(getServerDataMotd(managersv));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     return new ArrayList<>(updateLore);
                 }
             }
@@ -209,109 +199,6 @@ public class ItemMenu {
         return false;
     }
 
-    public List<String> getServerDataMotd(ServerInfo server) throws IllegalStateException {
-        if (server.getName().trim().toLowerCase().startsWith("dn-")) {
-            List<String> list = new ArrayList<>(Arrays.asList(
-                    "",
-                    "${lobby.games.server.players}[" + server.getOnline() + ", " + server.getMaxplayers() + "]"));
-
-            if (StringUtils.isValidJson(server.getMotd())) {
-                if (StringUtils.parseJson(server.getMotd()).getAsJsonObject() == null) {
-                    list.add(ChatColor.RED + "¡Sin información!");
-                    return list;
-                }
-
-                JsonObject obj = StringUtils.parseJson(server.getMotd()).getAsJsonObject();
-                String map = obj.get("map").getAsString();
-
-                if (map.equals("unknown")) { // El mapa todavía no se ha decidido
-                    list.add(1, "${lobby.games.server.map.unknown}");
-                } else {
-                    list.add(1, "${lobby.games.server.map}[" + map + "]");
-                }
-
-                String state = obj.get("state").getAsString();
-
-                if (state.equals("WAITING")) {
-                    int playersLeft = obj.get("playersLeft").getAsInt();
-
-                    list.add(
-                            "${lobby.games.server.status}${lobby.games.server.dn.status.playersleft." + (playersLeft == 1 ? "singular" : "plural") + "}[" + playersLeft + "]");
-                } else if (state.equalsIgnoreCase("STARTING")) {
-                    list.add("${lobby.games.server.status}${lobby.games.server.status.starting}");
-                } else {
-                    list.add("${lobby.games.server.dn.phase}[" + obj.get("phase").getAsString() + "]");
-                    list.add("");
-
-                    for (JsonElement el : obj.get("teams").getAsJsonArray()) {
-                        JsonObject teamObj = el.getAsJsonObject();
-
-                        int health = teamObj.get("health").getAsInt();
-
-                        if (health != 0) {
-                            list.add(teamObj.get("color").getAsString() + "${anni.scoreboard.team.nexus}["
-                                    + teamObj.get("translation").getAsString() + "]" + ChatColor.RESET + health);
-                        }
-                    }
-                }
-
-            } else {
-                String[] data = server.getMotd() != null ? server.getMotd().split(";") : null;
-                if (data == null) {
-                    return new ArrayList<>();
-                }
-                if (data.length > 2) {
-                    list.add("${lobby.games.server.dn.phase}[" + data[1] + "]");
-                    list.add("");
-
-                    int redNexus = Integer.parseInt(data[2]);
-
-                    if (redNexus > 0) {
-                        list.add("${lobby.games.server.dn.nexus.red}[" + redNexus + "]");
-                    }
-
-                    int blueNexus = Integer.parseInt(data[3]);
-
-                    if (blueNexus > 0) {
-                        list.add("${lobby.games.server.dn.nexus.blue}[" + blueNexus + "]");
-                    }
-
-                    int yellowNexus = Integer.parseInt(data[4]);
-
-                    if (yellowNexus > 0) {
-                        list.add("${lobby.games.server.dn.nexus.yellow}[" + yellowNexus + "]");
-                    }
-
-                    int greenNexus = Integer.parseInt(data[5]);
-
-                    if (greenNexus > 0) {
-                        list.add("${lobby.games.server.dn.nexus.green}[" + greenNexus + "]");
-                    }
-                } else if (data[1].contains("Comenzando")) {
-                    list.add("${lobby.games.server.status}${lobby.games.server.status.starting}");
-                } else {
-                    list.add("${lobby.games.server.status}${lobby.games.server.dn.status.playersleft."
-                            + (data[1].equals("1") ? "singular" : "plural") + "}[" + data[1] + "]");
-                }
-
-                if (server.getName().startsWith("DN-")) { // Si es DN le ponemos el nombre del mapa. Si es MiniDN, no
-                    list.add(1, "${lobby.games.server.map}[" + data[0] + "]");
-                }
-
-            }
-            list.add("");
-            list.add("${lobby.games.server.join}");
-
-            return list;
-        } else {
-            return Arrays.asList(
-                    "",
-                    "${lobby.games.server.players}[" + server.getOnline() + ", " + server.getMaxplayers() + "]",
-                    "${lobby.games.server.status}" + ChatColor.stripColor(server.getMotd()),
-                    "",
-                    "${lobby.games.server.join}");
-        }
-    }
 
     public void setItem(int position, MenuItem menuItem) {
         items[position] = menuItem;

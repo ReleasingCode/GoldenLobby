@@ -1,8 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.scoreboard;
 
+import com.releasingcode.goldenlobby.LobbyMC;
 import com.releasingcode.goldenlobby.Utils;
-import es.minecub.core.ranks.RanksCore;
-import es.minecub.core.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -42,15 +41,8 @@ public class NameTag {
             }
             for (Player player : Bukkit.getOnlinePlayers()) {
                 try {
-                    boolean hasDisguise = PlayerUtils.containsMapKeyObject(player.getName(), "disguiseName");
-                    String disguiseName = (String) PlayerUtils.getObjectMapKey(player.getName(), "disguiseName");
-                    if (hasDisguise) {
-                        Team teamBoard = getTeam(board, disguiseName);
-                        setPrefixTeam(player, teamBoard, true);
-                    } else {
-                        Team teamBoard = getTeam(board, player.getName());
-                        setPrefixTeam(player, teamBoard, false);
-                    }
+                    Team teamBoard = getTeam(board, player.getName());
+                    setPrefixTeam(player, teamBoard, false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -94,8 +86,8 @@ public class NameTag {
         if ((team.getNameTagVisibility() != NameTagVisibility.ALWAYS)) {
             team.setNameTagVisibility(NameTagVisibility.ALWAYS);
         }
-        String chatPrefix = hasDisguise ? Utils.chatColor("&a&lVIP.E &r&a") : Utils.chatColor(RanksCore.getPlayerRank(p)
-                .getChatPrefix());
+        String chatPrefix = hasDisguise ? Utils.chatColor("&a&lVIP.E &r&a") :
+                Utils.chatColor(LobbyMC.getInstance().getVaultAPI().getRank(p));
         String prefix = chatPrefix.indexOf(" ") > 0
                 ? chatPrefix.substring(0, chatPrefix.indexOf(" ")).trim() + " " : "";
         if (team.getNameTagVisibility() != NameTagVisibility.ALWAYS) {

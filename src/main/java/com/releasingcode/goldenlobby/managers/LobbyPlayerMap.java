@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LobbyPlayerMap {
@@ -14,8 +15,8 @@ public class LobbyPlayerMap {
      1.- Añadir al jugador a la memoria del HashMap - Concurrente
      2.- Obtenerlo por UUID el Objeto LobbyPlayer
      */
-    public static LobbyPlayer addJugador(Player player, int playerId) {
-        return jugadores.putIfAbsent(player.getName(), new LobbyPlayer(player, playerId));
+    public static LobbyPlayer addJugador(Player player) {
+        return jugadores.putIfAbsent(player.getName(), new LobbyPlayer(player));
     }
 
     public static LobbyPlayer getJugador(Player player) {

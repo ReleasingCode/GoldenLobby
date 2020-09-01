@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.extendido.nms.v1_8_R3.packets;
 
-import es.minecub.core.apis.reflection.Reflection;
+import com.releasingcode.goldenlobby.extendido.reflection.Reflection;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityHeadRotation;
 import org.bukkit.Location;
 

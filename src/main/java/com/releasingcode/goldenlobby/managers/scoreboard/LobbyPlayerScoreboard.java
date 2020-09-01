@@ -1,8 +1,8 @@
 package com.releasingcode.goldenlobby.managers.scoreboard;
 
 
+import com.releasingcode.goldenlobby.LobbyMC;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
-import es.minecub.core.minecubos.MinecubosAPI;
 import org.bukkit.entity.Player;
 import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
 import com.releasingcode.goldenlobby.modulos.scoreboard.manager.ContentsAnimatable;
@@ -24,7 +24,7 @@ public class LobbyPlayerScoreboard {
         text = new LinkedHashMap<>();
         Player player = lobbyPlayer.getPlayer();
         if (player != null && player.isOnline()) {
-            minecubos = MinecubosAPI.getMinecubos(player) + "";
+            minecubos = LobbyMC.getInstance().getVaultAPI().getEconPlayer(player) + "";
         }
     }
 
@@ -49,7 +49,7 @@ public class LobbyPlayerScoreboard {
                 Player player = lobbyPlayer.getPlayer();
                 if (player != null && player.isOnline()) {
                     if (minecubosTick >= 40) {
-                        minecubos = MinecubosAPI.getMinecubos(player) + "";
+                        minecubos = LobbyMC.getInstance().getVaultAPI().getEconPlayer(player) + "";
                     }
                     evaluater = evaluater.replace("{minecubos}", minecubos);
                 }
@@ -64,11 +64,12 @@ public class LobbyPlayerScoreboard {
                         content.getKey().toLowerCase(), content.getText().size(), tick >= content.getTick());
                 if (content.getTick() > 0 && tick >= content.getTick()) {
                     try {
-                        String evaluater = scoreboard.evaluateVariables(content.getText().get(nextIndex), lobbyPlayer);
+                        String evaluater = scoreboard.evaluateVariables(content.getText().get(nextIndex),
+                                lobbyPlayer);
                         Player player = lobbyPlayer.getPlayer();
                         if (player != null && player.isOnline()) {
                             if (minecubosTick >= 40) {
-                                minecubos = MinecubosAPI.getMinecubos(player) + "";
+                                minecubos = LobbyMC.getInstance().getVaultAPI().getEconPlayer(player) + "";
                             }
                             evaluater = evaluater.replace("{minecubos}", minecubos);
                         }

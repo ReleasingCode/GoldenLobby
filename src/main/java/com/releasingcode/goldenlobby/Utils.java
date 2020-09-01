@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class Utils {
     public static void log(String text) {
         if (text != null) {
-            Bukkit.getConsoleSender().sendMessage(chatColor("&f[LobbyMC] &a" + text));
+            Bukkit.getConsoleSender().sendMessage(chatColor("&f[GoldenLobby] &a" + text));
         }
     }
 

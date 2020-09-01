@@ -12,8 +12,6 @@ import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
 import com.releasingcode.goldenlobby.modulos.scoreboard.ScoreboardPlugin;
 import com.releasingcode.goldenlobby.npc.api.state.NPCMode;
 import com.releasingcode.goldenlobby.npc.internal.NPCManager;
-import es.minecub.core.exceptions.CoreException;
-import es.minecub.core.ranks.RanksCore;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -90,7 +88,7 @@ public class LobbyScoreboard extends Sidebar {
             if (LobbyMC.getInstance().isPlaceHolderAPI()) {
                 text = PlaceholderAPI.setPlaceholders(player, text);
             }
-            String rank = Utils.chatColor(RanksCore.getPlayerRank(player).getPriority() < 1000 ? RanksCore.getPlayerRank(player).getChatPrefix() : ChatColor.GREEN + "Usuario");
+            String rank = Utils.chatColor(LobbyMC.getInstance().getVaultAPI().getRank(player));
             return ServerManager.translateVar(text.replace("{staff_found}",
                     (lobbyPlayer.getLobbyStaffFound() == null) ? "Cargando..." : lobbyPlayer.getLobbyStaffFound()
                             .found() + "")
@@ -116,14 +114,9 @@ public class LobbyScoreboard extends Sidebar {
 
     @Override
     public String getTitle(Player player) {
-        LobbyPlayer lobbyPlayer = null;
-        try {
-            lobbyPlayer = LobbyPlayerMap.getJugador(player);
-        } catch (CoreException ignored) {
-        }
-
-        if (lobbyPlayer == null) return null;
-
+        LobbyPlayer lobbyPlayer = LobbyPlayerMap.getJugador(player);
+        if (lobbyPlayer == null)
+            return null;
         LobbyPlayerIndexing indexing = lobbyPlayer.getScoreboard().getIndexing();
         int changeOn = indexing.getAndIncrementIndexAtExtra("scoreboard_title_tick", (tick_title + 1));
         if (changeOn == tick_title) {

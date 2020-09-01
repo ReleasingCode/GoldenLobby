@@ -19,7 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-import us.minecub.lobbymc.extendido.nms.v1_8_R3.packets.*;
 
 import java.util.List;
 import java.util.UUID;
