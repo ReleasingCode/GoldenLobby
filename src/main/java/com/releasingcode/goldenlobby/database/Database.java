@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.database;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -14,7 +14,7 @@ public class Database {
     private final DatabaseConfig dbConfig;
     private HikariDataSource hikariDc;
 
-    public Database(LobbyMC mc) {
+    public Database(GoldenLobby mc) {
         dbConfig = mc.getDbConfig();
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(dbConfig.getJDBCUrl());

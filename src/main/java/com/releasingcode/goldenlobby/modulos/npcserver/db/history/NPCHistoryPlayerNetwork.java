@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class NPCHistoryPlayerNetwork implements Serializable {
     private static final long serialVersionUID = 4L;
-    public int uid;
+    public String uid;
     public String name;
     public String previus_target;
     public String current_target;

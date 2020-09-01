@@ -1,20 +1,20 @@
 package com.releasingcode.goldenlobby.modulos.scoreboard;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
-import com.releasingcode.goldenlobby.loader.LobbyComponente;
-import org.apache.commons.codec.binary.Base64;
 import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
 import com.releasingcode.goldenlobby.database.pubsub.onRedisMessage;
 import com.releasingcode.goldenlobby.extendido.scoreboard.Sidebar;
+import com.releasingcode.goldenlobby.loader.LobbyComponente;
 import com.releasingcode.goldenlobby.modulos.scoreboard.command.ScoreboardCommand;
 import com.releasingcode.goldenlobby.modulos.scoreboard.db.ScoreboardDB;
 import com.releasingcode.goldenlobby.modulos.scoreboard.db.ScoreboardFetch;
 import com.releasingcode.goldenlobby.modulos.scoreboard.db.redis.OnRedisMessageScoreboard;
 import com.releasingcode.goldenlobby.modulos.scoreboard.listener.onJoin;
 import com.releasingcode.goldenlobby.modulos.scoreboard.manager.ScoreboardManager;
+import org.apache.commons.codec.binary.Base64;
 
 import java.nio.charset.StandardCharsets;
 
@@ -43,7 +43,7 @@ public class ScoreboardPlugin extends LobbyComponente {
     }
 
     public void loadScoreboard() {
-        scoreboardConfig = new CustomConfiguration("Scoreboard", getPlugin());
+        scoreboardConfig = new CustomConfiguration("scoreboard", getPlugin());
         scoreboardManager = new ScoreboardManager(this);
         nameTag = new NameTag(this);
         nameTag.start();
@@ -74,7 +74,7 @@ public class ScoreboardPlugin extends LobbyComponente {
         getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             try {
                 setIamSender(true);
-                LobbyMC.getInstance().getRedisManager().pub(
+                GoldenLobby.getInstance().getRedisManager().pub(
                         SubChannel.SYNC_SCOREBOARD.tobyte(), operation.tobyte()
                 );
                 callBack.onSuccess();

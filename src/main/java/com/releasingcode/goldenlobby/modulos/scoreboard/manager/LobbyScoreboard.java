@@ -1,7 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.scoreboard.manager;
 
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.connections.ServerManager;
 import com.releasingcode.goldenlobby.extendido.scoreboard.Sidebar;
@@ -85,10 +85,10 @@ public class LobbyScoreboard extends Sidebar {
                 return "";
             }
             text = ChatColor.translateAlternateColorCodes('&', text);
-            if (LobbyMC.getInstance().isPlaceHolderAPI()) {
+            if (GoldenLobby.getInstance().isPlaceHolderAPI()) {
                 text = PlaceholderAPI.setPlaceholders(player, text);
             }
-            String rank = Utils.chatColor(LobbyMC.getInstance().getVaultAPI().getRank(player));
+            String rank = Utils.chatColor(GoldenLobby.getInstance().getVaultAPI().getRank(player));
             return ServerManager.translateVar(text.replace("{staff_found}",
                     (lobbyPlayer.getLobbyStaffFound() == null) ? "Cargando..." : lobbyPlayer.getLobbyStaffFound()
                             .found() + "")

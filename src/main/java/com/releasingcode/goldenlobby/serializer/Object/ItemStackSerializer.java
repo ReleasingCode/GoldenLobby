@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.serializer.Object;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.managers.Potion1_9;
 import com.releasingcode.goldenlobby.serializer.Serializer;
@@ -104,7 +104,7 @@ public class ItemStackSerializer
                     }
                 }
             }
-            if (LobbyMC.getInstance().isNewVersion()) {
+            if (GoldenLobby.getInstance().isNewVersion()) {
                 if (itemStack.getType().equals(Material.POTION) || itemStack.getType().equals(Material.SPLASH_POTION) || itemStack.getType().equals(Material.LINGERING_POTION) || itemStack.getType().equals(Material.TIPPED_ARROW)) {
                     final Potion1_9 fromItemStack = Potion1_9.fromItemStack(itemStack);
                     final PotionMeta potionMeta = (PotionMeta) itemStack.getItemMeta();
@@ -161,7 +161,7 @@ public class ItemStackSerializer
                 }
                 ItemStack itemStack;
                 if (hashMap.containsKey("Type")) {
-                    if (LobbyMC.getInstance().isNewVersion()) {
+                    if (GoldenLobby.getInstance().isNewVersion()) {
                         itemStack = new Potion1_9(Potion1_9.PotionType.fromString(hashMap.get("Type").replace("-", "_")), Boolean.valueOf(hashMap.get("St")), Boolean.valueOf(hashMap.get("Long")), Potion1_9.PotionIdType.fromString(hashMap.get("PType"))).toItemStack(Integer.parseInt(hashMap.get("Amount")));
                         final PotionMeta itemMeta = (PotionMeta) itemStack.getItemMeta();
                         if (hashMap.get("PE") != null && !hashMap.get("PE").isEmpty()) {

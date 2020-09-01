@@ -1,6 +1,5 @@
 package com.releasingcode.goldenlobby.listeners;
 
-import com.releasingcode.goldenlobby.LobbyMC;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import org.bukkit.GameMode;
@@ -11,29 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import com.releasingcode.goldenlobby.modulos.regions.PlayerEnterRegionEvent;
-import com.releasingcode.goldenlobby.modulos.regions.cuboid.StageOfCreation;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class DoubleJump implements Listener {
     private final Set<String> playersInDoubleJump = new HashSet<>();
-
-    @EventHandler
-    public void onRegionEnter(PlayerEnterRegionEvent e) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Player player = e.getPlayer();
-                StageOfCreation.Regions region = e.getRegion();
-                if (region == StageOfCreation.Regions.PVP) {
-                    playersInDoubleJump.remove(player.getName());
-                }
-            }
-        }.runTask(LobbyMC.getInstance());
-    }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {

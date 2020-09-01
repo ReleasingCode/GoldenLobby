@@ -1,18 +1,14 @@
 package com.releasingcode.goldenlobby.modulos.inventarios;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
 import com.releasingcode.goldenlobby.connections.ServerInfo;
-import com.releasingcode.goldenlobby.loader.LobbyComponente;
-import org.apache.commons.codec.binary.Base64;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
 import com.releasingcode.goldenlobby.database.pubsub.onRedisMessage;
 import com.releasingcode.goldenlobby.extendido.nms.IMenu;
+import com.releasingcode.goldenlobby.loader.LobbyComponente;
 import com.releasingcode.goldenlobby.modulos.inventarios.comandos.InventarioCommand;
 import com.releasingcode.goldenlobby.modulos.inventarios.comandos.MainCommand;
 import com.releasingcode.goldenlobby.modulos.inventarios.db.InventoriesDB;
@@ -23,6 +19,10 @@ import com.releasingcode.goldenlobby.modulos.inventarios.listener.ItemMenuListen
 import com.releasingcode.goldenlobby.modulos.inventarios.manager.Inventario;
 import com.releasingcode.goldenlobby.modulos.inventarios.manager.ItemSelector;
 import com.releasingcode.goldenlobby.modulos.inventarios.manager.ItemSlot;
+import org.apache.commons.codec.binary.Base64;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -56,7 +56,7 @@ public class InventarioPlugin extends LobbyComponente {
         comandos = new ArrayList<>();
         try {
             IMenu = Class.forName(
-                    "us.minecub.lobbymc.extendido.nms." + LobbyMC.getVersion() + ".IMenu_" + LobbyMC.getVersion());
+                    "us.minecub.lobbymc.extendido.nms." + GoldenLobby.getVersion() + ".IMenu_" + GoldenLobby.getVersion());
         } catch (Exception ignored) {
         }
         new MainCommand(this).register();
@@ -65,7 +65,7 @@ public class InventarioPlugin extends LobbyComponente {
         checkInventories();
         inventoriesLoadFromDisk();
         loadInventories();
-        ItemMenuListener.getInstance().register(LobbyMC.getInstance());
+        ItemMenuListener.getInstance().register(GoldenLobby.getInstance());
         onRedisMessage.registerUpdater(SubChannel.SYNC_INVENTORY, new OnRedisMessageInv());
     }
 
@@ -154,7 +154,7 @@ public class InventarioPlugin extends LobbyComponente {
         getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             try {
                 setIamSender(true);
-                LobbyMC.getInstance().getRedisManager().pub(SubChannel.SYNC_INVENTORY.tobyte(), operation.tobyte());
+                GoldenLobby.getInstance().getRedisManager().pub(SubChannel.SYNC_INVENTORY.tobyte(), operation.tobyte());
                 callBack.onSuccess();
             } catch (Exception e) {
                 setIamSender(false);
@@ -171,7 +171,7 @@ public class InventarioPlugin extends LobbyComponente {
     protected void onDisable() {
         Utils.log(" - Desabilitando modulo de Inventarios");
         this.inventariosConfigs.clear();
-        LobbyMC.getInstance().getServerManager().clear();
+        GoldenLobby.getInstance().getServerManager().clear();
         Inventario.clear();
         for (InventarioCommand commandos : comandos) {
             commandos.unregister();
@@ -197,9 +197,9 @@ public class InventarioPlugin extends LobbyComponente {
     public void reloadInventories(CallBack.SingleCallBack callBack, boolean fetchdb) {
         getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             this.inventariosConfigs.clear();
-            LobbyMC.getInstance().getServerManager().clear();
+            GoldenLobby.getInstance().getServerManager().clear();
             Inventario.clear();
-            LobbyMC.getInstance().serversConnections();
+            GoldenLobby.getInstance().serversConnections();
             if (!fetchdb) {
                 checkInventories();
                 inventoriesLoadFromDisk();

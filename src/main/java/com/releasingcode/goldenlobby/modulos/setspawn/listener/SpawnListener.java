@@ -1,13 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.setspawn.listener;
 
-import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.managers.SpawnPoint;
 import com.releasingcode.goldenlobby.modulos.setspawn.SpawnPointPlugin;
-import es.minecub.core.minecubos.MinecubosAPI;
-import es.minecub.core.ranks.RanksCore;
-import es.minecub.core.sync.player.PlayerManager;
-import es.minecub.serverdata.data.PlayerDatabase;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,35 +26,6 @@ public class SpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent e) {
-        boolean hasKiller = e.getEntity().getKiller() != null;
-
-        if (hasKiller) {
-            Player victim = e.getEntity();
-            Player killer = victim.getKiller();
-
-            String victimName = (PlayerManager.getInstance().getDatabase(victim).contains("Nickname"))
-                    ? PlayerManager.getInstance().getDatabase(victim).get("Nickname").asString()
-                    : victim.getName();
-
-            String killerName = (PlayerManager.getInstance().getDatabase(killer).contains("Nickname"))
-                    ? PlayerManager.getInstance().getDatabase(killer).get("Nickname").asString()
-                    : killer.getName();
-
-            victim.sendMessage(Utils.chatColor("&7Has sido asesinado por &6" + killerName + "&7."));
-            killer.sendMessage(Utils.chatColor("&7Has asesinado a &6" + victimName + "&7."));
-
-            boolean isUser = RanksCore.getDefaultRank().equals(RanksCore.getPlayerRank(killer.getPlayer()));
-            int minecubos = (isUser) ? 1 : 2;
-            String plural = (isUser) ? "." : "s.";
-
-            killer.sendMessage(ChatColor.GREEN + "Has ganado " + minecubos + " minecubo" + plural);
-            killer.addPotionEffect(REGENERATION);
-            MinecubosAPI.giveMinecubos(killer, minecubos, false);
-
-        } else {
-            e.getEntity().sendMessage(Utils.chatColor("&7Has muerto."));
-        }
-
         e.setDeathMessage(null);
         e.getDrops().clear();
     }

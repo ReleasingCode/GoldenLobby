@@ -8,9 +8,12 @@ import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import com.releasingcode.goldenlobby.managers.history.LobbyPlayerHistory;
 import com.releasingcode.goldenlobby.modulos.cooldown.object.CooldownSystem;
 import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
+import com.releasingcode.goldenlobby.modulos.npcserver.db.history.NPCHistoryPlayerNetwork;
+import com.releasingcode.goldenlobby.modulos.npcserver.history.NPCHistory;
+import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyPlayerBuilder;
+import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyStaffFound;
 import com.releasingcode.goldenlobby.npc.api.NPC;
 import com.releasingcode.goldenlobby.npc.api.events.NPCInteractEvent;
-import com.releasingcode.goldenlobby.npc.api.state.NPCMode;
 import com.releasingcode.goldenlobby.npc.api.state.NPCSlot;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,10 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import com.releasingcode.goldenlobby.modulos.npcserver.db.history.NPCHistoryPlayerNetwork;
-import com.releasingcode.goldenlobby.modulos.npcserver.history.NPCHistory;
-import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyPlayerBuilder;
-import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyStaffFound;
 
 public class NPCListener implements Listener {
     NPCServerPlugin npcServerPlugin;
@@ -156,7 +155,7 @@ public class NPCListener implements Listener {
             return;
         }
         switch (npc.getNPCMode()) {
-            case NPCMode.HISTORY: {
+            case HISTORY: {
                 LobbyPlayerHistory history = lobbyPlayer.getHistory();
                 if (!history.isPlaying()) {
                     if (npc.getHistory() != null) {
@@ -201,7 +200,7 @@ public class NPCListener implements Listener {
                 }
                 break;
             }
-            case NPCMode.COMMAND: {
+            case COMMAND: {
                 if (npc.getCooldownValidator() != null
                         && !npc.getCooldownValidator().trim().isEmpty()) {
                     CooldownSystem system = CooldownSystem.getCooldown(npc.getCooldownValidator());
@@ -213,7 +212,7 @@ public class NPCListener implements Listener {
                 commonCMD(npc, player);
                 break;
             }
-            case NPCMode.STAFF: {
+            case STAFF: {
 
 
                 /*

@@ -1,12 +1,26 @@
 package com.releasingcode.goldenlobby.modulos.npcserver;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
+import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
+import com.releasingcode.goldenlobby.database.pubsub.onRedisMessage;
 import com.releasingcode.goldenlobby.loader.LobbyComponente;
 import com.releasingcode.goldenlobby.managers.SkinGameProfile;
+import com.releasingcode.goldenlobby.modulos.npcserver.comandos.NpcServerCommand;
+import com.releasingcode.goldenlobby.modulos.npcserver.db.NPCFetch;
+import com.releasingcode.goldenlobby.modulos.npcserver.db.history.HistoryStatsDB;
+import com.releasingcode.goldenlobby.modulos.npcserver.db.mysql.NPCDB;
+import com.releasingcode.goldenlobby.modulos.npcserver.db.redis.OnRedisMessageNPC;
+import com.releasingcode.goldenlobby.modulos.npcserver.history.HistoryManager;
+import com.releasingcode.goldenlobby.modulos.npcserver.listener.NPCListener;
 import com.releasingcode.goldenlobby.npc.api.NPC;
+import com.releasingcode.goldenlobby.npc.api.skin.Skin;
+import com.releasingcode.goldenlobby.npc.api.skin.SkinFetcher;
+import com.releasingcode.goldenlobby.npc.api.state.NPCMode;
+import com.releasingcode.goldenlobby.npc.api.state.NPCPosition;
+import com.releasingcode.goldenlobby.npc.api.state.NPCSlot;
 import com.releasingcode.goldenlobby.npc.internal.NPCManager;
 import com.releasingcode.goldenlobby.serializer.Serializer;
 import com.releasingcode.goldenlobby.serializer.Serializers;
@@ -16,20 +30,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
-import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
-import com.releasingcode.goldenlobby.database.pubsub.onRedisMessage;
-import com.releasingcode.goldenlobby.modulos.npcserver.comandos.NpcServerCommand;
-import com.releasingcode.goldenlobby.modulos.npcserver.db.NPCFetch;
-import com.releasingcode.goldenlobby.modulos.npcserver.db.history.HistoryStatsDB;
-import com.releasingcode.goldenlobby.modulos.npcserver.db.mysql.NPCDB;
-import com.releasingcode.goldenlobby.modulos.npcserver.db.redis.OnRedisMessageNPC;
-import com.releasingcode.goldenlobby.modulos.npcserver.history.HistoryManager;
-import com.releasingcode.goldenlobby.modulos.npcserver.listener.NPCListener;
-import com.releasingcode.goldenlobby.npc.api.skin.Skin;
-import com.releasingcode.goldenlobby.npc.api.skin.SkinFetcher;
-import com.releasingcode.goldenlobby.npc.api.state.NPCMode;
-import com.releasingcode.goldenlobby.npc.api.state.NPCPosition;
-import com.releasingcode.goldenlobby.npc.api.state.NPCSlot;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -74,10 +74,10 @@ public class NPCServerPlugin extends LobbyComponente {
         if (operation == SubChannel.SubOperation.GET_FROM_LOCAL) {
             loadFileNPC();
             historyManager = new HistoryManager();
-            LobbyMC.getInstance().getNpcLib().startTaskNPC();
+            GoldenLobby.getInstance().getNpcLib().startTaskNPC();
             return;
         }
-        if (LobbyMC.getInstance().isMysqlEnable()) {
+        if (GoldenLobby.getInstance().isMysqlEnable()) {
             boolean purge = operation == SubChannel.SubOperation.PURGE_AND_GET_FROM_DB;
             syncDbStart(purge);
         }
@@ -102,7 +102,7 @@ public class NPCServerPlugin extends LobbyComponente {
                     Utils.log("NPC's recolectados desde la db: " + callback.size());
                     callFetchingUpdating(callback, purge);
                     historyManager = new HistoryManager();
-                    LobbyMC.getInstance().getNpcLib().startTaskNPC();
+                    GoldenLobby.getInstance().getNpcLib().startTaskNPC();
                 }));
     }
 
@@ -213,7 +213,7 @@ public class NPCServerPlugin extends LobbyComponente {
     @Override
     public void onDisable() {
         npcsConfig.clear();
-        LobbyMC.getInstance().getNpcLib().cancel();
+        GoldenLobby.getInstance().getNpcLib().cancel();
         NPCManager.clearNpcs();
     }
 
@@ -247,8 +247,8 @@ public class NPCServerPlugin extends LobbyComponente {
     public void reloadNPC(CallBack.SingleCallBack callBack, SubChannel.SubOperation operation) {
         getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             try {
-                LobbyMC.getInstance().getNpcLib().cancel();
-                LobbyMC.getInstance().stopServerConnections();
+                GoldenLobby.getInstance().getNpcLib().cancel();
+                GoldenLobby.getInstance().stopServerConnections();
                 npcsConfig.clear();
                 NPCManager.clearFullyLoaded();
                 ArrayList<String> NpcNames = NPCManager.getAllNPCs().stream().map(NPC::getName)
@@ -275,7 +275,7 @@ public class NPCServerPlugin extends LobbyComponente {
     public void sendSync(SubChannel.SubOperation operation) {
         getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             setIamSender(true);
-            LobbyMC.getInstance().getRedisManager().pub(
+            GoldenLobby.getInstance().getRedisManager().pub(
                     SubChannel.SYNC_NPC.tobyte(), operation.tobyte()
             );
         });
@@ -363,7 +363,7 @@ public class NPCServerPlugin extends LobbyComponente {
         String nameNPC = configuration.getString("npcName", null);
         String cooldownValidator = configuration.getString("cooldownValidator", null);
         NPCPosition positionStatus = NPCPosition.from(configuration.getString("position", "NORMAL"));
-        NPC npc = LobbyMC.getInstance().getNpcLib().createNPC(name, uid, nameNPC);
+        NPC npc = GoldenLobby.getInstance().getNpcLib().createNPC(name, uid, nameNPC);
         if (serializer != null) {
             ItemStack helmet = serializer.deserialize(configuration.getString("equipment.helmet"));
             ItemStack chestplate = serializer.deserialize(configuration.getString("equipment.chestplate"));
@@ -388,7 +388,7 @@ public class NPCServerPlugin extends LobbyComponente {
         npc.setCommand(comandos);
         npc.create();
         if (skinValue != null) {
-            if (LobbyMC.getInstance().isSkinExternal()) {
+            if (GoldenLobby.getInstance().isSkinExternal()) {
                 SkinFetcher.fetchSkinFromIdAsync(skinValue, new SkinFetcher.Callback() {
                     @Override
                     public void call(Skin skinData) {
@@ -451,7 +451,7 @@ public class NPCServerPlugin extends LobbyComponente {
     }
 
     public void deleteConfigNPC(String name, String dir, CallBack.SingleCallBack callBack) {
-        if (!LobbyMC.getInstance().isMysqlEnable()) {
+        if (!GoldenLobby.getInstance().isMysqlEnable()) {
             getPlugin().getServer().getScheduler()
                     .runTaskAsynchronously(getPlugin(), () -> npcDelete(name, dir, callBack));
             return;
@@ -529,7 +529,7 @@ public class NPCServerPlugin extends LobbyComponente {
             }
             configuration.set("Skin", npc.getValueSkin());
             npc.setConfigurationFile(configuration);
-            if (LobbyMC.getInstance().isMysqlEnable()) {
+            if (GoldenLobby.getInstance().isMysqlEnable()) {
                 getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
                     try {
                         getNpcdb().createConfiguration(player,

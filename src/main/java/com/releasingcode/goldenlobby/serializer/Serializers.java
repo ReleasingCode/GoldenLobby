@@ -1,13 +1,13 @@
 package com.releasingcode.goldenlobby.serializer;
 
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import com.releasingcode.goldenlobby.serializer.Object.ColorSerializer;
 import com.releasingcode.goldenlobby.serializer.Object.ItemStackSerializer;
 import com.releasingcode.goldenlobby.serializer.Object.MaterialSerializer;
 import com.releasingcode.goldenlobby.serializer.Object.PotionEffectSerializer;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public enum Serializers {
     public static <E> Serializer<E> getSerializer(Class<E> class_) {
         for (Serializers serializers : Serializers.values()) {
             if (!class_.getName().equals(serializers.getClassSer().getName())) continue;
-            return (Serializer<E>) serializers.getSerializer();
+            return ((Serializer<E>) serializers.getSerializer());
         }
         return null;
     }

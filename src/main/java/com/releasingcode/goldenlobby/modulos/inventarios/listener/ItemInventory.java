@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.modulos.inventarios.listener;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.managers.DelayPlayer;
 import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
 import com.releasingcode.goldenlobby.modulos.inventarios.manager.Inventario;
@@ -38,7 +38,7 @@ public class ItemInventory implements Listener {
             @Override public void run() {
                 Inventario.setSelectorToPlayer(respawnEvent.getPlayer());
             }
-        }.runTaskLater(LobbyMC.getInstance(), 60);
+        }.runTaskLater(GoldenLobby.getInstance(), 60);
     }
 
     @EventHandler

@@ -1,7 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.npcserver.comandos;
 
 import com.releasingcode.goldenlobby.BaseCommand;
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
@@ -10,6 +10,7 @@ import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import com.releasingcode.goldenlobby.managers.MessageSuggest;
 import com.releasingcode.goldenlobby.managers.SkinGameProfile;
 import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
+import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyPlayerBuilder;
 import com.releasingcode.goldenlobby.npc.api.NPC;
 import com.releasingcode.goldenlobby.npc.api.skin.Skin;
 import com.releasingcode.goldenlobby.npc.api.skin.SkinFetcher;
@@ -20,20 +21,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyPlayerBuilder;
 
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class NpcServerCommand extends BaseCommand {
-    private final LobbyMC lobbyMC;
+    private final GoldenLobby lobbyMC;
     NPCServerPlugin plugin;
 
     public NpcServerCommand(NPCServerPlugin plugin, String command, String usage, String description) {
         super(command, usage, description);
         this.plugin = plugin;
-        this.lobbyMC = LobbyMC.getInstance();
+        this.lobbyMC = GoldenLobby.getInstance();
     }
 
     @Override
@@ -216,7 +216,7 @@ public class NpcServerCommand extends BaseCommand {
                         }
                         builder.setEditing(name);
                         UUID uuid = new UUID(new Random().nextLong(), 0);
-                        NPC npc = LobbyMC.getInstance().getNpcLib().createNPC(name, uuid, name);
+                        NPC npc = GoldenLobby.getInstance().getNpcLib().createNPC(name, uuid, name);
                         npc.setEditing(true);
                         npc.setLocation(player.getLocation());
                         npc.setMode(NPCMode.from(modo));
@@ -375,7 +375,7 @@ public class NpcServerCommand extends BaseCommand {
                         String name = args[1];
                         builder.getNpc().setReady(false);
                         lobbyPlayer.sendMessage("&6Estableciendo skin al NPC, por favor espere...");
-                        if (LobbyMC.getInstance().isSkinExternal()) {
+                        if (GoldenLobby.getInstance().isSkinExternal()) {
                             SkinFetcher.fetchSkinFromIdAsync(name, new SkinFetcher.Callback() {
                                 @Override
                                 public void call(Skin skinData) {

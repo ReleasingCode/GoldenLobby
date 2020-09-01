@@ -1,6 +1,13 @@
 package com.releasingcode.goldenlobby.managers;
 
 import com.releasingcode.goldenlobby.Utils;
+import com.releasingcode.goldenlobby.managers.cooldown.LobbyCooldown;
+import com.releasingcode.goldenlobby.managers.history.LobbyPlayerHistory;
+import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
+import com.releasingcode.goldenlobby.managers.inventarios.LobbyPlayerInventory;
+import com.releasingcode.goldenlobby.managers.scoreboard.LobbyPlayerScoreboard;
+import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyPlayerBuilder;
+import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyStaffFound;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -9,14 +16,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import com.releasingcode.goldenlobby.managers.cooldown.LobbyCooldown;
-import com.releasingcode.goldenlobby.managers.history.LobbyPlayerHistory;
-import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
-import com.releasingcode.goldenlobby.managers.inventarios.LobbyPlayerInventory;
-import com.releasingcode.goldenlobby.managers.scoreboard.LobbyPlayerScoreboard;
-import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyPlayerBuilder;
-import com.releasingcode.goldenlobby.modulos.npcserver.object.LobbyStaffFound;
-import com.releasingcode.goldenlobby.modulos.regions.cuboid.StageOfCreation;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +33,6 @@ public class LobbyPlayer {
     private LobbyPlayerHistory history;
     private boolean flyer;
     private GameMode gameMode;
-    private StageOfCreation.Regions actualRegion = StageOfCreation.Regions.LOBBY;
     private LobbyCooldown lobbyCooldown;
 
     LobbyPlayer(Player player) {
@@ -181,15 +179,6 @@ public class LobbyPlayer {
             }
         }
         return "" + 0;
-    }
-
-
-    public StageOfCreation.Regions getActualRegion() {
-        return actualRegion;
-    }
-
-    public void setActualRegion(StageOfCreation.Regions actualRegion) {
-        this.actualRegion = actualRegion;
     }
 
     public void setEditingCooldown(String toLowerCase) {

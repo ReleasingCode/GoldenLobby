@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.extendido.nms;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -354,7 +354,7 @@ public enum ParticleEffect {
         }
 
         public static void initialize() {
-            if (LobbyMC.getInstance().isNewVersion()) {
+            if (GoldenLobby.getInstance().isNewVersion()) {
                 return;
             }
             if (initialized) {
@@ -417,7 +417,7 @@ public enum ParticleEffect {
         }
 
         public void sendTo(Location location, Player player) {
-            if (LobbyMC.getInstance().isNewVersion()) {
+            if (GoldenLobby.getInstance().isNewVersion()) {
                 player.spawnParticle(ParticleBuilder.getParticle(this.effect), location, this.amount, this.offsetX, this.offsetY, this.offsetZ, this.speed);
                 return;
             }

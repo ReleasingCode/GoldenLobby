@@ -1,10 +1,10 @@
 package com.releasingcode.goldenlobby.npc.hologram;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
+import com.releasingcode.goldenlobby.extendido.reflection.Reflection;
 import com.releasingcode.goldenlobby.managers.DelayPlayer;
 import com.releasingcode.goldenlobby.npc.internal.MinecraftVersion;
-import com.releasingcode.goldenlobby.extendido.reflection.Reflection;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -415,7 +415,7 @@ public class Hologram {
 
     public static class HologramListener implements Listener {
         public HologramListener() {
-            LobbyMC.getInstance().getServer().getPluginManager().registerEvents(this, LobbyMC.getInstance());
+            GoldenLobby.getInstance().getServer().getPluginManager().registerEvents(this, GoldenLobby.getInstance());
         }
 
         @EventHandler

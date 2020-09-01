@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.configuracion;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -99,12 +99,12 @@ public class CustomConfiguration {
     }
 
     public static boolean deleteFile(String child, String name) {
-        File file = new File(LobbyMC.getInstance().getDataFolder(), child + "/" + name);
+        File file = new File(GoldenLobby.getInstance().getDataFolder(), child + "/" + name);
         return file.delete();
     }
 
     public static File[] getFilesPath(String path) {
-        File file = new File(LobbyMC.getInstance().getDataFolder(), path);
+        File file = new File(GoldenLobby.getInstance().getDataFolder(), path);
         if (!file.isDirectory()) {
             file.mkdir();
         }

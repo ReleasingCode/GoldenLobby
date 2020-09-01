@@ -1,13 +1,14 @@
 package com.releasingcode.goldenlobby.modulos.inventarios.manager;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.connections.ServerInfo;
 import com.releasingcode.goldenlobby.connections.ServerManager;
 import com.releasingcode.goldenlobby.managers.ItemStackBuilder;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
+import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemClickEvent;
+import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
+import com.releasingcode.goldenlobby.modulos.inventarios.builder.MenuItem;
 import com.releasingcode.goldenlobby.npc.internal.MinecraftVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,11 +16,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemClickEvent;
-import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
-import com.releasingcode.goldenlobby.modulos.inventarios.builder.MenuItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,7 +104,7 @@ public class ItemMenu {
                             }
                         }
                         if (itemSlot.isGlowing()) {
-                            if (LobbyMC.getMinecraftVersion().isAboveOrEqual(MinecraftVersion.V1_14_R1)) {
+                            if (GoldenLobby.getMinecraftVersion().isAboveOrEqual(MinecraftVersion.V1_14_R1)) {
 
                             } else {
                                 lastBuilder.addEnchantment(new ItemStackBuilder.GlowEnchantment(), 1);
@@ -190,7 +191,6 @@ public class ItemMenu {
     }
 
     public boolean checkServer(String[] beforeLore) {
-        int index = 0;
         for (String text : beforeLore) {
             if (text.trim().contains("motd")) {
                 return true;
@@ -260,7 +260,7 @@ public class ItemMenu {
             } else {
                 //player.updateInventory();
                 if (itemClickEvent.willClose() || itemClickEvent.willGoBack()) {
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(LobbyMC.getInstance(), player::closeInventory, 0);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(GoldenLobby.getInstance(), player::closeInventory, 0);
                 }
                 /*if (itemClickEvent.willGoBack() && hasParent()) {
                     final String playerName = player.getName();

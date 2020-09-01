@@ -1,12 +1,12 @@
 package com.releasingcode.goldenlobby.managers.scoreboard;
 
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
-import org.bukkit.entity.Player;
 import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
 import com.releasingcode.goldenlobby.modulos.scoreboard.manager.ContentsAnimatable;
 import com.releasingcode.goldenlobby.modulos.scoreboard.manager.LobbyScoreboard;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,7 +24,7 @@ public class LobbyPlayerScoreboard {
         text = new LinkedHashMap<>();
         Player player = lobbyPlayer.getPlayer();
         if (player != null && player.isOnline()) {
-            minecubos = LobbyMC.getInstance().getVaultAPI().getEconPlayer(player) + "";
+            minecubos = GoldenLobby.getInstance().getVaultAPI().getEconPlayer(player) + "";
         }
     }
 
@@ -49,7 +49,7 @@ public class LobbyPlayerScoreboard {
                 Player player = lobbyPlayer.getPlayer();
                 if (player != null && player.isOnline()) {
                     if (minecubosTick >= 40) {
-                        minecubos = LobbyMC.getInstance().getVaultAPI().getEconPlayer(player) + "";
+                        minecubos = GoldenLobby.getInstance().getVaultAPI().getEconPlayer(player) + "";
                     }
                     evaluater = evaluater.replace("{minecubos}", minecubos);
                 }
@@ -69,7 +69,7 @@ public class LobbyPlayerScoreboard {
                         Player player = lobbyPlayer.getPlayer();
                         if (player != null && player.isOnline()) {
                             if (minecubosTick >= 40) {
-                                minecubos = LobbyMC.getInstance().getVaultAPI().getEconPlayer(player) + "";
+                                minecubos = GoldenLobby.getInstance().getVaultAPI().getEconPlayer(player) + "";
                             }
                             evaluater = evaluater.replace("{minecubos}", minecubos);
                         }

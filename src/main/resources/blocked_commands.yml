@@ -1,6 +1,0 @@
-# Archivo encargado de bloquear que un jugador ejecute ciertos comandos.
-enabled: true
-blocked-commands:
-  plugins:
-    mensaje: '&cNo puedes acceder a este comando.'
-    permission: lobbymc.commandblocker.plugins

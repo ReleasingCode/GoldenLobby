@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.modulos.warps;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
 import com.releasingcode.goldenlobby.managers.SpawnPoint;
 
@@ -20,7 +20,7 @@ public class Warps {
     public static void addWarp(Warps warp, boolean createFile) {
         warps.put(warp.getName().toLowerCase(), warp);
         if (createFile) {
-            CustomConfiguration customConfiguration = new CustomConfiguration(warp.getName().toLowerCase(), "/warps/", LobbyMC.getInstance());
+            CustomConfiguration customConfiguration = new CustomConfiguration(warp.getName().toLowerCase(), "/warps/", GoldenLobby.getInstance());
             customConfiguration.set("Location.World", warp.getLocation().getWorld());
             customConfiguration.set("Location.X", warp.getLocation().getX());
             customConfiguration.set("Location.Y", warp.getLocation().getY());

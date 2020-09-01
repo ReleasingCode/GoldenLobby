@@ -1,11 +1,10 @@
 package com.releasingcode.goldenlobby.listeners;
 
-import com.releasingcode.goldenlobby.LobbyMC;
-import com.releasingcode.goldenlobby.call.CallBack;
+import com.releasingcode.goldenlobby.GoldenLobby;
+import com.releasingcode.goldenlobby.listeners.custom.SecurePlayerJoinEvent;
 import com.releasingcode.goldenlobby.managers.DelayPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -14,7 +13,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import com.releasingcode.goldenlobby.listeners.custom.SecurePlayerJoinEvent;
 
 public class OnJoin implements Listener {
 
@@ -30,7 +28,7 @@ public class OnJoin implements Listener {
         if (player.hasPermission("lobbymc.benefits.fly")) {
             player.setFlying(true);
             lobbyPlayer.setFlyer(true);
-            player.setMetadata("userFlying", new FixedMetadataValue(LobbyMC.getInstance(), null));
+            player.setMetadata("userFlying", new FixedMetadataValue(GoldenLobby.getInstance(), null));
         }
         if (!evento.getPlayer().hasPermission("lobbymc.gamemode")) {
             lobbyPlayer.setGameMode(null);

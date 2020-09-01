@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.modulos.npcserver.history;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.extendido.nms.TitleAPI;
 import com.releasingcode.goldenlobby.managers.ItemStackBuilder;
@@ -175,13 +175,13 @@ public class NPCHistory {
                 return;
             }
             ItemStack stack = new ItemStackBuilder(itemStack).build();
-            Bukkit.getScheduler().runTask(LobbyMC.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(GoldenLobby.getInstance(), () -> {
                 Location location = npc.getLocation();
                 Location vectorLocation = location.setDirection(p.getLocation().subtract(location).toVector());
                 Item item = vectorLocation.getWorld().dropItemNaturally(vectorLocation, stack);
                 item.setPickupDelay(Integer.MAX_VALUE);
                 item.setFireTicks(0);
-                Bukkit.getScheduler().runTaskLater(LobbyMC.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLater(GoldenLobby.getInstance(), () -> {
                     try {
                         item.remove();
                     } catch (Exception ignored) {

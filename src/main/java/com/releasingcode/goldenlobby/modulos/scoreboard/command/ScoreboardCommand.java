@@ -1,7 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.scoreboard.command;
 
 import com.releasingcode.goldenlobby.BaseCommand;
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
@@ -39,7 +39,7 @@ public class ScoreboardCommand extends BaseCommand {
             return true;
         }
         if (args[0].equals("sync")) {
-            if (!LobbyMC.getInstance().isMysqlEnable()) {
+            if (!GoldenLobby.getInstance().isMysqlEnable()) {
                 return true;
             }
             if (args.length > 1) {

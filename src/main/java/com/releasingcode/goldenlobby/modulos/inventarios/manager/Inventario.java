@@ -7,13 +7,12 @@ import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
 import com.releasingcode.goldenlobby.modulos.inventarios.InventarioPlugin;
-import com.releasingcode.goldenlobby.modulos.regions.RegionPlugin;
+import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -118,17 +117,11 @@ public class Inventario implements Cloneable {
         for (ItemSelector selector : getItemsSelector()) {
             if (selector.getInventario() != null && selector.getItem() != null && selector.hasActive()) {
                 PlayerInventory inventory = p.getInventory();
-                ItemStack overridableItem = inventory.getItem(selector.getSlot());
                 ItemStack perHead = new ItemStackBuilder(
                         selector.getBuilderString().replace("{player}", p.getName()))
                         .setName(selector.getName())
                         .addLore(selector.getLore())
                         .build();
-
-                if (overridableItem != null && RegionPlugin.shopItemsParser.isAShopItem(overridableItem)) {
-                    inventory.addItem(overridableItem);
-                }
-
                 inventory.setItem(selector.getSlot(), perHead);
             }
         }

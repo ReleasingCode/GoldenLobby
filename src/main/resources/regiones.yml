@@ -1,8 +1,0 @@
-# Comandos que se pueden ejecutar en una región pvp, y no son bloqueados.
-# Muy importante: agregar '/'
-comandos-permitidos-pvp-region:
-  - "/cw1"
-  - "/cw2"
-  - "/dn1"
-enable-random-mob-events: true
-regiones:

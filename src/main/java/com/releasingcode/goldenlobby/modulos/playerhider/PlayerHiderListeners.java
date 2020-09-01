@@ -1,8 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.playerhider;
 
-import com.releasingcode.goldenlobby.LobbyMC;
-import com.yapzhenyie.GadgetsMenu.api.GadgetsMenuAPI;
-import com.yapzhenyie.GadgetsMenu.player.PlayerManager;
+import com.releasingcode.goldenlobby.GoldenLobby;
+import com.releasingcode.goldenlobby.modulos.inventarios.manager.Inventario;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,7 +13,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import com.releasingcode.goldenlobby.modulos.inventarios.manager.Inventario;
 
 /**
  * Encargarse de agregar el item
@@ -27,14 +25,10 @@ public class PlayerHiderListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         Hider hider = new Hider(player);
-        Hider.setHiderItem(itemToAdd -> player.setMetadata("showingPlayers", new FixedMetadataValue(LobbyMC.getInstance(), hider)), player, true);
-
+        Hider.setHiderItem(itemToAdd -> player.setMetadata("showingPlayers", new FixedMetadataValue(GoldenLobby.getInstance(), hider)), player, true);
         if (player.hasMetadata("Vanished")) {
-            PlayerManager playerManager = GadgetsMenuAPI.getPlayerManager(player);
-            playerManager.removeMenuSelector();
             Inventario.clearItemsSelectorToPlayer(player);
         }
-
         Hider.hideIncomingPlayers(e.getPlayer());
     }
 
@@ -48,12 +42,12 @@ public class PlayerHiderListeners implements Listener {
             Hider showingPlayers = ((Hider) player.getMetadata("showingPlayers").get(0).value());
             if (showingPlayers.isInCooldown()) return;
             showingPlayers.hidePlayers();
-            player.removeMetadata("showingPlayers", LobbyMC.getInstance());
+            player.removeMetadata("showingPlayers", GoldenLobby.getInstance());
         } else {
             Hider hider = new Hider(player);
             if (hider.isInCooldown()) return;
             hider.showPlayers(true);
-            player.setMetadata("showingPlayers", new FixedMetadataValue(LobbyMC.getInstance(), hider));
+            player.setMetadata("showingPlayers", new FixedMetadataValue(GoldenLobby.getInstance(), hider));
         }
     }
 

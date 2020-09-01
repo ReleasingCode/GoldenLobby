@@ -1,11 +1,10 @@
 package com.releasingcode.goldenlobby.modulos.inventarios.listener;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
 import com.releasingcode.goldenlobby.modulos.inventarios.manager.ItemSelector;
-import com.releasingcode.goldenlobby.modulos.regions.listener.RegionListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -83,19 +82,19 @@ public class ItemMenuListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDrop(PlayerDropItemEvent event) {
         ItemStack stack = event.getItemDrop().getItemStack();
-        if (ItemSelector.hasItemSelector(stack) || RegionListeners.Equipment.isEquipment(stack)) {
+        if (ItemSelector.hasItemSelector(stack)) {
             event.setCancelled(true);
         }
     }
 
-    public void register(LobbyMC plugin) {
+    public void register(GoldenLobby plugin) {
         if (!isRegistered(plugin)) {
             plugin.getServer().getPluginManager().registerEvents(instancia, plugin);
             this.plugin = plugin;
         }
     }
 
-    public boolean isRegistered(LobbyMC plugin) {
+    public boolean isRegistered(GoldenLobby plugin) {
         if (plugin.equals(this.plugin)) {
             for (RegisteredListener listener : HandlerList.getRegisteredListeners(plugin)) {
                 return listener.getListener().equals(instancia);

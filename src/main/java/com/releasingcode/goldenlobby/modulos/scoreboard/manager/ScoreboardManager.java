@@ -1,7 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.scoreboard.manager;
 
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.extendido.scoreboard.Sidebar;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
@@ -38,7 +38,7 @@ public class ScoreboardManager {
     }
 
     public void setScoreboardForPlayer(Player p) {
-        Bukkit.getScheduler().runTask(LobbyMC.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(GoldenLobby.getInstance(), () -> {
             p.setScoreboard(sb);
             this.sidebar.addRecipient(p);
         });

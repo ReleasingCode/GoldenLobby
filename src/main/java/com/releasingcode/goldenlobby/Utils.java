@@ -1,12 +1,12 @@
 package com.releasingcode.goldenlobby;
 
+import com.releasingcode.goldenlobby.managers.LobbyPlayer;
+import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import com.releasingcode.goldenlobby.managers.LobbyPlayer;
-import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -208,7 +208,7 @@ public class Utils {
             dos.writeUTF(server);
         } catch (Exception ignored) {
         }
-        p.sendPluginMessage(LobbyMC.getInstance(), "BungeeCord", bytes.toByteArray());
+        p.sendPluginMessage(GoldenLobby.getInstance(), "BungeeCord", bytes.toByteArray());
     }
 
     public static String concatArgs(String[] args, int start) {

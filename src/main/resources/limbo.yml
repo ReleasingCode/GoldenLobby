@@ -1,3 +1,0 @@
-enabled: true
-# Al llegar a estos segundos, se enviará el jugador al limbo.
-seconds-afk-needed-to-send: 300

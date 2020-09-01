@@ -1,6 +1,6 @@
 package com.releasingcode.goldenlobby.modulos.npcserver.db.history;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.database.Database;
@@ -25,12 +25,12 @@ import java.sql.Statement;
 
 public class HistoryStatsDB implements IDatabase {
     private final NPCServerPlugin plugin;
-    private final LobbyMC lobbyMC;
+    private final GoldenLobby lobbyMC;
     private Database database;
 
     public HistoryStatsDB(NPCServerPlugin plugin) {
         this.plugin = plugin;
-        lobbyMC = LobbyMC.getInstance();
+        lobbyMC = GoldenLobby.getInstance();
         Database.registerCall(this);
     }
 
@@ -52,7 +52,7 @@ public class HistoryStatsDB implements IDatabase {
                     new ColumnMeta().primaryKey().autoIncrement());
             //cambiar estructura de tabla al usarse en minecub
             columnBuilder.appendColumn(PlayerHistoryStatsColumns.uid,
-                    ColumnBuilder.ColumnType.BIGINT, new ColumnMeta().unique());
+                    ColumnBuilder.ColumnType.VARCHAR, new ColumnMeta(19).unique());
             columnBuilder.appendColumn(PlayerHistoryStatsColumns.username, ColumnBuilder.ColumnType.VARCHAR,
                     new ColumnMeta(17));
             columnBuilder.appendColumn(PlayerHistoryStatsColumns.previus_target, ColumnBuilder.ColumnType.VARCHAR,
@@ -87,7 +87,7 @@ public class HistoryStatsDB implements IDatabase {
             return;
         }
         LobbyPlayerHistory historia = lp.getHistory(); // administrador de historia por jugador y stats del jugador
-        Bukkit.getScheduler().runTaskAsynchronously(LobbyMC.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(GoldenLobby.getInstance(), () -> {
             String SQL = "INSERT INTO " + this.database.getDbConfig().getTable("NPC.PlayerStats")
                     + "(" + PlayerHistoryStatsColumns.uid + ","
                     + PlayerHistoryStatsColumns.username + ","
@@ -107,7 +107,7 @@ public class HistoryStatsDB implements IDatabase {
                     + PlayerHistoryStatsColumns.history_current_playing + "=?, "
                     + PlayerHistoryStatsColumns.history_dash + "=?, "
                     + PlayerHistoryStatsColumns.staff_founds + "=?";
-            int uid = lp.getId();
+            String uid = lp.toStringUUID();
             String name = lp.getName();
             String previus_target = historia.getPreviusTarget() == null ? "" : historia.getPreviusTarget();
             String current_target = historia.getActualTarget() == null ? "" : historia.getActualTarget();
@@ -128,7 +128,7 @@ public class HistoryStatsDB implements IDatabase {
             }
             try (Connection con = this.database.getConnection();
                  PreparedStatement prestat = con.prepareStatement(SQL)) {
-                prestat.setInt(1, uid);
+                prestat.setString(1, uid);
                 prestat.setString(2, name);
                 prestat.setString(3, previus_target);
                 prestat.setString(4, current_target);
@@ -162,7 +162,7 @@ public class HistoryStatsDB implements IDatabase {
                 LobbyPlayerHistory history = lobbyPlayer.getHistory();
                 String staff_found = lobbyPlayer.getLobbyStaffFound() != null ? lobbyPlayer.getLobbyStaffFound()
                         .allNPCs() : "";
-                playernet.uid = lobbyPlayer.getId();
+                playernet.uid = lobbyPlayer.toStringUUID();
                 playernet.name = lobbyPlayer.getName();
                 playernet.previus_target = history.getPreviusTarget() == null ? "" : history.getPreviusTarget();
                 playernet.current_target = history.getActualTarget() == null ? "" : history.getActualTarget();
@@ -207,7 +207,7 @@ public class HistoryStatsDB implements IDatabase {
         }
         String SQL = "SELECT * FROM " + database.getDbConfig().getTable("NPC.PlayerStats")
                 + " WHERE " + PlayerHistoryStatsColumns.uid + "=?";
-        Bukkit.getScheduler().runTaskAsynchronously(LobbyMC.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(GoldenLobby.getInstance(), () -> {
             try (Jedis jedis = lobbyMC.getRedisManager().getJedisEditor()) {
                 //byte[] channel = SubChannel.NPCSTAFF_PLAYERSLOBBY.lower().getBytes();
                 String key = "lobbymc/historynpcs/newstats/player/" + uid;
@@ -236,7 +236,7 @@ public class HistoryStatsDB implements IDatabase {
                      PreparedStatement prestat = con.prepareStatement(SQL)) {
                     prestat.setString(1, uid);
                     try (ResultSet set = prestat.executeQuery()) {
-                        int uidSet = -1;
+                        String uidSet = null;
                         String nameSet = null;
                         String previus_target = "";
                         String current_target = "";
@@ -246,7 +246,7 @@ public class HistoryStatsDB implements IDatabase {
                         int history_dash = -1;
                         String staff_found = "";
                         if (set.next()) { // existe el jugador
-                            uidSet = set.getInt(PlayerHistoryStatsColumns.uid);
+                            uidSet = set.getString(PlayerHistoryStatsColumns.uid);
                             nameSet = set.getString(PlayerHistoryStatsColumns.username);
                             previus_target = set.getString(PlayerHistoryStatsColumns.previus_target);
                             current_target = set.getString(PlayerHistoryStatsColumns.current_target);

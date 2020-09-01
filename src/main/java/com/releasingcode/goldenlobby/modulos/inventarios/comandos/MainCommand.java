@@ -1,7 +1,7 @@
 package com.releasingcode.goldenlobby.modulos.inventarios.comandos;
 
 import com.releasingcode.goldenlobby.BaseCommand;
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
@@ -82,7 +82,7 @@ public class MainCommand extends BaseCommand {
                     return true;
                 }
                 if (args[0].toLowerCase().equals("sync")) {
-                    if (!LobbyMC.getInstance().isMysqlEnable()) {
+                    if (!GoldenLobby.getInstance().isMysqlEnable()) {
                         return true;
                     }
                     if (args.length > 1) {

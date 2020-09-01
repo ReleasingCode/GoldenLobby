@@ -1,8 +1,6 @@
 package com.releasingcode.goldenlobby;
 
 
-import com.releasingcode.goldenlobby.managers.VaultAPI;
-import org.bukkit.configuration.file.FileConfiguration;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
 import com.releasingcode.goldenlobby.connections.ServerInfo;
 import com.releasingcode.goldenlobby.connections.ServerManager;
@@ -15,15 +13,12 @@ import com.releasingcode.goldenlobby.listeners.BasicCancelledEvents;
 import com.releasingcode.goldenlobby.listeners.DoubleJump;
 import com.releasingcode.goldenlobby.listeners.OnJoin;
 import com.releasingcode.goldenlobby.loader.LobbyMCPlugin;
-import com.releasingcode.goldenlobby.modulos.commandblocker.CommandBlockerPlugin;
+import com.releasingcode.goldenlobby.managers.VaultAPI;
 import com.releasingcode.goldenlobby.modulos.cooldown.CooldownPlugin;
 import com.releasingcode.goldenlobby.modulos.fly.FlyPlugin;
 import com.releasingcode.goldenlobby.modulos.inventarios.InventarioPlugin;
-import com.releasingcode.goldenlobby.modulos.limbo.LimboPlugin;
 import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
 import com.releasingcode.goldenlobby.modulos.playerhider.PlayerHidePlugin;
-import com.releasingcode.goldenlobby.modulos.regions.RegionPlugin;
-import com.releasingcode.goldenlobby.modulos.regions.cuboid.CuboidPlayerManager;
 import com.releasingcode.goldenlobby.modulos.scoreboard.ScoreboardPlugin;
 import com.releasingcode.goldenlobby.modulos.scoreboard.manager.SidebarScoreboard;
 import com.releasingcode.goldenlobby.modulos.setspawn.SpawnPointPlugin;
@@ -33,12 +28,13 @@ import com.releasingcode.goldenlobby.modulos.welcomemessage.WelcomeMessage;
 import com.releasingcode.goldenlobby.npc.NPCLib;
 import com.releasingcode.goldenlobby.npc.hologram.Hologram;
 import com.releasingcode.goldenlobby.npc.internal.MinecraftVersion;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.net.InetSocketAddress;
 
 
-public class LobbyMC extends LobbyMCPlugin {
-    private static LobbyMC plugin;
+public class GoldenLobby extends LobbyMCPlugin {
+    private static GoldenLobby plugin;
     public CustomConfiguration globalConfig;
     private DatabaseConfig dbConfig;
     private Database database;
@@ -48,10 +44,9 @@ public class LobbyMC extends LobbyMCPlugin {
     private boolean placeHolderAPI;
     private RedisManager redisManager;
     private boolean isNewVersion;
-    private CuboidPlayerManager cuboidManager;
     private VaultAPI vaultAPI;
 
-    public static LobbyMC getInstance() {
+    public static GoldenLobby getInstance() {
         return plugin;
     }
 
@@ -80,7 +75,7 @@ public class LobbyMC extends LobbyMCPlugin {
 
     public void serversConnections() {
         if (serverManager != null) serverManager.stop();
-        globalConfig = new CustomConfiguration("GlobalConfig", LobbyMC.getInstance());
+        globalConfig = new CustomConfiguration("config", GoldenLobby.getInstance());
         FileConfiguration config = globalConfig.getConfig();
         for (String key : config.getConfigurationSection("Connections").getKeys(false)) {
             String host = config.getString("Connections." + key + ".host");
@@ -172,7 +167,7 @@ public class LobbyMC extends LobbyMCPlugin {
             Utils.log("Hook with Vault [Permission] [OK]");
         }
         Utils.log("Iniciando complemento");
-        CustomConfiguration dbConfigFile = new CustomConfiguration("DatabaseConfig", this);
+        CustomConfiguration dbConfigFile = new CustomConfiguration("database", this);
         this.mysqlEnable = dbConfigFile.getConfig().getBoolean("MySQL.Enable", false);
         // Para cargar un componente se debe hacer de la siguiente manera
         // llamar al metodo cargarComponente y la clase que contiene una herencia de LobbyComponente
@@ -195,7 +190,6 @@ public class LobbyMC extends LobbyMCPlugin {
         cargarComponente(WelcomeMessage.class);
         cargarComponente(FlyPlugin.class);
         cargarComponente(PlayerHidePlugin.class);
-        cargarComponente(CommandBlockerPlugin.class);
         cargarComponente(WarpsPlugin.class);
         cargarComponente(CooldownPlugin.class);
 
@@ -217,14 +211,6 @@ public class LobbyMC extends LobbyMCPlugin {
 
     public VaultAPI getVaultAPI() {
         return vaultAPI;
-    }
-
-    public CuboidPlayerManager getCuboidManager() {
-        return cuboidManager;
-    }
-
-    public void setCuboidManager(CuboidPlayerManager cuboidManager) {
-        this.cuboidManager = cuboidManager;
     }
 
 }

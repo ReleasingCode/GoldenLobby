@@ -3,7 +3,6 @@ package com.releasingcode.goldenlobby.modulos.welcomemessage.command;
 import com.releasingcode.goldenlobby.BaseCommand;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.modulos.welcomemessage.WelcomeMessage;
-import es.minecub.core.ranks.PlayerRank;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

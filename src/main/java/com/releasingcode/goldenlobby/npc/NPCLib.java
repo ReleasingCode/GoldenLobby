@@ -1,13 +1,10 @@
 package com.releasingcode.goldenlobby.npc;
 
-import com.releasingcode.goldenlobby.LobbyMC;
+import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
-import com.releasingcode.goldenlobby.extendido.packetlistener.PacketListenerCore;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import com.releasingcode.goldenlobby.connections.ServerManager;
 import com.releasingcode.goldenlobby.extendido.nms.ParticleEffect;
+import com.releasingcode.goldenlobby.extendido.packetlistener.PacketListenerCore;
 import com.releasingcode.goldenlobby.managers.DelayPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
@@ -19,6 +16,9 @@ import com.releasingcode.goldenlobby.npc.api.NPC;
 import com.releasingcode.goldenlobby.npc.internal.NPCManager;
 import com.releasingcode.goldenlobby.npc.listener.PacketListeners;
 import com.releasingcode.goldenlobby.npc.listener.PlayerListener;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class NPCLib {
-    private static LobbyMC plugin;
+    private static GoldenLobby plugin;
     private final ScheduledExecutorService executorService;
     Runnable taskNPC = () -> {
 
@@ -183,26 +183,26 @@ public class NPCLib {
     private Class<?> npcClass;
     private ScheduledFuture<?> thread;
 
-    public NPCLib(LobbyMC plugin) {
+    public NPCLib(GoldenLobby plugin) {
         executorService = Executors.newScheduledThreadPool(2);
         NPCLib.plugin = plugin;
         try {
             npcClass = Class.forName(
-                    "us.minecub.lobbymc.extendido.nms." + LobbyMC.getVersion() + ".NPC_" + LobbyMC.getVersion());
+                    "us.minecub.lobbymc.extendido.nms." + GoldenLobby.getVersion() + ".NPC_" + GoldenLobby.getVersion());
         } catch (Exception ignored) {
         }
         if (npcClass == null) {
             Utils.log("&cNo se puede cargar el componente para NPC's");
-            Utils.log(" &c- Versión incompatible: " + LobbyMC.getVersion());
+            Utils.log(" &c- Versión incompatible: " + GoldenLobby.getVersion());
             return;
         }
         plugin.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
-        Utils.log("Cargando componente para NPC'S v: " + LobbyMC.getVersion());
-        PacketListenerCore.registerPackets(new PacketListeners(), LobbyMC.getInstance());
+        Utils.log("Cargando componente para NPC'S v: " + GoldenLobby.getVersion());
+        PacketListenerCore.registerPackets(new PacketListeners(), GoldenLobby.getInstance());
 
     }
 
-    public static LobbyMC getPlugin() {
+    public static GoldenLobby getPlugin() {
         return plugin;
     }
 
