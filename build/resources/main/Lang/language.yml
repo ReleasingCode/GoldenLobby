@@ -1,0 +1,14 @@
+# Language: English
+# Status: COMPLETE
+# Contributor(s): Shortninja
+
+# Leave ANY of these messages blank to disable them!
+# Placeholders are only available on messages that have them by default.
+
+############################################################
+# +------------------------------------------------------+ #
+# |                      Prefixes                        | #
+# +------------------------------------------------------+ #
+############################################################
+version: 1
+no-permission: "You dont have permission"

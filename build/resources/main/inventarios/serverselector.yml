@@ -1,0 +1,228 @@
+#Titulo menu animacion
+TituloMenu:
+  1: "Servidores {lobby_players}/{lobby_maxplayers}"
+#Actualización por ticks
+#donde 20 ticks representan 1 segundo
+TituloActualizacion: 20 #El tiempo en el que se actualizará el titulo (solo se puede poner mayor a 10) (para desabilitar pon 0)
+Comando: server #este comando se usará para abrir el inventario
+Filas: 6 #cuantas filas deseas que el inventario tenga
+Item-Selector: compass:1:0 #el formato es material:cantidad:item-data
+Item-Selector-Slot: 1 #Si pones 0 este item se desabilitará
+Item-Selector-Name: '&aLista de servidores'
+Item-Selector-Lore: |-
+  &cEste es un lore
+  &aEste es otro lore
+Items:
+  - Slot: 1, 1
+    # este es el tiempo de refreso del item, refrescará el nombre,
+    # material y lore 0 para poner el item estatico en material, nombre y lore.
+    ItemUpdateDelay: 0
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 2, 1
+    ItemUpdateDelay: 0
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 3, 1
+    Name: " "
+    Material: "stained_glass_pane:1:15"
+  - Slot: 4, 1
+    Name: " "
+    Material: "stained_glass_pane:1:7"
+  - Slot: 6, 1
+    Name: " "
+    Material: "stained_glass_pane:1:7"
+  - Slot: 7, 1
+    Name: " "
+    Material: "stained_glass_pane:1:15"
+  - Slot: 8, 1
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 9, 1
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  # lado lateral izquierdo
+  - Slot: 1, 2
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 1, 3
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 1, 4
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 1, 5
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 1, 6
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  # lado inferior horizontal
+  - Slot: 2, 6
+    ItemUpdateDelay: 0
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 3, 6
+    Name: " "
+    Material: "stained_glass_pane:1:15"
+  - Slot: 4, 6
+    Name: " "
+    Material: "stained_glass_pane:1:7"
+  - Slot: 6, 6
+    Name: " "
+    Material: "stained_glass_pane:1:7"
+  - Slot: 7, 6
+    Name: " "
+    Material: "stained_glass_pane:1:15"
+  - Slot: 8, 6
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 9, 6
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  # lado lateral derecho vertical
+  - Slot: 9, 2
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 9, 3
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 9, 4
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  - Slot: 9, 5
+    Name: " "
+    Material: "stained_glass_pane:1:5"
+  # centro
+  # SkyBlock
+  - Slot: 3, 3
+    #este es el tiempo de refreso del item, refrescará el nombre, material y lore
+    ItemUpdateDelay: 1
+    Name:
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡&6&lEN MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡&6&lEN MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡E&6&lN MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡E&6&lN MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN&6&l MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN&6&l MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN M&6&lANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN M&6&lANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MA&6&lNTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MA&6&lNTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MAN&6&lTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MAN&6&lTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANT&6&lENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANT&6&lENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTE&6&lNIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTE&6&lNIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTEN&6&lIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTEN&6&lIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENI&6&lMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENI&6&lMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIM&6&lIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIM&6&lIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMI&6&lENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMI&6&lENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIE&6&lNTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIE&6&lNTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIEN&6&lTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIEN&6&lTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIENT&6&lO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIENT&6&lO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIENTO&6&l!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIENTO&6&l!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &e&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &f&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &f&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &f&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &f&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+      - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
+    Material:
+      0: "grass:1:0"
+      40: "sapling:1:0"
+      80: "grass:1:0"
+    Lore: |-
+      &7
+      &7Trabaja en equipo o solo
+      &7para ser el rey de las Islas
+      &7haciendo granjas y completando
+      &7todos los retos que tenemos para ti.
+      &7
+      &aClick para entrar &e(1.8 - 1.11.2)
+      &7{lobby_players} Jugadores conectado
+    Command: "server: lobby"
+  - Slot: 4, 3
+    #este es el tiempo de refreso del item, refrescará el nombre, material y lore
+    ItemUpdateDelay: 1
+    glow: true
+    Name:
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &e&l¡&6&lEN MANTENIMIENTO!'
+      - '&aPractice &e&l¡&6&lEN MANTENIMIENTO!'
+      - '&aPractice &e&l¡E&6&lN MANTENIMIENTO!'
+      - '&aPractice &e&l¡E&6&lN MANTENIMIENTO!'
+      - '&aPractice &e&l¡EN&6&l MANTENIMIENTO!'
+      - '&aPractice &e&l¡EN&6&l MANTENIMIENTO!'
+      - '&aPractice &e&l¡EN M&6&lANTENIMIENTO!'
+      - '&aPractice &e&l¡EN M&6&lANTENIMIENTO!'
+      - '&aPractice &e&l¡EN MA&6&lNTENIMIENTO!'
+      - '&aPractice &e&l¡EN MA&6&lNTENIMIENTO!'
+      - '&aPractice &e&l¡EN MAN&6&lTENIMIENTO!'
+      - '&aPractice &e&l¡EN MAN&6&lTENIMIENTO!'
+      - '&aPractice &e&l¡EN MANT&6&lENIMIENTO!'
+      - '&aPractice &e&l¡EN MANT&6&lENIMIENTO!'
+      - '&aPractice &e&l¡EN MANTE&6&lNIMIENTO!'
+      - '&aPractice &e&l¡EN MANTE&6&lNIMIENTO!'
+      - '&aPractice &e&l¡EN MANTEN&6&lIMIENTO!'
+      - '&aPractice &e&l¡EN MANTEN&6&lIMIENTO!'
+      - '&aPractice &e&l¡EN MANTENI&6&lMIENTO!'
+      - '&aPractice &e&l¡EN MANTENI&6&lMIENTO!'
+      - '&aPractice &e&l¡EN MANTENIM&6&lIENTO!'
+      - '&aPractice &e&l¡EN MANTENIM&6&lIENTO!'
+      - '&aPractice &e&l¡EN MANTENIMI&6&lENTO!'
+      - '&aPractice &e&l¡EN MANTENIMI&6&lENTO!'
+      - '&aPractice &e&l¡EN MANTENIMIE&6&lNTO!'
+      - '&aPractice &e&l¡EN MANTENIMIE&6&lNTO!'
+      - '&aPractice &e&l¡EN MANTENIMIEN&6&lTO!'
+      - '&aPractice &e&l¡EN MANTENIMIEN&6&lTO!'
+      - '&aPractice &e&l¡EN MANTENIMIENT&6&lO!'
+      - '&aPractice &e&l¡EN MANTENIMIENT&6&lO!'
+      - '&aPractice &e&l¡EN MANTENIMIENTO&6&l!'
+      - '&aPractice &e&l¡EN MANTENIMIENTO&6&l!'
+      - '&aPractice &e&l¡EN MANTENIMIENTO!'
+      - '&aPractice &e&l¡EN MANTENIMIENTO!'
+      - '&aPractice &f&l¡EN MANTENIMIENTO!'
+      - '&aPractice &f&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &f&l¡EN MANTENIMIENTO!'
+      - '&aPractice &f&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+      - '&aPractice &6&l¡EN MANTENIMIENTO!'
+    Material: "skull_texture:1:base64"
+    AddFlags: |-
+      HIDE_ENCHANTS
+      HIDE_ATTRIBUTES
+    Lore: |-
+      &7
+      &7¡Practica tus habilidades
+      &7para el PvP y consigue ser
+      &7el mejor del servidor
+      &7
+      &aClick para entrar &e(1.8 - 1.15.2)
+      &70 Jugadores conectado
+    Command:
+      - "msg: &aHola &e{player}!"
