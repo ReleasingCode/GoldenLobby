@@ -7,13 +7,13 @@ public class SpawnPlugin extends LobbyComponente {
 
     @Override
     protected void onEnable() {
-        Utils.log(" - Cargando módulo Spawn");
+        Utils.log(" - Loading module Spawn");
         new SpawnCommand().register();
     }
 
     @Override
     protected void onDisable() {
-        Utils.log(" - Inhabilitando módulo Spawn");
+        Utils.log(" - Disabling módule Spawn");
     }
 
 }

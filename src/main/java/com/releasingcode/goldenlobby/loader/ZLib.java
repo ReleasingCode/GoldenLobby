@@ -17,7 +17,7 @@ public class ZLib {
     static private void checkInitialized() throws IllegalStateException {
         if (plugin == null)
             throw new IllegalStateException(
-                    "Inicializacion fallida: No se ha instanciado correctamente el complemento a LobbyMCPlugin");
+                    "Failed initialization: The LobbyPlugin add-on was not correctly instantiated");
     }
 
     public static Plugin getPlugin() {

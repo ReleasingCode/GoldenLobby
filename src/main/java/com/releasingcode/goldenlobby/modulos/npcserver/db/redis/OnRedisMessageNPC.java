@@ -15,9 +15,9 @@ public class OnRedisMessageNPC implements IRedisSub {
         }
         SubChannel.SubOperation operation = SubChannel.SubOperation.from(returnBack);
         if (operation != null) {
-            System.out.println("Recargando NPC desde Base de datos: " + operation.lower());
-            NPCServerPlugin.getInstance().reloadNPC(() -> System.out.println("se ha recargado el complemento"),
-                                                    operation);
+            System.out.println("Reloading NPC from Database: " + operation.lower());
+            NPCServerPlugin.getInstance().reloadNPC(() -> System.out.println("the plug-in has been reloaded"),
+                    operation);
         }
     }
 }

@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,7 +13,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
@@ -39,12 +37,12 @@ public class BasicCancelledEvents implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent e) {
-        cancelIfNotAllowed(e.getPlayer(), e, "lobbymc.modification.blockbreak");
+        cancelIfNotAllowed(e.getPlayer(), e, "goldenlobby.modification.blockbreak");
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent e) {
-        cancelIfNotAllowed(e.getPlayer(), e, "lobbymc.modification.blockplace");
+        cancelIfNotAllowed(e.getPlayer(), e, "goldenlobby.modification.blockplace");
     }
 
     @EventHandler
@@ -54,7 +52,7 @@ public class BasicCancelledEvents implements Listener {
 
     @EventHandler
     public void onArmorManip(PlayerArmorStandManipulateEvent e) {
-        if (!e.getPlayer().hasPermission("lobbymc.modification.armormanip")) e.setCancelled(true);
+        if (!e.getPlayer().hasPermission("goldenlobby.modification.armormanip")) e.setCancelled(true);
     }
 
     @EventHandler
@@ -66,39 +64,39 @@ public class BasicCancelledEvents implements Listener {
     public void onEntityHit(EntityDamageByEntityEvent e) {
         switch (e.getEntity().getType()) {
             case ARMOR_STAND:
-                cancelIfNotAllowed(e.getDamager(), e, "lobbymc.modification.armormanip");
+                cancelIfNotAllowed(e.getDamager(), e, "goldenlobby.modification.armormanip");
                 break;
             case ITEM_FRAME:
-                cancelIfNotAllowed(e.getDamager(), e, "lobbymc.modification.itemframebreak");
+                cancelIfNotAllowed(e.getDamager(), e, "goldenlobby.modification.itemframebreak");
                 break;
             case MINECART:
-                cancelIfNotAllowed(e.getDamager(), e, "lobbymc.modification.minecartbreak");
+                cancelIfNotAllowed(e.getDamager(), e, "goldenlobby.modification.minecartbreak");
                 break;
         }
     }
 
     @EventHandler
     public void hangingBreakEvent(HangingBreakByEntityEvent e) {
-        cancelIfNotAllowed(e.getRemover(), e, "lobbymc.modification.itemframebreak");
+        cancelIfNotAllowed(e.getRemover(), e, "goldenlobby.modification.itemframebreak");
     }
 
     @EventHandler
     public void onItemInteract(PlayerInteractEvent e) {
         if (e.getClickedBlock() == null) return;
         if (e.getClickedBlock().getType() == Material.SOIL) {
-            cancelIfNotAllowed(e.getPlayer(), e, "lobbymc.modification.cropbreak");
+            cancelIfNotAllowed(e.getPlayer(), e, "goldenlobby.modification.cropbreak");
             return;
         }
 
         if (UNALLOWED_MATERIALS.contains(e.getClickedBlock().getType())) {
-            cancelIfNotAllowed(e.getPlayer(), e, "lobbymc.modification.interact");
+            cancelIfNotAllowed(e.getPlayer(), e, "goldenlobby.modification.interact");
         }
     }
 
     @EventHandler
     public void onInteract(PlayerInteractEntityEvent e) {
         if (e.getRightClicked().getType() == EntityType.ITEM_FRAME) {
-            cancelIfNotAllowed(e.getPlayer(), e, "lobbymc.modification.itemframeflip");
+            cancelIfNotAllowed(e.getPlayer(), e, "goldenlobby.modification.itemframeflip");
         }
     }
 

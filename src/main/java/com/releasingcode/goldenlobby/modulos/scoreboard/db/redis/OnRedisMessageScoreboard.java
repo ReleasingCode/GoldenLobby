@@ -19,11 +19,11 @@ public class OnRedisMessageScoreboard implements IRedisSub {
         }
         SubChannel.SubOperation operation = SubChannel.SubOperation.from(returnBack);
         if (operation != null) {
-            Utils.log("Sincronizando Scoreboard desde Base de datos: " + operation.lower());
+            Utils.log("Synchronizing Scoreboard from Database: " + operation.lower());
             ScoreboardPlugin.getInstance().fetchFromDatabase(new CallBack.SingleCallBack() {
                 @Override
                 public void onSuccess() {
-                    Utils.log("Sincronizacion de scoreboard completada");
+                    Utils.log("Scoreboard synchronization completed");
                 }
             });
         }

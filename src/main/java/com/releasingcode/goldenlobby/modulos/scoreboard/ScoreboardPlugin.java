@@ -36,9 +36,9 @@ public class ScoreboardPlugin extends LobbyComponente {
         scoreboardDB = new ScoreboardDB(this);
 
         loadScoreboard();
-        Utils.log(" - Cargando modulo Scoreboard");
+        Utils.log(" - Loading module Scoreboard");
         new onJoin(this);
-        new ScoreboardCommand(this, "mcscoreboard", "/mcscoreboard", "Recarga Scoreboard").register();
+        new ScoreboardCommand(this, "mcscoreboard", "/mcscoreboard", "Reload Scoreboard").register();
         onRedisMessage.registerUpdater(SubChannel.SYNC_SCOREBOARD, new OnRedisMessageScoreboard());
     }
 
@@ -91,12 +91,12 @@ public class ScoreboardPlugin extends LobbyComponente {
             @Override
             public void onSuccess(ScoreboardFetch callback) {
                 if (callback == null) {
-                    Utils.log("&cNo hay datos para sincronizar");
+                    Utils.log("&cNo data to synchronize");
                     callBack.onError();
                     return;
                 }
                 //ACTUALIZAR
-                Utils.log("Actualizando Scoreboard...");
+                Utils.log("Updating Scoreboard...");
                 byte[] bytesconfig = Base64.decodeBase64(callback.getBase64());
                 String text = new String(bytesconfig, StandardCharsets.UTF_8);
                 scoreboardConfig.updateFile(text);
@@ -123,6 +123,6 @@ public class ScoreboardPlugin extends LobbyComponente {
 
     @Override
     protected void onDisable() {
-        Utils.log("&cModulo de scoreboard desabilitado");
+        Utils.log("&cScoreboard module disabled");
     }
 }

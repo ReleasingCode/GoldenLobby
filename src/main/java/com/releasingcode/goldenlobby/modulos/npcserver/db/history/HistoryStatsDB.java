@@ -73,11 +73,11 @@ public class HistoryStatsDB implements IDatabase {
             tableBuilder.index(PlayerHistoryStatsColumns.uid);
             int i = statement.executeUpdate(tableBuilder.build());
             if (i > 0) {
-                Utils.log("[DB] La tabla del modulo NPC -> PlayerStats ha sido creada");
+                Utils.log("[DB] The NPC module table -> PlayerStats has been created");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Utils.log("No se pudo conectar a la base de datos [NPC - HistoryStats]");
+            Utils.log("Could not connect to the database [NPC - HistoryStats]");
         }
     }
 

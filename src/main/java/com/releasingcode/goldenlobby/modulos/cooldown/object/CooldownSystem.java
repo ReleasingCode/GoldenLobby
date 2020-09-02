@@ -127,10 +127,10 @@ public class CooldownSystem {
             if (futureTime != null) {
                 return futureTime.toString();
             }
-            return "DESABILITADO";
+            return "DISABLED";
         }
         if (status == CooldownStatus.FINISHED) {
-            return "¡FINALIZADO!";
+            return "¡FINISHED!";
         }
         long now = System.currentTimeMillis();
         Date finish = new Date(finishAt);
@@ -146,7 +146,7 @@ public class CooldownSystem {
             format = new SimpleDateFormat("mm:ss");
         }
         if (now >= finishAt) {
-            return "¡FINALIZADO!";
+            return "¡FINISHED!";
         }
         return format.format(remaing);
     }

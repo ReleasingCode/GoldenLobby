@@ -9,14 +9,14 @@ public class PlayerHidePlugin extends LobbyComponente {
 
     @Override
     protected void onEnable() {
-        Utils.log(" - Cargando módulo PlayerHider");
+        Utils.log(" - Loading module PlayerHider");
         getPlugin().getServer().getPluginManager().registerEvents(new PlayerHiderListeners(), getPlugin());
         SLOT = new CustomConfiguration("player_hider", getPlugin()).getConfig().getInt("slot");
     }
 
     @Override
     protected void onDisable() {
-        Utils.log(" - Inhabilitando módulo PlayerHider");
+        Utils.log(" - Enabling module PlayerHider");
     }
 
 }

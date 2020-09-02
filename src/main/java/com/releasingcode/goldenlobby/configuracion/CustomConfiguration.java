@@ -21,6 +21,7 @@ public class CustomConfiguration {
         por ejemplo
         CustomConfiguracion archivo = new CustomConfiguration("archivo", instanciaPlugin);
      */
+
     public CustomConfiguration(File file, Plugin main) {
         this.plugin = main;
         this.file = file;
@@ -29,11 +30,12 @@ public class CustomConfiguration {
             File folderParent = file.getAbsoluteFile().getParentFile();
             folderParent.mkdirs();
         }
+
         try {
             config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Utils.log("&c  - Error al leer el archivo " + file.getName() + "");
+            Utils.log("&c  - Error when reading the file " + file.getName() + "");
         }
     }
 
@@ -53,17 +55,17 @@ public class CustomConfiguration {
             if (main.getClass().getClassLoader().getResourceAsStream(name) == null) {
                 try {
                     if (file.createNewFile()) {
-                        Utils.log("&c  - Creando archivo " + name + "");
+                        Utils.log("&c  - Creating file " + name + "");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Utils.log("&c  - Error al crear " + name + "");
+                    Utils.log("&c  - Error while creating " + name + "");
                 }
                 try {
                     config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(previus.getFile()), StandardCharsets.UTF_8));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                    Utils.log("&c  - Error al leer el archivo " + name + "");
+                    Utils.log("&c  - Error when reading the file " + name + "");
                 }
             } else {
                 InputStream in = main.getResource(name);
@@ -76,15 +78,15 @@ public class CustomConfiguration {
                     }
                     out.close();
                     in.close();
-                    Utils.log("&c  - Creando archivo " + name + "");
+                    Utils.log("&c  - Creating file " + name + "");
                     try {
                         config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(previus.getFile()), StandardCharsets.UTF_8));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        Utils.log("&c  - Error al leer el archivo " + file.getName() + "");
+                        Utils.log("&c  - Error when reading the file " + file.getName() + "");
                     }
                 } catch (Exception e) {
-                    Utils.log("&c  - Error al crear el archivo " + name + "");
+                    Utils.log("&c  - Error while creating the file " + name + "");
                 }
 
             }
@@ -93,7 +95,7 @@ public class CustomConfiguration {
                 config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(previus.getFile()), StandardCharsets.UTF_8));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Utils.log("&c  - Error al leer el archivo " + name + "");
+                Utils.log("&c  - Error when reading the file " + name + "");
             }
         }
     }
@@ -122,22 +124,25 @@ public class CustomConfiguration {
         if (!childPath.isDirectory()) {
             childPath.mkdir();
         }
+
         this.file = new File(main.getDataFolder(), child + name);
         if (!file.exists()) {
             if (main.getClass().getClassLoader().getResourceAsStream(name) == null) {
                 try {
                     if (file.createNewFile()) {
-                        Utils.log("&c  - Creando archivo " + name + "");
+                        Utils.log("&c  - Creating file " + name + "");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Utils.log("&c  - Error al crear " + name + "");
+                    Utils.log("&c  - Error while creating " + name + "");
                 }
                 try {
                     config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
                 } catch (FileNotFoundException e) {
+
                     e.printStackTrace();
-                    Utils.log("&c  - Error al leer el archivo " + name + "");
+                    Utils.log("&c  - Error when reading the file " + name + "");
+
                 }
             } else {
                 InputStream in = main.getResource(name);
@@ -150,15 +155,15 @@ public class CustomConfiguration {
                     }
                     out.close();
                     in.close();
-                    Utils.log("&c  - Creando archivo " + name + "");
+                    Utils.log("&c  - Creating file " + name + "");
                     try {
                         config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        Utils.log("&c  - Error al leer el archivo " + file.getName() + "");
+                        Utils.log("&c  - Error when reading the file " + file.getName() + "");
                     }
                 } catch (Exception e) {
-                    Utils.log("&c  - Error al crear el archivo " + name + "");
+                    Utils.log("&c  - Error while creating the file " + name + "");
                 }
 
             }
@@ -167,7 +172,7 @@ public class CustomConfiguration {
                 config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Utils.log("&c  - Error al leer el archivo " + name + "");
+                Utils.log("&c  - Error when reading the file " + name + "");
             }
         }
     }
@@ -188,9 +193,9 @@ public class CustomConfiguration {
             }
             out.close();
             in.close();
-            Utils.log("&c  - Creando archivo " + resourceName + "");
+            Utils.log("&c  - Creating file " + resourceName + "");
         } catch (Exception e) {
-            Utils.log("&c  - Error al crear el archivo " + resourceName + "");
+            Utils.log("&c  - Error while creating the file " + resourceName + "");
         }
     }
 
@@ -251,6 +256,5 @@ public class CustomConfiguration {
     public File getFile() {
         return file;
     }
-
 
 }

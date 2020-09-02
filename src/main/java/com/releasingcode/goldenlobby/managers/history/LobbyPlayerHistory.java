@@ -1,5 +1,6 @@
 package com.releasingcode.goldenlobby.managers.history;
 
+import com.releasingcode.goldenlobby.languages.Lang;
 import com.releasingcode.goldenlobby.managers.indexing.LobbyPlayerIndexing;
 import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
 import com.releasingcode.goldenlobby.npc.api.NPC;
@@ -116,7 +117,7 @@ public class LobbyPlayerHistory {
         if (currentPlaying != null) {
             String name = NPCServerPlugin.getInstance().getHistoryManager().getNameNPCByUid(currentPlaying);
             if (name != null) {
-                return ("Hablando con: " + name);
+                return (Lang.TALKING_TO.toString() + " " + name);
             }
         }
         return objective;

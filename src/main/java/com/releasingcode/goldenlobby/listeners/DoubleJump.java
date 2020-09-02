@@ -29,7 +29,7 @@ public class DoubleJump implements Listener {
                 || p.getGameMode() == GameMode.SPECTATOR
                 || p.isFlying()
                 || playersInDoubleJump.contains(p.getName())
-                || p.hasPermission("lobbymc.benefits.fly")
+                || p.hasPermission("goldenlobby.benefits.fly")
                 && p.hasMetadata("userFlying")) {
             return;
         }

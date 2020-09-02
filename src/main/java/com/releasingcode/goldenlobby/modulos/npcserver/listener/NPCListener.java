@@ -2,6 +2,7 @@ package com.releasingcode.goldenlobby.modulos.npcserver.listener;
 
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
+import com.releasingcode.goldenlobby.languages.Lang;
 import com.releasingcode.goldenlobby.listeners.custom.SecurePlayerJoinEvent;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
@@ -81,7 +82,7 @@ public class NPCListener implements Listener {
                     @Override
                     public void onError(NPCHistoryPlayerNetwork callback) {
                         lobbyPlayer.sendMessage(
-                                "&cNo se ha podido cargar tus estadisticas, comunicalo a un administrador");
+                                Lang.NO_LOAD_Statistics.toString());
                     }
                 });
  /*       npcServerPlugin.getStaffStatsDB().loadPlayer(lobbyPlayer.toStringUUID(), player.getName(), new CallBack.ReturnCallBack<String>() {
@@ -116,7 +117,7 @@ public class NPCListener implements Listener {
                         }
                         npc.setItem(slot, stack);
                         lobbyPlayer.sendMessage(
-                                "&aHas establecido:&2 " + slot.name() + " &a-> &e" + stack.getType().name());
+                                "&aYou have established:&2 " + slot.name() + " &a-> &e" + stack.getType().name());
                         return;
                     }
                     NPCSlot slot = NPCSlot.NPCSlotByItemStack(stack);
@@ -128,11 +129,11 @@ public class NPCListener implements Listener {
                 }
                 return;
             }
-            lobbyPlayer.sendMessage("&cEstás en modo edición, termina el modo edición para clickear un NPC");
+            lobbyPlayer.sendMessage(Lang.COMMAND_ENABLE.toString());
             return;
         }
         if (!npc.isReady() || npc.isEditing()) {
-            lobbyPlayer.sendMessage("&cEste npc no está listo para ser clickeado");
+            lobbyPlayer.sendMessage(Lang.NPC_NOT_READY_CLICKED.toString());
             return;
         }
 
@@ -145,13 +146,13 @@ public class NPCListener implements Listener {
                 builderNPC.setCommands(builderNPC.getNpc().getCommand());
                 builderNPC.setRewardCommands(builderNPC.getNpc().getRewardCommands());
                 builderNPC.setHologram(builderNPC.getNpc().getText());
-                lobbyPlayer.sendMessage("&aHas seleccionado al NPC: &e" + event.getNPC().getName());
+                lobbyPlayer.sendMessage("&aYou have selected the NPC: &e" + event.getNPC().getName());
                 return;
             }
         }
         if (lobbyPlayer.getLobbyStaffFound() == null) {
             lobbyPlayer.sendMessage(
-                    "&cNo se han cargado tus estadisticas de npc's encontrados, contacta con un administrador");
+                    Lang.NO_LOAD_Statistics.toString());
             return;
         }
         switch (npc.getNPCMode()) {
@@ -221,7 +222,7 @@ public class NPCListener implements Listener {
                  */
                 if (npc.getRewardCommands().isEmpty()) {
                     lobbyPlayer.sendMessage(
-                            "&cEste npc de staff no está listo aún, necesita almenos un comando de recompensa");
+                            Lang.NPC_NOT_READYSTAFF.toString());
                     return;
                 }
                 if (lobbyPlayer.getLobbyStaffFound().addNPC(npc)) {
@@ -236,7 +237,7 @@ public class NPCListener implements Listener {
                         public void onError() {
                             lobbyPlayer.getLobbyStaffFound().removeSet(npc.getUid());
                             lobbyPlayer.sendMessage(
-                                    "&cha ocurrido un error mientras se registraba tu interacción, contacta con un administrador");
+                                    Lang.ERROR_INTERACTION_REGISTER.toString());
                         }
                     }, false);
                     return;

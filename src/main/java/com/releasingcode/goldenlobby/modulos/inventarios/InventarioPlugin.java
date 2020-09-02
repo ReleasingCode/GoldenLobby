@@ -51,7 +51,7 @@ public class InventarioPlugin extends LobbyComponente {
     protected void onEnable() {
         instance = this;
         iamsender = false;
-        Utils.log(" - Cargando modulo Inventarios");
+        Utils.log(" - Loading Inventory module");
         inventariosConfigs = new ArrayList<>();
         comandos = new ArrayList<>();
         try {
@@ -71,7 +71,7 @@ public class InventarioPlugin extends LobbyComponente {
 
     public IMenu NMSMenu() {
         if (IMenu == null) {
-            Utils.log("IMenu: &cdesabilitado [version incompatible]: " + Utils.getNMSVersion());
+            Utils.log("IMenu: &cdisabled [version incompatible]: " + Utils.getNMSVersion());
             return null;
         }
         try {
@@ -108,12 +108,12 @@ public class InventarioPlugin extends LobbyComponente {
                                 }
                                 isInLocal = true;
                                 //ACTUALIZAR
-                                Utils.log("Configuracion para: " + name + ", actualizando...");
+                                Utils.log("Configuration for: " + name + ", updating...");
                                 byte[] bytesconfig = Base64.decodeBase64(FETCH.getBase64());
                                 String text = new String(bytesconfig, StandardCharsets.UTF_8);
                                 inv.getCustomConfiguration().updateFile(text);
                                 loadInventory(inv.getCustomConfiguration());
-                                Utils.log("Configuracion: " + name + " actualizada!");
+                                Utils.log("Configuration: " + name + " Updated!");
                             }
                     /*
                         Crear el archivo localmente
@@ -130,13 +130,13 @@ public class InventarioPlugin extends LobbyComponente {
                                         fw.write(text);
                                         fw.close();
                                     } catch (Exception e) {
-                                        Utils.log("No se pudo sincronizar un archivo " + FETCH
-                                                .getName() + " , ocurrio un error de escritura: " + e.getMessage());
+                                        Utils.log("Could not synchronize a file " + FETCH
+                                                .getName() + " , a writing error occurred: " + e.getMessage());
                                     }
                                     CustomConfiguration inv = new CustomConfiguration(inventario, getPlugin());
                                     inventariosConfigs.add(inv);
                                     loadInventory(inv);
-                                    Utils.log("Generando inventario desde base de datos: " + FETCH.getName());
+                                    Utils.log("Generating inventory from database: " + FETCH.getName());
                                 }
                             }
                         }
@@ -169,7 +169,7 @@ public class InventarioPlugin extends LobbyComponente {
 
     @Override
     protected void onDisable() {
-        Utils.log(" - Desabilitando modulo de Inventarios");
+        Utils.log(" - Disabling Inventory module");
         this.inventariosConfigs.clear();
         GoldenLobby.getInstance().getServerManager().clear();
         Inventario.clear();
@@ -181,11 +181,11 @@ public class InventarioPlugin extends LobbyComponente {
 
     public void syncConfig(CommandSender sender, String who, CustomConfiguration customConfiguration, CallBack.SingleCallBack callBack) {
         getPlugin().getServer().getScheduler().runTaskAsynchronously(getPlugin(), () -> {
-            sender.sendMessage("§aSincronizando inventarios, por favor espere!");
+            sender.sendMessage("§aSynchronizing inventories, please wait!");
             try {
                 getDbManager().createConfiguration(who, customConfiguration, callBack);
             } catch (IOException e) {
-                sender.sendMessage("§4Error mientras se sincronizaba la configuración: " + customConfiguration.getFile()
+                sender.sendMessage("§4Error while synchronizing settings: " + customConfiguration.getFile()
                         .getName());
                 callBack.onError();
                 e.printStackTrace();

@@ -55,17 +55,17 @@ public class RedisManager {
             schedule.cancel(true);
         }
         schedule = executor.scheduleAtFixedRate(() -> {
-            Utils.log("&eInicializando Conexion Redis [Sub]");
+            Utils.log("&eInitializing Connection Redis ");
             try {
                 if (jedisSub == null) {
                     stablishConnectionJedisSub();
                 }
-                Utils.log("&aConexion establecida [Redis][Sub]");
+                Utils.log("&aConnection established [Redis][Sub]");
                 jedisSub.subscribe(sub, bytes);
             } catch (Exception e) {
                 //error de conexión intentando nuevamente en 5 segundos
                 jedisSub = null;
-                Utils.log("&cConexion de Jedis Perdida [Sub], reintentando conexion en 5 segundos");
+                Utils.log("&cLost Jedi Connection [Sub], retrying connection in 5 seconds");
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException interruptedException) {

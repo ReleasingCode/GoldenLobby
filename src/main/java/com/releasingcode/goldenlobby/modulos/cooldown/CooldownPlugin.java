@@ -2,17 +2,17 @@ package com.releasingcode.goldenlobby.modulos.cooldown;
 
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
+import com.releasingcode.goldenlobby.extendido.nms.ParticleEffect;
 import com.releasingcode.goldenlobby.loader.LobbyComponente;
+import com.releasingcode.goldenlobby.modulos.cooldown.command.CooldownCommand;
+import com.releasingcode.goldenlobby.modulos.cooldown.db.CooldownDB;
+import com.releasingcode.goldenlobby.modulos.cooldown.object.CooldownSystem;
 import com.releasingcode.goldenlobby.npc.api.NPC;
 import com.releasingcode.goldenlobby.npc.internal.NPCManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import com.releasingcode.goldenlobby.extendido.nms.ParticleEffect;
-import com.releasingcode.goldenlobby.modulos.cooldown.command.CooldownCommand;
-import com.releasingcode.goldenlobby.modulos.cooldown.db.CooldownDB;
-import com.releasingcode.goldenlobby.modulos.cooldown.object.CooldownSystem;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -81,8 +81,8 @@ public class CooldownPlugin extends LobbyComponente {
         cooldownSettingsObject.setVolume(cooldownSettings.getConfig().getDouble("SoundFinish.pitch"));
         cooldownDB = new CooldownDB(this);
         new CooldownCommand(this, "mccooldown").register();
-        Utils.log("CooldownPlugin", "&aSe ha iniciado correctamente!");
-        Utils.log("CooldownPlugin", "&aCargando cooldowns");
+        Utils.log("CooldownPlugin", "&aIt has been started correctly!");
+        Utils.log("CooldownPlugin", "&aLoading cooldowns");
         executorService.scheduleWithFixedDelay(scheduler, 0, 1, TimeUnit.SECONDS);
     }
 
@@ -100,7 +100,7 @@ public class CooldownPlugin extends LobbyComponente {
 
     public void loadCooldown() {
         cooldownDB.fetchCooldown(callback -> {
-            Utils.log("CooldownPlugin", "se ha cargado " + callback.size() + " cooldown(s)");
+            Utils.log("CooldownPlugin", "has been loaded " + callback.size() + " cooldown(s)");
             if (!callback.isEmpty()) {
                 CooldownSystem.addCooldowns(callback);
             }
@@ -109,6 +109,6 @@ public class CooldownPlugin extends LobbyComponente {
 
     @Override
     protected void onDisable() {
-        Utils.log("CooldownPlugn", "&cSe ha desabilitado correctamente!");
+        Utils.log("CooldownPlugn", "&cIt has been correctly disabled!");
     }
 }

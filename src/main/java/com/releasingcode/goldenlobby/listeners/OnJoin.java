@@ -25,12 +25,12 @@ public class OnJoin implements Listener {
         LobbyPlayer lobbyPlayer = LobbyPlayerMap.getJugador(player);
         player.setGameMode(GameMode.SURVIVAL);
         player.setAllowFlight(true);
-        if (player.hasPermission("lobbymc.benefits.fly")) {
+        if (player.hasPermission("goldenlobby.benefits.fly")) {
             player.setFlying(true);
             lobbyPlayer.setFlyer(true);
             player.setMetadata("userFlying", new FixedMetadataValue(GoldenLobby.getInstance(), null));
         }
-        if (!evento.getPlayer().hasPermission("lobbymc.gamemode")) {
+        if (!evento.getPlayer().hasPermission("goldenlobby.gamemode")) {
             lobbyPlayer.setGameMode(null);
         }
         SecurePlayerJoinEvent event = new SecurePlayerJoinEvent(lobbyPlayer);

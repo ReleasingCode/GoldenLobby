@@ -2,6 +2,7 @@ package com.releasingcode.goldenlobby.modulos.welcomemessage.command;
 
 import com.releasingcode.goldenlobby.BaseCommand;
 import com.releasingcode.goldenlobby.Utils;
+import com.releasingcode.goldenlobby.languages.Lang;
 import com.releasingcode.goldenlobby.modulos.welcomemessage.WelcomeMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,7 @@ public class WelcomeMessageCmd extends BaseCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!sender.hasPermission("lobbymc.general.welcomemessagereload")) {
+        if (!sender.hasPermission("goldenlobby.general.welcomemessagereload")) {
             return true;
         }
         if (args.length == 0) {
@@ -24,7 +25,7 @@ public class WelcomeMessageCmd extends BaseCommand {
             return true;
         }
         plugin.reload();
-        sender.sendMessage(Utils.chatColor("&aConfiguración de mensaje de bienvenida reiniciada"));
+        sender.sendMessage(Utils.chatColor(Lang.WELCOME_MESSAGE_SETTING.toString()));
         return true;
     }
 }

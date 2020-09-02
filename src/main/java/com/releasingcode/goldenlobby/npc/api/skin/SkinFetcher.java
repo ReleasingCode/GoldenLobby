@@ -136,7 +136,7 @@ public class SkinFetcher {
                     }
                 }
             } catch (Exception exception) {
-                Bukkit.getLogger().severe("No se pudo retornar la skin!: " + uuid + ", error: " + exception.getMessage());
+                Bukkit.getLogger().severe("The skin could not be returned!: " + uuid + ", error: " + exception.getMessage());
                 exception.printStackTrace();
                 callback.failed();
             }
@@ -167,7 +167,7 @@ public class SkinFetcher {
                 String value = jsonObject.get("id").getAsString();
                 callback.onSuccess(value);
             } catch (Exception exception) {
-                Bukkit.getLogger().severe("No se pudo retornar la UUID!: " + name + ", error: " + exception.getMessage());
+                Bukkit.getLogger().severe("The UUID could not be returned!: " + name + ", error: " + exception.getMessage());
                 callback.onError(null);
             }
         });

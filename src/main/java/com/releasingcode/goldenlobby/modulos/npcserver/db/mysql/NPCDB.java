@@ -55,11 +55,11 @@ public class NPCDB implements IDatabase {
             tableBuilder.index(NPC_Columns.fileConfiguration);
             int i = statement.executeUpdate(tableBuilder.build());
             if (i > 0) {
-                Utils.log("[DB] La tabla del modulo NPC ha sido creada");
+                Utils.log("[DB] The NPC module table has been created");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Utils.log("No se pudo conectar a la base de datos [NPC]");
+            Utils.log("Could not connect to the database [NPC]");
         }
     }
 
@@ -164,7 +164,7 @@ public class NPCDB implements IDatabase {
 
     public void fetchNPCs(CallBack.ReturnCallBack<ArrayList<NPCFetch>> callBack) {
         if (database == null) {
-            Utils.log("Database nula");
+            Utils.log("Database null");
             return;
         }
         String SQL = "SELECT * FROM " + database.getDbConfig().getTable("NPC");

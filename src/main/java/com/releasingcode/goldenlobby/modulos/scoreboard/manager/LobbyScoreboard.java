@@ -90,7 +90,7 @@ public class LobbyScoreboard extends Sidebar {
             }
             String rank = Utils.chatColor(GoldenLobby.getInstance().getVaultAPI().getRank(player));
             return ServerManager.translateVar(text.replace("{staff_found}",
-                    (lobbyPlayer.getLobbyStaffFound() == null) ? "Cargando..." : lobbyPlayer.getLobbyStaffFound()
+                    (lobbyPlayer.getLobbyStaffFound() == null) ? "Loading..." : lobbyPlayer.getLobbyStaffFound()
                             .found() + "")
                     .replace("{total_staff}", NPCManager.getAllNPCs(NPCMode.STAFF).size() + "")
                     .replace("{progress_history}", (npcServerPlugin != null ?
@@ -102,7 +102,7 @@ public class LobbyScoreboard extends Sidebar {
                     .replace("{total_history}",
                             (npcServerPlugin != null ? npcServerPlugin.getHistoryManager().totalHistory() + "" : ""))
                     .replace("{objective_history}", (npcServerPlugin != null ? lobbyPlayer.getHistory().getObjective()
-                            != null ? lobbyPlayer.getHistory().getObjective() : "Ninguno" : "-"))
+                            != null ? lobbyPlayer.getHistory().getObjective() : "none" : "-"))
                     .replace("{colored_rank}", rank) //( solo version final )
                     .replace("{player}", lobbyPlayer.getName()), null);
         } catch (Exception e) {

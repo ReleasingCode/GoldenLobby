@@ -14,7 +14,7 @@ public class WelcomeMessage extends LobbyComponente {
 
     @Override
     protected void onEnable() {
-        Utils.log("Inicializando WelcomeMessage");
+        Utils.log("Starting WelcomeMessage");
         welcomeMessage = new CustomConfiguration("welcomeMessage", getPlugin());
         messages = Utils.stringToArrayList(welcomeMessage.getConfig().getString("welcomeMessage"));
         new WelcomeMessageCmd(this, "welcomemessage").register();

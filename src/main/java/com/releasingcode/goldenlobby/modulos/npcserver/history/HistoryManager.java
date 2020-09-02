@@ -21,8 +21,8 @@ public class HistoryManager {
             }
         }
         loadInitialHistory();
-        Utils.log("Historias cargadas: " + historyLinkedHashMap.size());
-        Utils.log("NPCS de Historias: " + npcs);
+        Utils.log("Loaded stories: " + historyLinkedHashMap.size());
+        Utils.log("NPCS Stories: " + npcs);
     }
 
     public void loadHistory(NPC npcHistory) {

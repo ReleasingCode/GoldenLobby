@@ -20,7 +20,7 @@ public class MainCommand extends BaseCommand {
     InventarioPlugin plugin;
 
     public MainCommand(InventarioPlugin plugin) {
-        super("mcinventories", "/mcinventories", "Administrador de inventario");
+        super("mcinventories", "/mcinventories", "Inventory Manager");
         this.plugin = plugin;
     }
 
@@ -29,7 +29,7 @@ public class MainCommand extends BaseCommand {
         if (sender instanceof Player) {
             Player p = ((Player) sender).getPlayer();
             LobbyPlayer lobbyPlayer = LobbyPlayerMap.getJugador(p);
-            if (!p.hasPermission("lobbymc.inventories.admin")) {
+            if (!p.hasPermission("goldenlobby.inventories.admin")) {
                 return true;
             }
             if (args.length > 0) {
@@ -44,7 +44,7 @@ public class MainCommand extends BaseCommand {
                             }
                         }
                     }
-                    lobbyPlayer.sendMessage("&aRecargando la configuración de inventarios");
+                    lobbyPlayer.sendMessage("&aReloading the inventory configuration");
                     plugin.reloadInventories(new CallBack.SingleCallBack() {
                         @Override
                         public void onSuccess() {
@@ -52,8 +52,8 @@ public class MainCommand extends BaseCommand {
                                 Inventario.clearItemsSelectorToPlayer(p);
                                 Inventario.setSelectorToPlayer(p);
                             }
-                            lobbyPlayer.sendMessage("&aSe ha recargado la configuración de inventarios");
-                            lobbyPlayer.sendMessage(" &fInventarios cargados: &a" + Inventario.getInventories().size());
+                            lobbyPlayer.sendMessage("&aInventory configuration has been reloaded");
+                            lobbyPlayer.sendMessage(" &fLoaded inventories: &a" + Inventario.getInventories().size());
                         }
 
                         @Override
@@ -74,10 +74,10 @@ public class MainCommand extends BaseCommand {
                             inv.openInventory(p);
                         } else {
                             lobbyPlayer.sendMessage(
-                                    "No existe un archivo de inventario con ese nombre: " + archivoInventario);
+                                    "There is no inventory file by that name.: " + archivoInventario);
                         }
                     } else {
-                        lobbyPlayer.sendMessage("&cComando: &e/mcinventories open [archivo]");
+                        lobbyPlayer.sendMessage("&cCommand: &e/mcinventories open [archivo]");
                     }
                     return true;
                 }
@@ -91,7 +91,7 @@ public class MainCommand extends BaseCommand {
                         if (inv != null) {
                             sendSyncRebaseConfig(sender, p.getName(), inv.getCustomConfiguration(), archivoInventario);
                         } else {
-                            sender.sendMessage("§cNo existe un inventario con ese nombre");
+                            sender.sendMessage("§cThere is no inventory under that name");
                         }
                         return true;
                     }
@@ -100,11 +100,11 @@ public class MainCommand extends BaseCommand {
                 }
                 return true;
             }
-            lobbyPlayer.sendMessage("&6&lAdministrador de inventarios");
+            lobbyPlayer.sendMessage("&6&lInventory Manager");
             lobbyPlayer.sendMessage("");
-            lobbyPlayer.sendMessage(" &f/mcinventories reload &a- Recargar configuración");
-            lobbyPlayer.sendMessage(" &f/mcinventories open [archivo-inventario] &a- Abrir un menú");
-            sender.sendMessage(" §f/mcinventories sync [archivo] §a- Sincronizar un inventario");
+            lobbyPlayer.sendMessage(" &f/mcinventories reload &a- Reload Configuration");
+            lobbyPlayer.sendMessage(" &f/mcinventories open [archivo-inventario] &a- Open a menu");
+            sender.sendMessage(" §f/mcinventories sync [archivo] §a- Synchronize an inventory");
             return true;
         }
         if (args.length > 0) {
@@ -129,8 +129,8 @@ public class MainCommand extends BaseCommand {
                             Inventario.clearItemsSelectorToPlayer(p);
                             Inventario.setSelectorToPlayer(p);
                         }
-                        sender.sendMessage(Utils.chatColor("&aSe ha recargado la configuración de inventarios"));
-                        sender.sendMessage(Utils.chatColor(" &fInventarios cargados: &a" + Inventario.getInventories().size()));
+                        sender.sendMessage(Utils.chatColor("&aInventory configuration has been reloaded"));
+                        sender.sendMessage(Utils.chatColor(" &fLoaded inventories: &a" + Inventario.getInventories().size()));
                     }
 
                     @Override
@@ -147,7 +147,7 @@ public class MainCommand extends BaseCommand {
                     if (inv != null) {
                         sendSyncRebaseConfig(sender, "console", inv.getCustomConfiguration(), archivoInventario);
                     } else {
-                        sender.sendMessage("§cNo existe un inventario con ese nombre");
+                        sender.sendMessage("§cThere is no inventory under that name");
                     }
                     return true;
                 }
@@ -155,10 +155,10 @@ public class MainCommand extends BaseCommand {
                 sendSync(sender);
             }
         }
-        sender.sendMessage("§6§lAdministrador de inventarios");
+        sender.sendMessage("§6§lInventory Manager");
         sender.sendMessage("");
-        sender.sendMessage(" §f/mcinventories reload §a- Recargar configuración");
-        sender.sendMessage(" §f/mcinventories sync [archivo] §a- Sincronizar un inventario");
+        sender.sendMessage(" §f/mcinventories reload §a- Reload Configuration");
+        sender.sendMessage(" §f/mcinventories sync [archivo] §a- Synchronize an inventory");
         return true;
     }
 
@@ -166,12 +166,12 @@ public class MainCommand extends BaseCommand {
         plugin.sendSync(SubChannel.SubOperation.GET_FROM_DB, new CallBack.SingleCallBack() {
             @Override
             public void onSuccess() {
-                sender.sendMessage("§aSe ha sincronizado los servidores a la base de datos de inventarios ");
+                sender.sendMessage("§aServers have been synchronized with the inventory database ");
             }
 
             @Override
             public void onError() {
-                sender.sendMessage("§cError al sincronizar los servidores con los inventarios ");
+                sender.sendMessage("§cError when synchronizing servers with inventories ");
             }
         });
     }
@@ -184,12 +184,12 @@ public class MainCommand extends BaseCommand {
                     @Override
                     public void onSuccess() {
                         sender.sendMessage(
-                                "§aSe ha sincronizado a la base de datos el inventario: " + archivoInventario);
+                                "§aInventory has been synchronized to the database: " + archivoInventario);
                     }
 
                     @Override
                     public void onError() {
-                        sender.sendMessage("§cError al sincronizar con Redis el inventario: " + archivoInventario);
+                        sender.sendMessage("§cError synchronizing inventory with Redis: " + archivoInventario);
                     }
                 });
             }
@@ -197,16 +197,16 @@ public class MainCommand extends BaseCommand {
             @Override
             public void onError() {
                 // siempre es -1
-                sender.sendMessage("§cNo se pudo sincronizar a la base de datos el inventario: §a" + archivoInventario);
+                sender.sendMessage("§cInventory could not be synchronized to the database: §a" + archivoInventario);
             }
         });
     }
 
     public void fetchDB(CommandSender sender) {
-        sender.sendMessage("§aObteniendo datos registrados en la base de datos");
+        sender.sendMessage("§aObtaining data recorded in the database");
         InventarioPlugin.getInstance().reloadInventories(() -> {
-            Utils.log("Se ha recargado el modulo de inventarios");
-            sender.sendMessage("§aSe ha recargado el modulo de inventarios");
+            Utils.log("Inventory module has been reloaded");
+            sender.sendMessage("§aInventory module has been reloaded");
         }, true);
     }
 }

@@ -8,13 +8,13 @@ public class FlyPlugin extends LobbyComponente {
 
     @Override
     protected void onEnable() {
-        Utils.log(" - Cargando módulo Fly");
+        Utils.log(" - Loading module Fly");
         new FlyCommands().register();
     }
 
     @Override
     protected void onDisable() {
-        Utils.log(" - Inhabilitando módulo Fly");
+        Utils.log(" - Disabling module Fly");
     }
 
 }
