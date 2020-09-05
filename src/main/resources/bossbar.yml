@@ -1,0 +1,40 @@
+title: "GoldenLobby"
+
+# PINK - BLUE - RED - GREEN - YELLOW - PURPLE - WHITE
+color: "WHITE"
+
+# SOLID - SEGMENTED_6 - SEGMENTED_10 - SEGMENTED_12 - SEGMENTED_20
+style: "SOLID"
+
+# 0 - 100
+progress: 100
+
+
+animation:
+
+  enabled: true
+
+  # Ticks per frame
+  tpf: 20
+
+  # Ejemplo con 4 frames:
+  # Normal: 1 -> 2 -> 3 -> 4 -> 1 -> 2 -> 3 ...
+  # Bounce: 1 -> 2 -> 3 -> 4 -> 3 -> 2 -> 1 -> 2 ...
+  bounce: false
+
+  frames:
+
+    # El nombre puede ser cualquier cosa
+    1:
+      title: "Bar full"
+      color: "RED"
+      progress: 100
+      #ticks: 30 # El frame durará 30 ticks en lugar de 20
+    2:
+      title: "Bar halfway through"
+      color: "YELLOW"
+      progress: 50
+    3:
+      title: "Bar empty"
+      color: "GREEN"
+      progress: 0
