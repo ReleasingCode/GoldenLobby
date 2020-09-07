@@ -59,10 +59,10 @@ public class ItemMenu {
     }
 
     public void tick() {
-        slots.forEach(slot -> updateItemSlot(slot, false));
         LobbyPlayerIndexing indexing = lobbyPlayer.getInventoryManager().getIndexing();
-        int tick = indexing.getAndIncrementIndexAtExtra("sendPacket", 22);
-        if (tick >= 21) {
+        int tick = indexing.getAndIncrementIndexAtExtra("sendPacket", (inventario.getItems_Inventory_Updater() + 1));
+        if (tick >= (inventario.getItems_Inventory_Updater())) {
+            slots.forEach(slot -> updateItemSlot(slot, false));
             update();
         }
     }
@@ -95,7 +95,7 @@ public class ItemMenu {
                                 itemSlot.getLastMaterial() != null ?
                                         itemSlot.getLastMaterial() : "stone:1:0" : material);
                         if (itemSlot.hasNames()) {
-                            int indexNames = indexing.getAndIncrementIndexAtExtra("names" + itemSlot.getPosition(),
+                            int indexNames = indexing.getAndIncrementIndexAtExtra("inv-names-" + itemSlot.getPosition(),
                                     itemSlot.getNamesMaxValue());
                             if (itemSlot.getNames().containsKey(indexNames)) {
                                 String name = itemSlot.getNames().get(indexNames);
@@ -114,7 +114,6 @@ public class ItemMenu {
                             lastBuilder.addFlag(itemSlot.getFlags());
                         }
                         if (itemSlot.hasLore()) {
-
                             ItemSlot.ItemSlotInput ItemLoreSlot = itemSlot.getItemSlotLore();
                             int indexLores = indexing
                                     .getAndIncrementIndexAtExtra("lores-" + estado.name().toLowerCase() +
@@ -215,7 +214,9 @@ public class ItemMenu {
                 instanceof ItemMenuHolder && ((ItemMenuHolder) inventory.getTopInventory().getHolder()).getMenu()
                 .equals(this)) {
             this.apply(inventory.getTopInventory(), player);
-            inventario.getNMSMenu().setItemContents(player, items);
+            if (inventario.getNMSMenu() != null) {
+                inventario.getNMSMenu().setItemContents(player, items);
+            }
         }
     }
 

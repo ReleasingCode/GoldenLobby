@@ -97,7 +97,7 @@ Items:
   # SkyBlock
   - Slot: 3, 3
     #este es el tiempo de refreso del item, refrescará el nombre, material y lore
-    ItemUpdateDelay: 1
+    ItemUpdateDelay: 20
     Name:
       - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
       - '&aSkyBlock &6&l¡EN MANTENIMIENTO!'
@@ -162,7 +162,7 @@ Items:
     Command: "server: lobby"
   - Slot: 4, 3
     #este es el tiempo de refreso del item, refrescará el nombre, material y lore
-    ItemUpdateDelay: 1
+    ItemUpdateDelay: 20
     glow: true
     Name:
       - '&aPractice &6&l¡EN MANTENIMIENTO!'

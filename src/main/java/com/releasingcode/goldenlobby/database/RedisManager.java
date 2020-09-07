@@ -33,9 +33,13 @@ public class RedisManager {
         config.setMaxTotal(10);
         config.setMaxWaitMillis(6000);
         config.setBlockWhenExhausted(true);
-        stablishConnectionJedisPub();
-        //Para subscriptor (Sub)
-        stablishConnectionJedisSub();
+        try {
+            stablishConnectionJedisPub();
+            //Para subscriptor (Sub)
+            stablishConnectionJedisSub();
+        } catch (Exception e) {
+            Utils.log("Redis", "&4Unable to connect Redis Server: " + e.getMessage());
+        }
     }
 
     public void stablishConnectionJedisPub() {
@@ -96,7 +100,11 @@ public class RedisManager {
     }
 
     public Jedis getJedisEditor() {
-        return jedisEditor.getResource();
+        try {
+            return jedisEditor.getResource();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean isPubConnected() {

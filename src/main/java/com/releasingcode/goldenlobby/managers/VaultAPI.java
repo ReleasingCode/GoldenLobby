@@ -2,9 +2,9 @@ package com.releasingcode.goldenlobby.managers;
 
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -32,6 +32,9 @@ public class VaultAPI {
     }
 
     public boolean setupChat() {
+        if (plugin.getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
         RegisteredServiceProvider<Chat> rsp = plugin.getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
         return chat != null;
@@ -46,6 +49,9 @@ public class VaultAPI {
     }
 
     public boolean setupPermissions() {
+        if (plugin.getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
         RegisteredServiceProvider<Permission> rsp =
                 plugin.getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();

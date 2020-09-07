@@ -28,6 +28,6 @@ public abstract class LobbyComponente {
     }
 
     public Plugin getPlugin() {
-        return ZLib.getPlugin();
+        return PluginBootstrap.getPlugin();
     }
 }

@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class Inventario implements Cloneable {
     private static final List<ItemSelector> itemsOpenInventory = new ArrayList<>();
@@ -29,6 +30,7 @@ public class Inventario implements Cloneable {
     private List<String> Titulo;
     private int row;
     private long titleTicks;
+    private int Items_Inventory_Updater = 5;
     private ItemSelector itemSelector;
     private ScheduledFuture<?> scheduledFuture;
 
@@ -38,6 +40,14 @@ public class Inventario implements Cloneable {
         itemSelector = new ItemSelector(this);
         itemSlots = new ArrayList<>();
         NMSMenu = InventarioPlugin.getInstance().NMSMenu();
+    }
+
+    public int getItems_Inventory_Updater() {
+        return Items_Inventory_Updater;
+    }
+
+    public void setItems_Inventory_Updater(int items_Inventory_Updater) {
+        Items_Inventory_Updater = items_Inventory_Updater;
     }
 
     public static void addInventario(String file, Inventario inv) {
@@ -178,19 +188,32 @@ public class Inventario implements Cloneable {
         if (scheduledFuture != null) {
             scheduledFuture.cancel(true);
         }
-        scheduledFuture =
-                thread.scheduleAtFixedRate(() -> {
-                    for (LobbyPlayer lp : LobbyPlayerMap.getPlayers()) {
-                        try {
-                            ItemMenu menu = lp.getInventoryManager().getMenu();
-                            if (menu != null) {
-                                menu.tick();
+        List<Long> minorTicksFrame = getItemSlots().stream().map(ItemSlot::getTicksFrameDelay).collect(Collectors.toCollection(ArrayList::new));
+        List<Long> disableChecker = minorTicksFrame.stream().filter(number -> number == 0).collect(Collectors.toList());
+        long min = Collections.min(minorTicksFrame);
+        if (disableChecker.size() == getItemSlots().size()) {
+            min = -1; //disable
+        } else {
+            if (min < 1) {
+                min = 1;
+            }
+        }
+        setItems_Inventory_Updater((int) min);
+        if (min > 0) {
+            scheduledFuture =
+                    thread.scheduleAtFixedRate(() -> {
+                        for (LobbyPlayer lp : LobbyPlayerMap.getPlayers()) {
+                            try {
+                                ItemMenu menu = lp.getInventoryManager().getMenu();
+                                if (menu != null) {
+                                    menu.tick();
+                                }
+                                updatePlayers(lp);
+                            } catch (Exception e) {
                             }
-                            updatePlayers(lp);
-                        } catch (Exception e) {
                         }
-                    }
-                }, 0, 35, TimeUnit.MILLISECONDS);
+                    }, 0, 50, TimeUnit.MILLISECONDS);
+        }
     }
 
     public List<ItemSlot> getItemSlots() {

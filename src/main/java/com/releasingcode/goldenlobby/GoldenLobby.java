@@ -48,6 +48,7 @@ public class GoldenLobby extends LobbyMCPlugin {
     private boolean isNewVersion;
     private VaultAPI vaultAPI;
     private LanguageFile lang;
+
     public static GoldenLobby getInstance() {
         return plugin;
     }
@@ -171,23 +172,19 @@ public class GoldenLobby extends LobbyMCPlugin {
         if (vaultAPI.setupPermissions()) {
             Utils.log("Hook with Vault [Permission] [OK]");
         }
-
         Utils.log("Iniciando complemento");
         CustomConfiguration dbConfigFile = new CustomConfiguration("database", this);
         this.mysqlEnable = dbConfigFile.getConfig().getBoolean("MySQL.Enable", false);
         // Para cargar un componente se debe hacer de la siguiente manera
         // llamar al metodo cargarComponente y la clase que contiene una herencia de LobbyComponente
-
         lang = new LanguageFile(plugin, "language");
         lang.setup();
-
         this.getServer().getPluginManager().registerEvents(new OnJoin(), this);
         this.getServer().getPluginManager().registerEvents(new DoubleJump(), this);
         this.getServer().getPluginManager().registerEvents(new BasicCancelledEvents(), this);
         cargarRecursos();
         serversConnections();
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-
         /*
           Carga Componentes del Plugin
          */
@@ -214,10 +211,12 @@ public class GoldenLobby extends LobbyMCPlugin {
         String passwordRedis = dbConfigFile.getConfig().getString("Redis.PassWord");
         int portRedis = dbConfigFile.getConfig().getInt("Redis.Port");
         redisManager = new RedisManager(hostRedis, passwordRedis, portRedis);
-        Utils.log("  Editor Client [" + (redisManager.isEditorConnected() ? "conectado" : "desconectado") + "]");
-        Utils.log("  Subscriptor Client [" + (redisManager.isPubConnected() ? "conectado" : "desconectado") + "]");
-        redisManager.registerChangesListener(new onRedisMessage(),
-                onRedisMessage.getChannels());
+        if (redisManager.isEditorConnected() && redisManager.isPubConnected()) {
+            Utils.log("  Editor Client [" + (redisManager.isEditorConnected() ? "conectado" : "desconectado") + "]");
+            Utils.log("  Subscriptor Client [" + (redisManager.isPubConnected() ? "conectado" : "desconectado") + "]");
+            redisManager.registerChangesListener(new onRedisMessage(),
+                    onRedisMessage.getChannels());
+        }
     }
 
     public VaultAPI getVaultAPI() {

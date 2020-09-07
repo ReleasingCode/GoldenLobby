@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-public class ZLib {
+public class PluginBootstrap {
     static private final ArrayList<Class<? extends LobbyComponente>> componentesAlCargar = new ArrayList<>();
     static JavaPlugin plugin;
     static private Set<LobbyComponente> componentes;

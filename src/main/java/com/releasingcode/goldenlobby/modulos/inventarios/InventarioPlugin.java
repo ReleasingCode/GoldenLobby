@@ -56,7 +56,7 @@ public class InventarioPlugin extends LobbyComponente {
         comandos = new ArrayList<>();
         try {
             IMenu = Class.forName(
-                    "us.minecub.lobbymc.extendido.nms." + GoldenLobby.getVersion() + ".IMenu_" + GoldenLobby.getVersion());
+                    "com.releasingcode.goldenlobby.extendido.nms." + GoldenLobby.getVersion() + ".IMenu_" + GoldenLobby.getVersion());
         } catch (Exception ignored) {
         }
         new MainCommand(this).register();
@@ -75,7 +75,6 @@ public class InventarioPlugin extends LobbyComponente {
             return null;
         }
         try {
-
             return (IMenu) this.IMenu.getConstructors()[0].newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();

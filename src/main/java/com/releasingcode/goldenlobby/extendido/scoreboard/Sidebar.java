@@ -3,7 +3,7 @@ package com.releasingcode.goldenlobby.extendido.scoreboard;
 
 import com.releasingcode.goldenlobby.extendido.nms.ObjectiveSender;
 import com.releasingcode.goldenlobby.extendido.nms.SidebarObjective;
-import com.releasingcode.goldenlobby.loader.ZLib;
+import com.releasingcode.goldenlobby.loader.PluginBootstrap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public abstract class Sidebar {
 
     public static void init() {
 
-        ZLib.registerEvents(new OnlinePlayersListener());
+        PluginBootstrap.registerEvents(new OnlinePlayersListener());
     }
 
     public static void exit() {
@@ -125,7 +125,7 @@ public abstract class Sidebar {
                         thread.scheduleAtFixedRate(refreshRunnable, 0, 35, TimeUnit.MILLISECONDS);
             } else {
                 refreshTask = Bukkit.getScheduler().runTaskTimer(
-                        ZLib.getPlugin(), refreshRunnable, 1, 0
+                        PluginBootstrap.getPlugin(), refreshRunnable, 1, 0
                 );
             }
         }
