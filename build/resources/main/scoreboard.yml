@@ -1,0 +1,146 @@
+scoreboard-async: true
+animatable:
+  title: true
+  contents: true
+tick-updater:
+  title: 4
+  contents: 15
+title: |-
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+  &2&lM&a&lINE&7&lCUB
+  &2&lM&a&lINE&7&lCUB
+  &2&lM&a&lINE&7&lCUB
+  &2&lMI&a&lNE&7&lCUB
+  &2&lMI&a&lNE&7&lCUB
+  &2&lMI&a&lNE&7&lCUB
+  &2&lMIN&a&lE&7&lCUB
+  &2&lMIN&a&lE&7&lCUB
+  &2&lMIN&a&lE&7&lCUB
+  &2&lMINE&7&lCUB
+  &2&lMINE&7&lCUB
+  &2&lMINE&8&lC&7&lUB
+  &2&lMINE&8&lC&7&lUB
+  &2&lMINE&8&lC&7&lUB
+  &2&lMINE&8&lCU&7&lB
+  &2&lMINE&8&lCU&7&lB
+  &2&lMINE&8&lCU&7&lB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &2&lMINE&8&lCUB
+  &a&lM&2&lINE&8&lCUB
+  &a&lM&2&lINE&8&lCUB
+  &a&lM&2&lINE&8&lCUB
+  &a&lMI&2&lNE&8&lCUB
+  &a&lMI&2&lNE&8&lCUB
+  &a&lMI&2&lNE&8&lCUB
+  &a&lMIN&2&lE&8&lCUB
+  &a&lMIN&2&lE&8&lCUB
+  &a&lMIN&2&lE&8&lCUB
+  &a&lMINE&8&lCUB
+  &a&lMINE&8&lCUB
+  &a&lMINE&7&lC&8&lUB
+  &a&lMINE&7&lC&8&lUB
+  &a&lMINE&7&lC&8&lUB
+  &a&lMINE&7&lCU&8&lB
+  &a&lMINE&7&lCU&8&lB
+  &a&lMINE&7&lCU&8&lB
+  &a&lMINE&7&lCUB
+  &a&lMINE&7&lCUB
+contents:
+  in-lobby: |-
+    &f
+    &c » &fEstadísticas
+    &a   Bajas: &7{kills}
+    &a   Victorias: &7{wins}
+    &a   Golpes a nexos: &7{nexosHit}
+    &f
+    &c » &fInformación
+    &a   Jugadores: &7{players}
+    &a   Estado: &7{status}
+    &f
+    &c » &fServidor
+    &a   Mapa: &7{map}
+    &a   Sala: &{room}
+  in-game: |-
+    &f{date} {server}
+    &f
+    &b&lInformación
+    &f Mapa: &a{map}
+    &f Fase: &a{phaseRoman}
+    &f Bajas: &a{roomKill}
+    &c Nexo
+    &a
+    &awww.MineCub.es
+contents-animatable:
+  spacio: []
+  linea1:
+    contents: |-
+      &fLobby &a#2                 &f
+  linea2: []
+  staff:
+    tick: 20
+    contents: |-
+      &c » &fStaff Encontrados:
+      &c   &fStaff Encontrados:
+  staff_2:
+    tick: 20
+    contents: |-
+      &a     {staff_found}/{total_staff}
+  minecubos:
+    tick: 3
+    contents: |-
+      &c » &fMinecubos:
+      &f » &fMinecubos:
+      &e » &fMinecubos:
+      &6 » &fMinecubos:
+  minecubos_2:
+    tick: 20
+    contents: |-
+      &a     {minecubos}
+  rango:
+    contents: |-
+      &c » &fRango:
+  rango_2:
+    tick: 20
+    contents: |-
+      &a     {colored_rank}
+  nombre:
+    contents: |-
+      &c » &fNombre:
+  nombre_2:
+    contents: |-
+      &a     {player}
+  lastline: []
+  minecubes:
+    contents: |-
+      &awww.MineCub.es

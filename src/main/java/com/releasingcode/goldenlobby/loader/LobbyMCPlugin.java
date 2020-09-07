@@ -13,7 +13,7 @@ public class LobbyMCPlugin extends JavaPlugin {
         try {
             return ZLib.cargarComponente(componentClass);
         } catch (Exception e) {
-            Utils.log("No se ha podido cargar la clase: " + componentClass.getName());
+            Utils.log("Class could not be loaded: " + componentClass.getName());
             e.printStackTrace();
         }
         return null;

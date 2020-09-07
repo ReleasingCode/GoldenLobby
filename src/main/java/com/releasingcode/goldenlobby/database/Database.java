@@ -36,9 +36,9 @@ public class Database {
                 call.onCreateTable(this);
                 call.onLoaded(this);
             }
-            Utils.log("La base de datos se ha iniciado");
+            Utils.log("The database has been started");
         } catch (Exception e) {
-            Utils.log("&4Ha ocurrido un error mientras se conectaba a la base de datos [Base de datos desabilitada]: " + e.getMessage());
+            Utils.log("&4An error has occurred while connecting to the database [Database Disabled].: " + e.getMessage());
         }
 
     }

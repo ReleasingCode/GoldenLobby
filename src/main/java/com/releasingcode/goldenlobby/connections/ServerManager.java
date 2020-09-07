@@ -108,7 +108,7 @@ public class ServerManager {
         if (servidores.containsKey(server.toLowerCase())) {
             return servidores.get(server.toLowerCase()).getMotd() + "";
         }
-        return "&c¡Servidor no encontrado!";
+        return "&c¡Server no found!";
     }
 
     public static ServerInfo.Estados getAvailable(String server) {

@@ -57,7 +57,7 @@ public class FutureTime {
                         }
                     }
                 } catch (NumberFormatException e) {
-                    Utils.log("Formato incorrecto: " + e.getMessage() + " -> " + matcher.group(1));
+                    Utils.log("Incorrect format: " + e.getMessage() + " -> " + matcher.group(1));
                 }
             }
         }
@@ -141,7 +141,7 @@ public class FutureTime {
         if (getSecond() != null && getSecond() > 0) {
             builder += "" + getSecond() + " " + (getSecond() == 1 ? "Segundo" : "Segundos") + " ";
         }
-        return builder.trim().isEmpty() ? "No hay un tiempo especificado" : builder.trim();
+        return builder.trim().isEmpty() ? "No specified time" : builder.trim();
     }
 
     public enum TIME {

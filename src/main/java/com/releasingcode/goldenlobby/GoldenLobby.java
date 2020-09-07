@@ -9,13 +9,14 @@ import com.releasingcode.goldenlobby.database.DatabaseConfig;
 import com.releasingcode.goldenlobby.database.RedisManager;
 import com.releasingcode.goldenlobby.database.pubsub.onRedisMessage;
 import com.releasingcode.goldenlobby.extendido.nms.ParticleEffect;
+import com.releasingcode.goldenlobby.languages.LanguageFile;
 import com.releasingcode.goldenlobby.listeners.BasicCancelledEvents;
 import com.releasingcode.goldenlobby.listeners.DoubleJump;
 import com.releasingcode.goldenlobby.listeners.OnJoin;
 import com.releasingcode.goldenlobby.loader.LobbyMCPlugin;
 import com.releasingcode.goldenlobby.managers.VaultAPI;
+import com.releasingcode.goldenlobby.modulos.bossbar.BossBarPlugin;
 import com.releasingcode.goldenlobby.modulos.cooldown.CooldownPlugin;
-import com.releasingcode.goldenlobby.modulos.ejemplo.EjemploPlugin;
 import com.releasingcode.goldenlobby.modulos.fly.FlyPlugin;
 import com.releasingcode.goldenlobby.modulos.inventarios.InventarioPlugin;
 import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
@@ -46,7 +47,7 @@ public class GoldenLobby extends LobbyMCPlugin {
     private RedisManager redisManager;
     private boolean isNewVersion;
     private VaultAPI vaultAPI;
-
+    private LanguageFile lang;
     public static GoldenLobby getInstance() {
         return plugin;
     }
@@ -92,7 +93,9 @@ public class GoldenLobby extends LobbyMCPlugin {
                 ServerManager.addServer(key, info);
             }
         }
+
         skinExternal = globalConfig.getConfig().getString("SkinFetcher", "internal").equals("external");
+
         serverManager = new ServerManager(config.getLong("syncDelay", 2000));
         serverManager.async();
         ServerManager.clearVar();
@@ -152,6 +155,7 @@ public class GoldenLobby extends LobbyMCPlugin {
 
     @Override
     public void onEnable() {
+
         mysqlEnable = false;
         skinExternal = false;
         plugin = this;
@@ -167,11 +171,16 @@ public class GoldenLobby extends LobbyMCPlugin {
         if (vaultAPI.setupPermissions()) {
             Utils.log("Hook with Vault [Permission] [OK]");
         }
+
         Utils.log("Iniciando complemento");
         CustomConfiguration dbConfigFile = new CustomConfiguration("database", this);
         this.mysqlEnable = dbConfigFile.getConfig().getBoolean("MySQL.Enable", false);
         // Para cargar un componente se debe hacer de la siguiente manera
         // llamar al metodo cargarComponente y la clase que contiene una herencia de LobbyComponente
+
+        lang = new LanguageFile(plugin, "language");
+        lang.setup();
+
         this.getServer().getPluginManager().registerEvents(new OnJoin(), this);
         this.getServer().getPluginManager().registerEvents(new DoubleJump(), this);
         this.getServer().getPluginManager().registerEvents(new BasicCancelledEvents(), this);
@@ -193,7 +202,7 @@ public class GoldenLobby extends LobbyMCPlugin {
         cargarComponente(PlayerHidePlugin.class);
         cargarComponente(WarpsPlugin.class);
         cargarComponente(CooldownPlugin.class);
-        cargarComponente(EjemploPlugin.class);
+        cargarComponente(BossBarPlugin.class);
 
         if (mysqlEnable && dbConfigFile.getConfig() != null) {
             this.dbConfig = new DatabaseConfig(dbConfigFile.getConfig());
@@ -213,6 +222,10 @@ public class GoldenLobby extends LobbyMCPlugin {
 
     public VaultAPI getVaultAPI() {
         return vaultAPI;
+    }
+
+    public LanguageFile getLang() {
+        return lang;
     }
 
 }

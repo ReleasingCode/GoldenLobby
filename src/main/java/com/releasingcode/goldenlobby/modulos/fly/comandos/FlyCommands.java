@@ -2,6 +2,7 @@ package com.releasingcode.goldenlobby.modulos.fly.comandos;
 
 import com.releasingcode.goldenlobby.BaseCommand;
 import com.releasingcode.goldenlobby.GoldenLobby;
+import com.releasingcode.goldenlobby.languages.Lang;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import org.bukkit.command.Command;
@@ -12,12 +13,12 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 public class FlyCommands extends BaseCommand {
     public FlyCommands() {
-        super("fly", "/fly", "Volar jugador");
+        super("fly", "/fly", "Flying player");
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player && sender.hasPermission("lobbymc.benefits.fly")) {
+        if (sender instanceof Player && sender.hasPermission("goldenlobby.benefits.fly")) {
             Player player = ((Player) sender).getPlayer();
             LobbyPlayer lobbyPlayer = LobbyPlayerMap.getJugador(player);
             if (lobbyPlayer == null) {
@@ -36,11 +37,10 @@ public class FlyCommands extends BaseCommand {
                 player.setFlying(false);
                 lobbyPlayer.sendMessage("${lobbymc.flight.player.disabled}");
             }
-        } else if (!sender.hasPermission("lobbymc.benefits.fly")) {
-            sender.sendMessage("No tienes permisos");
+        } else if (!sender.hasPermission("goldenlobby.benefits.fly")) {
+            sender.sendMessage(Lang.NO_PERMISSION.toString());
         }
         return true;
     }
-
 
 }

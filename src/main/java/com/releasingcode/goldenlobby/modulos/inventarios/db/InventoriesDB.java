@@ -54,11 +54,11 @@ public class InventoriesDB implements IDatabase {
             tableBuilder.index(Inventory_Columns.fileConfiguration);
             int i = statement.executeUpdate(tableBuilder.build());
             if (i > 0) {
-                Utils.log("[DB] La tabla del modulo inventarios ha sido creada");
+                Utils.log("[DB] The table of the module inventories has been created");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Utils.log("No se pudo conectar a la base de datos [Inventory]");
+            Utils.log("Could not connect to the database [Inventory]");
         }
 
     }

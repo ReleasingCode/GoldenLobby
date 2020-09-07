@@ -17,8 +17,8 @@ public class OnRedisMessageInv implements IRedisSub {
         }
         SubChannel.SubOperation operation = SubChannel.SubOperation.from(returnBack);
         if (operation != null) {
-            System.out.println("Sincronizando Inventarios desde Base de datos: " + operation.lower());
-            InventarioPlugin.getInstance().reloadInventories(() -> Utils.log("Se ha recargado el modulo de inventarios"), true);
+            System.out.println("Synchronizing Inventory from Database: " + operation.lower());
+            InventarioPlugin.getInstance().reloadInventories(() -> Utils.log("Inventory module has been reloaded"), true);
         }
     }
 }

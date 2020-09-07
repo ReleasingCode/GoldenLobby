@@ -8,7 +8,7 @@ public class GameModePlugin extends LobbyComponente {
 
     @Override
     protected void onEnable() {
-        Utils.log(" - Cargando modulo de GameMode");
+        Utils.log(" - Loading module of GameMode");
         new GamemodeCommand().register();
         //getPlugin().getServer().getPluginManager().registerEvents(new onJoin(), getPlugin());
         ///
@@ -17,7 +17,7 @@ public class GameModePlugin extends LobbyComponente {
 
     @Override
     protected void onDisable() {
-        Utils.log(" - Desabilitando modulo de GameMode");
+        Utils.log(" - Disabling module of GameMode");
 
     }
 }

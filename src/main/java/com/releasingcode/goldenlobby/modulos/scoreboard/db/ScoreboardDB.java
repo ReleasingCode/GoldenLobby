@@ -8,10 +8,10 @@ import com.releasingcode.goldenlobby.database.IDatabase;
 import com.releasingcode.goldenlobby.database.builders.ColumnBuilder;
 import com.releasingcode.goldenlobby.database.builders.ColumnMeta;
 import com.releasingcode.goldenlobby.database.builders.TableBuilder;
+import com.releasingcode.goldenlobby.modulos.inventarios.db.Inventory_Columns;
 import com.releasingcode.goldenlobby.modulos.scoreboard.ScoreboardPlugin;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
-import com.releasingcode.goldenlobby.modulos.inventarios.db.Inventory_Columns;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -54,11 +54,11 @@ public class ScoreboardDB implements IDatabase {
             tableBuilder.index(Inventory_Columns.fileConfiguration);
             int i = statement.executeUpdate(tableBuilder.build());
             if (i > 0) {
-                Utils.log("[DB] La tabla del modulo scoreboard ha sido creada");
+                Utils.log("[DB] The scoreboard module table has been created");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Utils.log("No se pudo conectar a la base de datos [Scoreboard]");
+            Utils.log("Could not connect to the database [Scoreboard]");
         }
     }
 

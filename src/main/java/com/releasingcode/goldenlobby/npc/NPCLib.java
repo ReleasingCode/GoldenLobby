@@ -192,12 +192,12 @@ public class NPCLib {
         } catch (Exception ignored) {
         }
         if (npcClass == null) {
-            Utils.log("&cNo se puede cargar el componente para NPC's");
-            Utils.log(" &c- Versión incompatible: " + GoldenLobby.getVersion());
+            Utils.log("&cThe component cannot be loaded for NPC's");
+            Utils.log(" &c- Incompatible version: " + GoldenLobby.getVersion());
             return;
         }
         plugin.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
-        Utils.log("Cargando componente para NPC'S v: " + GoldenLobby.getVersion());
+        Utils.log("Loading component for NPC'S v: " + GoldenLobby.getVersion());
         PacketListenerCore.registerPackets(new PacketListeners(), GoldenLobby.getInstance());
 
     }
@@ -229,7 +229,7 @@ public class NPCLib {
         try {
             return (NPC) npcClass.getConstructors()[0].newInstance(this, name, text, uuid, nameNPC);
         } catch (Exception exception) {
-            Utils.log("&cError al crear el NPC, reporta este mensaje de error: " + exception.getMessage());
+            Utils.log("&cError creating the NPC, report this error message: " + exception.getMessage());
         }
 
         return null;

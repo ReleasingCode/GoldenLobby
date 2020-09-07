@@ -53,11 +53,11 @@ public class CooldownDB implements IDatabase {
             tableBuilder.createIfNotExists();
             int i = statement.executeUpdate(tableBuilder.build());
             if (i > 0) {
-                Utils.log("[DB] La tabla del modulo cooldown ha sido creada");
+                Utils.log("[DB] The cooldown module table has been created");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Utils.log("No se pudo conectar a la base de datos [CooldownPlugin]");
+            Utils.log("Could not connect to the [CooldownPlugin] database");
         }
     }
 
@@ -110,7 +110,7 @@ public class CooldownDB implements IDatabase {
 
     public void fetchCooldown(CallBack.ReturnCallBack<ArrayList<CooldownSystem>> callBack) {
         if (database == null) {
-            Utils.log("CooldownPlugin", "Database es nula");
+            Utils.log("CooldownPlugin", "Database is null");
             return;
         }
         String SQL = "SELECT * FROM " + database.getDbConfig().getTable("Cooldown");
@@ -131,9 +131,9 @@ public class CooldownDB implements IDatabase {
                         system.setStartedAt(startedAtSystem);
                         system.setStatus(CooldownSystem.CooldownStatus.valueOf(statusSystem));
                         cooldowns.add(system);
-                        Utils.log("Agregando nuevo CooldownSystem: " + system.getName());
+                        Utils.log("Adding new CooldownSystem: " + system.getName());
                     } catch (Exception e) {
-                        Utils.log("&cNo se ha podido cargar el cooldown: " + nombreSystem + " Error: " + e.getMessage());
+                        Utils.log("&cCouldn't load the cooldown: " + nombreSystem + " Error: " + e.getMessage());
                     }
                 }
                 callBack.onSuccess(cooldowns);

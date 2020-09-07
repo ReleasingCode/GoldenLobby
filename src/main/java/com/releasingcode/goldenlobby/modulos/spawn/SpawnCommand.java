@@ -1,12 +1,12 @@
 package com.releasingcode.goldenlobby.modulos.spawn;
 
 import com.releasingcode.goldenlobby.BaseCommand;
+import com.releasingcode.goldenlobby.languages.Lang;
 import com.releasingcode.goldenlobby.managers.SpawnPoint;
-import org.bukkit.ChatColor;
+import com.releasingcode.goldenlobby.modulos.setspawn.SpawnPointPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import com.releasingcode.goldenlobby.modulos.setspawn.SpawnPointPlugin;
 
 public class SpawnCommand extends BaseCommand {
 
@@ -22,7 +22,7 @@ public class SpawnCommand extends BaseCommand {
         SpawnPoint location = SpawnPointPlugin.SPAWNPOINT;
 
         if (location == null) {
-            player.sendMessage(ChatColor.RED + "Ocurrió un error al ejecutar este comando. [ERRx05]");
+            player.sendMessage(Lang.ERROR_EXCUTING_THIS_COMMAND.toString());
             return false;
         }
 

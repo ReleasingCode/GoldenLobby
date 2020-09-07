@@ -16,7 +16,7 @@ public final class NPCManager {
 
     private static ConcurrentHashMap<String, NPC> npcs = new ConcurrentHashMap<>();
     private NPCManager() {
-        throw new SecurityException("No puedes inicializar está clase");
+        throw new SecurityException("You cannot initialize this class");
     }
 
     public static ArrayList<NPC> getAllNPCs() {

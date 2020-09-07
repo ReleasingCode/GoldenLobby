@@ -56,11 +56,11 @@ public class NPCServerPlugin extends LobbyComponente {
         instance = this;
         iamsender = false;
         npcsConfig.clear();
-        Utils.log(" - Cargando modulo NPCServer");
+        Utils.log(" - Loading module NPCServer");
         npcdb = new NPCDB(this);
         historyStatsDB = new HistoryStatsDB(this);
         new NPCListener(instance);
-        new NpcServerCommand(this, "mcnpc", "mcnpc", "Crea, edita NPC para teletransportar a otros servidores")
+        new NpcServerCommand(this, "mcnpc", "mcnpc", "Create, edit NPC to teleport to other servers")
                 .register();
         completeLoadNPC(SubChannel.SubOperation.GET_FROM_LOCAL);
         onRedisMessage.registerUpdater(SubChannel.SYNC_NPC, new OnRedisMessageNPC());
@@ -96,10 +96,10 @@ public class NPCServerPlugin extends LobbyComponente {
         getPlugin().getServer().getScheduler()
                 .runTaskAsynchronously(getPlugin(), () -> getNpcdb().fetchNPCs(callback -> {
                     if (callback.isEmpty()) {
-                        Utils.log("No se encontró ningun NPC's en la base de datos");
+                        Utils.log("");
                         return;
                     }
-                    Utils.log("NPC's recolectados desde la db: " + callback.size());
+                    Utils.log("No NPC's were found in the database: " + callback.size());
                     callFetchingUpdating(callback, purge);
                     historyManager = new HistoryManager();
                     GoldenLobby.getInstance().getNpcLib().startTaskNPC();
@@ -120,7 +120,7 @@ public class NPCServerPlugin extends LobbyComponente {
                 isInLocal = true;
                 //ACTUALIZAR
                 npc.destroy();
-                Utils.log("Actualizando la configuracion: " + npc.getName() + "");
+                Utils.log("Updating the configuration: " + npc.getName() + "");
                 byte[] bytesconfig = org.apache.commons.codec.binary.Base64.decodeBase64(FETCH.getBase64());
                 String text = new String(bytesconfig, StandardCharsets.UTF_8);
                 deleteConfigNPCForUpdate(npc.getName());
@@ -129,7 +129,7 @@ public class NPCServerPlugin extends LobbyComponente {
                 uconfig.updateFile(text);
                 npcsConfig.put(npc.getName().toLowerCase(), uconfig);
                 loadNPC(uconfig);
-                Utils.log("Configuracion: " + npc.getName() + " actualizada!");
+                Utils.log("Configuration: " + npc.getName() + " Updated!");
             }
                     /*
                         Crear el archivo localmente
@@ -153,13 +153,13 @@ public class NPCServerPlugin extends LobbyComponente {
                         fw.write(text);
                         fw.close();
                     } catch (Exception e) {
-                        Utils.log("No se pudo sincronizar un archivo " + FETCH
-                                .getName() + " , ocurrio un error de escritura: " + e.getMessage());
+                        Utils.log("Could not synchronize a file " + FETCH
+                                .getName() + " , a writing error occurred: " + e.getMessage());
                     }
                     CustomConfiguration cConfig = new CustomConfiguration(npcConfig, getPlugin());
                     npcsConfig.put(cConfig.getFile().getName().replace(".yml", ""), cConfig);
                     loadNPC(cConfig);
-                    Utils.log("Generando nuevo NPC desde base de datos: " + FETCH.getName());
+                    Utils.log("Generating new NPC from database: " + FETCH.getName());
                 }
             }
         }

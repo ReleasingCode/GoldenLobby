@@ -4,9 +4,9 @@ import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.configuracion.CustomConfiguration;
 import com.releasingcode.goldenlobby.loader.LobbyComponente;
 import com.releasingcode.goldenlobby.managers.SpawnPoint;
+import com.releasingcode.goldenlobby.modulos.warps.command.CommandWarp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import com.releasingcode.goldenlobby.modulos.warps.command.CommandWarp;
 
 import java.io.File;
 
@@ -23,13 +23,13 @@ public class WarpsPlugin extends LobbyComponente {
     protected void onEnable() {
         plugin = this;
         new CommandWarp("mcwarps").register();
-        Utils.log("Iniciando Warp Plugin");
+        Utils.log("Starting Warp Plugin");
         loadWarps();
     }
 
     @Override
     protected void onDisable() {
-        Utils.log("Desabilitando Warp Plugin");
+        Utils.log("Desabling Warp Plugin");
     }
 
     public void loadWarps() {
@@ -53,7 +53,7 @@ public class WarpsPlugin extends LobbyComponente {
                 Warps.addWarp(new Warps(file.getName().replace(".yml", "").toLowerCase(), point), false);
             }
         }
-        Utils.log("Warps", "Warp(s) cargadas &e" + Warps.getWarps().size() + "");
+        Utils.log("Warps", "Warp(s) loaded &e" + Warps.getWarps().size() + "");
     }
 
     public void reload() {

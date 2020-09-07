@@ -5,6 +5,7 @@ import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.Utils;
 import com.releasingcode.goldenlobby.call.CallBack;
 import com.releasingcode.goldenlobby.database.pubsub.SubChannel;
+import com.releasingcode.goldenlobby.languages.Lang;
 import com.releasingcode.goldenlobby.managers.LobbyPlayer;
 import com.releasingcode.goldenlobby.managers.LobbyPlayerMap;
 import com.releasingcode.goldenlobby.managers.MessageSuggest;
@@ -41,15 +42,16 @@ public class NpcServerCommand extends BaseCommand {
         // es un console
 
         if (args.length == 0) {
-            if (!sender.hasPermission("mclobby.npcserver.create")) {
-                sender.sendMessage(Utils.chatColor("&cNo tienes permisos para ejecutar esta acción"));
+            if (!sender.hasPermission("goldenlobby.npcserver.create")) {
+                sender.sendMessage(Lang.NO_PERMISSION.toString());
                 return true;
             }
-            sender.sendMessage(Utils.chatColor("&aComandos disponibles:"));
+            sender.sendMessage(Utils.chatColor(Lang.COMMAND_ENABLE.toString()));
             sender.sendMessage(Utils.chatColor("&e - reload"));
             sender.sendMessage(Utils.chatColor("&e - sync [purge]"));
             return true;
         }
+
         switch (args[0]) {
             case "reset": {
                 if (args.length > 1) {
@@ -57,7 +59,7 @@ public class NpcServerCommand extends BaseCommand {
                     Player playerArg = Bukkit.getPlayer(nombre);
                     if (playerArg == null) {
                         sender.sendMessage(Utils.chatColor(
-                                "&cNo puedes reiniciar estadisticas desde el jugado de un usuario fuera de linea"));
+                                Lang.YOU_CANNOT_RESTART_STATISTICS.toString()));
                         return true;
                     }
                     LobbyPlayer player1 = LobbyPlayerMap.getJugador(playerArg);
@@ -67,45 +69,45 @@ public class NpcServerCommand extends BaseCommand {
                                     @Override
                                     public void onSuccess() {
                                         sender.sendMessage(Utils.chatColor(
-                                                "&aHas reseteado las estadisticas de historia para: " + nombre));
+                                                Lang.YOU_HAS_RESET_HISTORY.toString() + nombre));
                                     }
 
                                     @Override
                                     public void onError() {
                                         sender.sendMessage(Utils.chatColor(
-                                                "&cHa ocurrido un error al intentar eliminar estadisticas de historia para: " + nombre + " [DB]"));
+                                                Lang.AN_ERROR_REMOVE_HISTORY.toString() + nombre + " [DB]"));
                                     }
                                 });
                         return true;
                     }
                     sender.sendMessage(Utils.chatColor(
-                            "&cHa ocurrido un error al intentar eliminar estadisticas de historia para: " + nombre));
+                            Lang.AN_ERROR_REMOVE_HISTORY.toString() + nombre));
                     return true;
                 }
                 sender.sendMessage(Utils.chatColor(
-                        "&cDebes especificar el nombre del jugador al que reiniciarás la estadistica de historia"));
+                        Lang.SPECIFY_NAME_RESTART_HISTORY_STATISTICS.toString()));
                 return true;
             }
             case "sync": {
-                if (!sender.hasPermission("mclobby.npcserver.create")) {
-                    sender.sendMessage(Utils.chatColor("&cNo tienes permisos para ejecutar esta acción"));
+                if (!sender.hasPermission("goldenlobby.npcserver.create")) {
+                    sender.sendMessage(Utils.chatColor(Lang.NO_PERMISSION.toString()));
                     return true;
                 }
                 if (isReadyNPCs()) {
-                    sender.sendMessage(Utils.chatColor("&aSincronizando los npcs [desde consola]"));
+                    sender.sendMessage(Utils.chatColor(Lang.SYNC_NPC.toString()));
                     if (args.length == 1) {
-                        sender.sendMessage(Utils.chatColor("&a¡Sincronizando servidores !"));
+                        sender.sendMessage(Utils.chatColor("&a¡Synchronizing servers!"));
                         plugin.reloadNPC(new CallBack.SingleCallBack() {
                             @Override
                             public void onSuccess() {
                                 plugin.sendSync(SubChannel.SubOperation.GET_FROM_DB);
-                                sender.sendMessage(Utils.chatColor("&aSincronización completada!"));
+                                sender.sendMessage(Utils.chatColor("&aSynchronization completed!"));
                             }
 
                             @Override
                             public void onError() {
                                 sender.sendMessage(Utils.chatColor(
-                                        "&cHa ocurrido un error mientras se recargaba la configuración y los NPC's"));
+                                        "&cAn error occurred while reloading the configuration and NPC's"));
                             }
                         }, SubChannel.SubOperation.GET_FROM_DB);
                         return true;
@@ -121,14 +123,14 @@ public class NpcServerCommand extends BaseCommand {
                         }
                     }
                 } else {
-                    sender.sendMessage(Utils.chatColor("&cNo puedes sincronizar mientras no hay un NPC listo"));
-                    sender.sendMessage(Utils.chatColor("&cEsto ocurre cuando una persona está editando un NPC"));
+                    sender.sendMessage(Utils.chatColor(Lang.YOU_CANNOT_SYNC_NCP_READY.toString()));
+                    sender.sendMessage(Utils.chatColor("&cThis occurs when a person is editing an NPC"));
                 }
                 return true;
             }
             case "reload": {
-                if (!sender.hasPermission("mclobby.npcserver.create")) {
-                    sender.sendMessage(Utils.chatColor("&cNo tienes permisos para ejecutar esta acción"));
+                if (!sender.hasPermission("goldenlobby.npcserver.create")) {
+                    sender.sendMessage(Utils.chatColor(Lang.NO_PERMISSION.toString()));
                     return true;
                 }
                 if (isReadyNPCs()) {
@@ -137,33 +139,32 @@ public class NpcServerCommand extends BaseCommand {
                         NPC npc = NPCManager.getNPC(npcNombre);
                         if (npc == null) {
                             sender
-                                    .sendMessage(Utils.chatColor("&cNo existe este npc, solo puedes recargar npcs existentes"));
+                                    .sendMessage(Utils.chatColor(Lang.NO_EXIST_NPC_WHILE_RELOAD.toString()));
                             return true;
                         }
-                        sender.sendMessage(Utils.chatColor("&eRecargando NPC: " + npcNombre));
+                        sender.sendMessage(Utils.chatColor("&eReloading NPC: " + npcNombre));
                         plugin.reloadNPC(npc, () -> {
-                            sender.sendMessage(Utils.chatColor("&aSe ha recargado el NPC: " + npcNombre));
+                            sender.sendMessage(Utils.chatColor(Lang.NPC_HAS_BEEN_RELOADED.toString() + npcNombre));
                         }, SubChannel.SubOperation.GET_FROM_LOCAL);
                         return true;
                     }
-                    sender.sendMessage(Utils.chatColor("&6Recargando configuración y NPC's, por favor espera..."));
+                    sender.sendMessage(Utils.chatColor(Lang.RELOADING_CONFIG_NPC.toString()));
                     plugin.reloadNPC(new CallBack.SingleCallBack() {
                         @Override
                         public void onSuccess() {
-                            sender.sendMessage(Utils.chatColor("&aSe ha recargado con éxito!"));
+                            sender.sendMessage(Utils.chatColor(Lang.SUCCESSFULLY_RELOADED.toString()));
                         }
 
                         @Override
                         public void onError() {
                             sender.sendMessage(Utils.chatColor(
-                                    "&cHa ocurrido un error mientras se recargaba la configuración y los NPC's"));
+                                    Lang.ERROR_OCURRED_WHILE_RELOADING_CONFIG.toString()));
                         }
                     }, SubChannel.SubOperation.GET_FROM_LOCAL);
                     return true;
 
                 } else {
-                    sender.sendMessage(Utils.chatColor("&cNo puedes reiniciar mientras no hay un NPC listo"));
-                    sender.sendMessage(Utils.chatColor("&cEsto ocurre cuando una persona está editando un NPC"));
+                    sender.sendMessage(Utils.chatColor(Lang.YOU_CANNOT_SYNC_NCP_READY.toString()));
                 }
                 return true;
             }
@@ -172,7 +173,7 @@ public class NpcServerCommand extends BaseCommand {
             Player player = ((Player) sender).getPlayer();
             LobbyPlayer lobbyPlayer = LobbyPlayerMap.getJugador(player);
             LobbyPlayerBuilder builder = lobbyPlayer.getNpcBuilder();
-            if (player.hasPermission("mclobby.npcserver.create")) {
+            if (player.hasPermission("goldenlobby.npcserver.create")) {
                 //mcnpc create den
                 // builder
                 // - mcnpc addline &a&l¡ACTUALIZACIÓN! (x++)
@@ -184,34 +185,34 @@ public class NpcServerCommand extends BaseCommand {
                     case "create": {
                         if (builder.isEditing()) {
                             lobbyPlayer.sendMessage("&aEstás editando actualmente",
-                                    " &aLos comandos disponibles son:",
-                                    "  &7 - /mcnpc addline (texto) &eAgrega una linea de texto sobre el NPC",
-                                    "  &7 - /mcnpc removeline (linea) &eElimina una linea de texto del NPC",
-                                    "  &7 - /mcnpc done &eCierra el modo edición del NPC", "");
+                                    Lang.COMMAND_ENABLE.toString(),
+                                    "  &7 - /mcnpc addline (texto) &eAdd a line of text about the NPC",
+                                    "  &7 - /mcnpc removeline (linea) &eRemove a line of text from the NPC",
+                                    "  &7 - /mcnpc done &eClose NPC edit mode", "");
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir el modo del NPC");
+                            lobbyPlayer.sendMessage(" &c[*] You must write the NPC mode");
                             lobbyPlayer.sendMessage("  &7/mcnpc create (ModoNPC) NombreId");
                             return true;
                         }
                         String modo = args[1];
                         if (NPCMode.from(modo) == null) {
-                            lobbyPlayer.sendMessage(" &c[*] Escribe un tipo de NPC válido:",
+                            lobbyPlayer.sendMessage(" &c[*] " + Lang.TYPE_A_VALID_NCP.toString() + ":",
                                     "  &e- COMMAND",
                                     "  &e- HISTORY",
                                     "  &e- STAFF");
                             return true;
                         }
                         if (args.length == 2) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir el nombre de identificador del NPC");
+                            lobbyPlayer.sendMessage(" &c[*] " + Lang.WRITE_NAME_NCP_IDENTIFIER.toString());
                             lobbyPlayer.sendMessage("  &7/mcnpc create NombreId");
                             return true;
                         }
                         String name = args[2];
                         if (NPCManager.alreadyNPC(name)) {
                             lobbyPlayer
-                                    .sendMessage(" &c[*] Escribe un nombre de identificador que otro NPC no tenga");
+                                    .sendMessage(" &c[*] " + Lang.ENTER_IDENTIFIER_NAME_ANOTHERNPC.toString());
                             return true;
                         }
                         builder.setEditing(name);
@@ -224,41 +225,41 @@ public class NpcServerCommand extends BaseCommand {
                         npc.setReady(true);
                         NPCManager.addFullyLoaded(npc);
                         lobbyPlayer.sendMessage("",
-                                "&a [*] &aHas creado al NPC: &f" + name,
-                                "&e - Se ha activado el modo edición para este NPC", "");
+                                Lang.YOU_HAVE_CREATED_NPC.toString() + name,
+                                Lang.EDITING_MODE_HAS_BEEN_ACTIVED.toString(), "");
                         sendHelpEditing(lobbyPlayer);
                         return true;
                     }
                     case "tp": {
                         if (builder.isEditing()) {
                             lobbyPlayer.sendMessage(
-                                    "&cNo puedes ejecutar este comando mientras estás en modo edición");
+                                    Lang.YOU_CANNOT_EXECUTE_COMMAND_WHILE_EDIT.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage("&aEscribe un nombre de NPC al que quieres teletransportarte");
+                            lobbyPlayer.sendMessage(Lang.WRITE_NAMENCP_TO_TELEPORT.toString());
                             return true;
                         }
                         String name = args[1];
                         NPC npc = NPCManager.getNPC(name);
                         if (npc != null) {
-                            lobbyPlayer.sendMessage("&aTeletransportandote al npc: " + npc.getName());
+                            lobbyPlayer.sendMessage(Lang.TP_TO_NCP.toString() + npc.getName());
                             player.teleport(npc.getLocation());
                         } else {
-                            lobbyPlayer.sendMessage("&cNo se encontró un NPC con ese nombre");
+                            lobbyPlayer.sendMessage(Lang.NO_NCP_FOUND_WHIT_NAME.toString());
                         }
                         return true;
                     }
                     case "commands": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cDebes estar en modo edición para ejecutar este comando");
+                            lobbyPlayer.sendMessage(Lang.YOU_MUST_EDIT_MODE.toString());
                             return true;
                         }
                         if (builder.getNpc().getCommand().isEmpty()) {
-                            lobbyPlayer.sendMessage("&cAún no tiene comandos este npc");
+                            lobbyPlayer.sendMessage(Lang.THIS_NCP_NO_COMMANDS.toString());
                             return true;
                         }
-                        lobbyPlayer.sendMessage("Lista de Comandos de " + builder.getNpc().getName());
+                        lobbyPlayer.sendMessage(Lang.LIST_OF_COMMANDS_FROM.toString() + builder.getNpc().getName());
                         AtomicInteger i = new AtomicInteger();
                         builder.getNpc().getCommand().forEach(Comando -> {
                             lobbyPlayer.sendMessage((i.getAndIncrement()) + ".- &e" + command);
@@ -267,14 +268,14 @@ public class NpcServerCommand extends BaseCommand {
                     }
                     case "rewardcommands": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cDebes estar en modo edición para ejecutar este comando");
+                            lobbyPlayer.sendMessage(Lang.YOU_MUST_EDIT_MODE.toString());
                             return true;
                         }
                         if (builder.getNpc().getRewardCommands().isEmpty()) {
-                            lobbyPlayer.sendMessage("&cAún no tiene comandos de recompensas este npc");
+                            lobbyPlayer.sendMessage(Lang.NPC_BOUNTY_COMMANDS.toString());
                             return true;
                         }
-                        lobbyPlayer.sendMessage("Lista de Comandos de Recompensa " + builder.getNpc().getName());
+                        lobbyPlayer.sendMessage(Lang.REAWARD_COMMAND_LIST.toString() + builder.getNpc().getName());
                         AtomicInteger i = new AtomicInteger();
                         builder.getNpc().getRewardCommands().forEach(Comando -> {
                             lobbyPlayer.sendMessage((i.getAndIncrement()) + ".- &e" + command);
@@ -284,10 +285,10 @@ public class NpcServerCommand extends BaseCommand {
                     case "list": {
                         if (builder.isEditing()) {
                             lobbyPlayer.sendMessage(
-                                    "&cNo puedes ejecutar este comando mientras estás en modo edición");
+                                    Lang.YOU_CANNOT_EXECUTE_COMMAND_WHILE_EDIT.toString());
                             return true;
                         }
-                        lobbyPlayer.sendMessage("Lista de NPC's");
+                        lobbyPlayer.sendMessage(Lang.LIST_OF_NPC.toString());
                         for (NPC npc : NPCManager.getAllNPCs()) {
                             try {
                                 lobbyPlayer.sendMessage(
@@ -302,22 +303,22 @@ public class NpcServerCommand extends BaseCommand {
                     case "edit": {
                         if (builder.isEditing()) {
                             lobbyPlayer.sendMessage(
-                                    "&cYa estás editando un NPC, para salir usa /" + command + " done");
+                                    Lang.ALREADY_EDITING_NPC.toString() + command + " done");
                             return true;
                         }
                         if (builder.isSelecting()) {
                             lobbyPlayer.sendMessage(
-                                    "&cYa has ejecutado este comando y aún no has seleccionado un NPC, por favor seleccionalo para continuar con la edición");
+                                    Lang.ALREADY_EXECUTED_THIS_COMMAND.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage("&a¡Selecciona un NPC para comenzar la edición");
+                            lobbyPlayer.sendMessage(Lang.SELECT_NPC_START_EDITING.toString());
                             builder.setSelectingNpc(true);
                             return true;
                         }
                         String name = args[1];
                         if (name.toLowerCase().equals("deliveryman")) {
-                            lobbyPlayer.sendMessage("&cEste npc no se puede editar");
+                            lobbyPlayer.sendMessage(Lang.THIS_NPC_CANNOT_EDITED.toString());
                             return true;
                         }
                         NPC npc = NPCManager.getNPC(name);
@@ -747,7 +748,7 @@ public class NpcServerCommand extends BaseCommand {
                     }
                 }
             }
-            lobbyPlayer.sendMessage("&cNo tienes permisos para ejecutar esta acción");
+            lobbyPlayer.sendMessage(Lang.NO_PERMISSION.toString());
         }
 
         return true;
@@ -790,7 +791,7 @@ public class NpcServerCommand extends BaseCommand {
 
     public void sendHelpEditing(LobbyPlayer lobbyPlayer) {
         lobbyPlayer.sendMessage("",
-                " &aLos comandos disponibles son:"
+                Lang.COMMAND_ENABLE.toString()
         );
         lobbyPlayer.sendMessageWithSuggest(
                 new MessageSuggest(
