@@ -174,7 +174,22 @@ public class Utils {
         return colored;
     }
 
-    public static List<String> stringToArrayList(String text) {
+    public static void clearHotbarInventory(Player player) {
+        for (int x = 0; x < 9; x++) {
+            player.getInventory().clear(x);
+            player.updateInventory();
+        }
+    }
+
+    public static List<String> stringToList(String text) {
+        if (text == null || text.trim().isEmpty() || text.trim().equals("[]")) {
+            return new ArrayList<>();
+        }
+        return Arrays.stream(text.split("\\n")).map(String::trim).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+
+    public static ArrayList<String> stringToArrayList(String text) {
         if (text == null || text.trim().isEmpty() || text.trim().equals("[]")) {
             return new ArrayList<>();
         }

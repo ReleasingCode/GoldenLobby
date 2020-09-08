@@ -188,7 +188,7 @@ public class NPCLib {
         NPCLib.plugin = plugin;
         try {
             npcClass = Class.forName(
-                    "us.minecub.lobbymc.extendido.nms." + GoldenLobby.getVersion() + ".NPC_" + GoldenLobby.getVersion());
+                    "com.releasingcode.goldenlobby.extendido.nms." + GoldenLobby.getVersion() + ".NPC_" + GoldenLobby.getVersion());
         } catch (Exception ignored) {
         }
         if (npcClass == null) {

@@ -37,17 +37,17 @@ public class HistoryManager {
                     return;
                 }
                 List<String> required = Utils
-                        .stringToArrayList(config.getString(keyHistory + ".required", null));
+                        .stringToList(config.getString(keyHistory + ".required", null));
                 String objetiveName = config.getString(keyHistory + ".objective.display", null);
                 String target = config.getString(keyHistory + ".objective.target",
                         null); //si es nulo se considera fin de la historia del npc
-                List<String> required_messages = Utils.stringToArrayList(
+                List<String> required_messages = Utils.stringToList(
                         config.getString(keyHistory + ".required-message", null)
                 );
-                List<String> in_progress_message = Utils.stringToArrayList(
+                List<String> in_progress_message = Utils.stringToList(
                         config.getString(keyHistory + ".in-progress-message", null)
                 );
-                List<String> dissapear = Utils.stringToArrayList(
+                List<String> dissapear = Utils.stringToList(
                         config.getString(keyHistory + ".disappear-when-is-completed", null)
                 );
                 LinkedHashMap<Integer, NPCHistory.Dash> dashMap = new LinkedHashMap<>();
@@ -56,9 +56,9 @@ public class HistoryManager {
                         String dash = "dash.";
                         int secondsKeep = config.getInt("history." + dash + key + ".keep", 0);
                         List<String> messages = Utils
-                                .stringToArrayList(config.getString("history." + dash + key + ".message", null));
+                                .stringToList(config.getString("history." + dash + key + ".message", null));
                         List<String> effects = Utils
-                                .stringToArrayList(config.getString("history." + dash + key + ".effects", null));
+                                .stringToList(config.getString("history." + dash + key + ".effects", null));
                         NPCHistory.Dash dashObject = new NPCHistory.Dash(secondsKeep, messages, effects);
                         dashMap.put(Integer.parseInt(key), dashObject);
                     }

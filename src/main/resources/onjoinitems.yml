@@ -1,0 +1,26 @@
+Items-OnJoin:
+  Clear-Hotbar: true
+  Clear-After: 20 #20 tick => 1 second
+  Give-Items: true
+  Give-Items-After: 40
+Items-Held: 1
+Items:
+  head_player:
+    Name: '&aHead Player {player}'
+    Item: 'skull_owner:1:{player}'
+    Slot: 1
+    Lore: |-
+      This is a lore one
+      This is a other line
+      Hello {player}
+    Executors: |-
+      esto es un ejemplo
+  server_selector:
+    Name: 'Selector de servidor'
+    Item: 'book:1:0'
+    Slot: 2
+    Lore: |-
+      &aThis is a lore for Server
+      &kone &aThis work
+    Executors: |-
+      deberia dar un sonido

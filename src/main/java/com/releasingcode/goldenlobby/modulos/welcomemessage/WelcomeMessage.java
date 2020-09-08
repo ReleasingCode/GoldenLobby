@@ -16,14 +16,14 @@ public class WelcomeMessage extends LobbyComponente {
     protected void onEnable() {
         Utils.log("Starting WelcomeMessage");
         welcomeMessage = new CustomConfiguration("welcomeMessage", getPlugin());
-        messages = Utils.stringToArrayList(welcomeMessage.getConfig().getString("welcomeMessage"));
+        messages = Utils.stringToList(welcomeMessage.getConfig().getString("welcomeMessage"));
         new WelcomeMessageCmd(this, "welcomemessage").register();
         new onJoin(this);
     }
 
     public void reload() {
         welcomeMessage.reloadConfig();
-        messages = Utils.stringToArrayList(welcomeMessage.getConfig().getString("welcomeMessage"));
+        messages = Utils.stringToList(welcomeMessage.getConfig().getString("welcomeMessage"));
     }
 
     @Override
