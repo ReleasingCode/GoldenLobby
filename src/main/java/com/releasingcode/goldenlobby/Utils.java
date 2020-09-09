@@ -262,7 +262,7 @@ public class Utils {
             return;
         }
         if (comandos.startsWith("sound:")) {
-            comandos = comandos.replace("consola:", "").trim();
+            comandos = comandos.replace("sound:", "").trim();
         }
     }
 

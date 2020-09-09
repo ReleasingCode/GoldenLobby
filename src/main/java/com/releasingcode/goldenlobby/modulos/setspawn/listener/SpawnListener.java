@@ -27,7 +27,7 @@ public class SpawnListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent e) {
         e.setDeathMessage(null);
-        e.getDrops().clear();
+        // e.getDrops().clear();
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

@@ -3,24 +3,36 @@ Items-OnJoin:
   Clear-After: 20 #20 tick => 1 second
   Give-Items: true
   Give-Items-After: 40
-Items-Held: 1
+Held-Item-Slot:
+  On-Join: 3 # This start selected slot the hotbar; -1 to disable
+  On-Respawn: -1
 Items:
   head_player:
     Name: '&aHead Player {player}'
     Item: 'skull_owner:1:{player}'
+    Use-Cooldown: 5000 # milliseconds
+    Click-Use: 'LEFT,RIGHT'
+    Permission:
+      User-Permission: 'itemspecial.vip.permission'
+      No-Permission: |-
+        &cYou dont have permission for use this item &a(Custom message)
     Slot: 1
     Lore: |-
       This is a lore one
       This is a other line
       Hello {player}
     Executors: |-
-      esto es un ejemplo
+      msg:&4Hi {player} how are you?
+      console:gamemode 0 {player}
   server_selector:
     Name: 'Selector de servidor'
     Item: 'book:1:0'
     Slot: 2
+    Drop-On-Player-Death: true
+    No-Movable-Item: false
+    Give-On-Respawn: true
     Lore: |-
       &aThis is a lore for Server
       &kone &aThis work
     Executors: |-
-      deberia dar un sonido
+      msg:&aHi &e{player} &6how are you? &e[Book]

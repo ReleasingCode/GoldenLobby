@@ -88,6 +88,26 @@ public class ItemStackBuilder {
 
     }
 
+    public static boolean equalsItemMaterial(ItemStack stack, ItemStack selectorStack) {
+        if (stack != null && selectorStack != null) {
+            if (stack.getType().equals(selectorStack.getType())) {
+                return stack.getData() == selectorStack.getData();
+            }
+        }
+        return false;
+    }
+
+    public static boolean equalsItem(ItemStack stack, String displayName) {
+        if (stack != null && displayName != null) {
+            ItemMeta meta = stack.getItemMeta();
+            if (meta != null) {
+                String displayStack = meta.getDisplayName();
+                return displayName.contains(displayStack);
+            }
+        }
+        return false;
+    }
+
     public static boolean equalsItem(ItemStack stack, ItemStack selectorStack) {
         if (stack != null && selectorStack != null) {
             if (stack.getType().equals(selectorStack.getType())) {
@@ -96,7 +116,7 @@ public class ItemStackBuilder {
                 if (meta != null && selectorMeta != null) {
                     String displayStack = meta.getDisplayName();
                     String displaySelector = selectorMeta.getDisplayName();
-                    return displaySelector != null && displaySelector.equals(displayStack);
+                    return displaySelector != null && displayStack.contains(displaySelector);
                 }
             }
         }
@@ -189,8 +209,10 @@ public class ItemStackBuilder {
             this.item.setItemMeta(this.meta);
         }
         if (skullMeta != null) {
-            SkinGameProfile owner = new SkinGameProfile(this.name64);
-            owner.applySkull(this.skullMeta);
+            if (!name64.trim().equals("0")) {
+                SkinGameProfile owner = new SkinGameProfile(this.name64);
+                owner.applySkull(this.skullMeta);
+            }
             this.item.setItemMeta(this.skullMeta);
         }
         if (this.item.getType() != Material.AIR) {

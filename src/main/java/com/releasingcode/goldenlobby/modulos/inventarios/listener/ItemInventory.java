@@ -1,6 +1,5 @@
 package com.releasingcode.goldenlobby.modulos.inventarios.listener;
 
-import com.releasingcode.goldenlobby.GoldenLobby;
 import com.releasingcode.goldenlobby.managers.DelayPlayer;
 import com.releasingcode.goldenlobby.modulos.inventarios.builder.ItemMenuHolder;
 import com.releasingcode.goldenlobby.modulos.inventarios.manager.Inventario;
@@ -14,9 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class ItemInventory implements Listener {
 
@@ -32,15 +29,7 @@ public class ItemInventory implements Listener {
         Inventario.clearItemsSelectorToPlayer(player);
     }
 
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent respawnEvent) {
-        new BukkitRunnable() {
-            @Override public void run() {
-                Inventario.setSelectorToPlayer(respawnEvent.getPlayer());
-            }
-        }.runTaskLater(GoldenLobby.getInstance(), 60);
-    }
-
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onItemClick(PlayerInteractEvent event) {
         Player p = event.getPlayer();

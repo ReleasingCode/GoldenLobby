@@ -189,14 +189,11 @@ public class Inventario implements Cloneable {
             scheduledFuture.cancel(true);
         }
         List<Long> minorTicksFrame = getItemSlots().stream().map(ItemSlot::getTicksFrameDelay).collect(Collectors.toCollection(ArrayList::new));
+        List<Long> allExceptZero = minorTicksFrame.stream().filter(number -> number > 0).collect(Collectors.toCollection(ArrayList::new));
         List<Long> disableChecker = minorTicksFrame.stream().filter(number -> number == 0).collect(Collectors.toList());
-        long min = Collections.min(minorTicksFrame);
+        long min = Collections.min(allExceptZero);
         if (disableChecker.size() == getItemSlots().size()) {
             min = -1; //disable
-        } else {
-            if (min < 1) {
-                min = 1;
-            }
         }
         setItems_Inventory_Updater((int) min);
         if (min > 0) {
