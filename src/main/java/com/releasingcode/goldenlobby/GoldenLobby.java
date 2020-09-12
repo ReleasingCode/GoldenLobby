@@ -15,6 +15,7 @@ import com.releasingcode.goldenlobby.listeners.DoubleJump;
 import com.releasingcode.goldenlobby.listeners.OnJoin;
 import com.releasingcode.goldenlobby.loader.LobbyMCPlugin;
 import com.releasingcode.goldenlobby.managers.VaultAPI;
+import com.releasingcode.goldenlobby.modulos.TabList.TabListPlugin;
 import com.releasingcode.goldenlobby.modulos.bossbar.BossBarPlugin;
 import com.releasingcode.goldenlobby.modulos.cooldown.CooldownPlugin;
 import com.releasingcode.goldenlobby.modulos.fly.FlyPlugin;
@@ -202,6 +203,7 @@ public class GoldenLobby extends LobbyMCPlugin {
         cargarComponente(CooldownPlugin.class);
         cargarComponente(BossBarPlugin.class);
         cargarComponente(OnJoinItemsPlugin.class);
+        cargarComponente(TabListPlugin.class);
 
         if (mysqlEnable && dbConfigFile.getConfig() != null) {
             this.dbConfig = new DatabaseConfig(dbConfigFile.getConfig());

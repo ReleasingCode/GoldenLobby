@@ -100,8 +100,11 @@ Permisos:
             <b>goldenlobby.general.tragaperras</b> - usar comando /tragaperra para administrar tragaperras
           </li>
           <li>
-              b>goldenlobby.admin.warps</b> - usar comando /mcwarps para agregar warps
+              <b>goldenlobby.admin.warps</b> - usar comando /mcwarps para agregar warps
           </li>
+          <li>
+               <b>goldenlobby.tablist.admin</b> - usar el comando /tbl todo lo que es referente al TabList
+           </li>
     </ul>
    </div>
  </h4>  

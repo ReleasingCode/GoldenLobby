@@ -18,4 +18,5 @@ public class PacketPlayOutEntityHeadRotationWrapper {
 
         return packetPlayOutEntityHeadRotation;
     }
+
 }

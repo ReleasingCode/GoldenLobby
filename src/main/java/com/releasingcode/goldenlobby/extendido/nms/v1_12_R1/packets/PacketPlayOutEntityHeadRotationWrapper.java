@@ -8,6 +8,7 @@ import org.bukkit.Location;
 public class PacketPlayOutEntityHeadRotationWrapper {
 
     public PacketPlayOutEntityHeadRotation create(Location location, int entityId) {
+
         PacketPlayOutEntityHeadRotation packetPlayOutEntityHeadRotation = new PacketPlayOutEntityHeadRotation();
 
         Reflection.getField(packetPlayOutEntityHeadRotation.getClass(), "a", int.class).
@@ -17,4 +18,5 @@ public class PacketPlayOutEntityHeadRotationWrapper {
 
         return packetPlayOutEntityHeadRotation;
     }
+
 }

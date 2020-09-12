@@ -184,9 +184,9 @@ public class NpcServerCommand extends BaseCommand {
                 switch (args[0]) {
                     case "create": {
                         if (builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&aEstás editando actualmente",
+                            lobbyPlayer.sendMessage(Lang.YOU_CURRENTLY_EDITING.toString(),
                                     Lang.COMMAND_ENABLE.toString(),
-                                    "  &7 - /mcnpc addline (texto) &eAdd a line of text about the NPC",
+                                    "  &7 - /mcnpc addline (text) &eAdd a line of text about the NPC",
                                     "  &7 - /mcnpc removeline (linea) &eRemove a line of text from the NPC",
                                     "  &7 - /mcnpc done &eClose NPC edit mode", "");
                             return true;
@@ -323,59 +323,61 @@ public class NpcServerCommand extends BaseCommand {
                         }
                         NPC npc = NPCManager.getNPC(name);
                         if (npc != null) {
+
                             npc.setEditing(true);
-                            lobbyPlayer.sendMessage("&aEstás editando el NPC: &e" + name);
+                            lobbyPlayer.sendMessage(Lang.YOU_ARE_EDITING_NPC.toString() + name);
                             builder.setEditing(npc.getName());
                             builder.setCommands(builder.getNpc().getCommand());
                             builder.setRewardCommands(builder.getNpc().getRewardCommands());
                             builder.setHologram(builder.getNpc().getText());
+
                         } else {
-                            lobbyPlayer.sendMessage("&cNo existe el NPC que mencionaste");
+                            lobbyPlayer.sendMessage(Lang.NPC_MENTIONED_NOT_EXIST.toString());
                         }
                         return true;
                     }
                     case "status": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir el estado al que quieres poner al npc");
+                            lobbyPlayer.sendMessage(Lang.YOU_WRITE_STATE_PUT_NPC.toString());
                             lobbyPlayer.sendMessage("  &7/mcnpc status normal/sit/corpse");
                             return true;
                         }
                         String nameStatus = args[1];
                         NPCPosition position = NPCPosition.from(nameStatus);
                         if (position == null) {
-                            lobbyPlayer.sendMessage("&cNo existe este estado de npc");
+                            lobbyPlayer.sendMessage(Lang.THERE_SUCH_STATE_OF_NPC.toString());
                             lobbyPlayer.sendMessage("&a - Normal");
                             lobbyPlayer.sendMessage("&a - Sit");
                             lobbyPlayer.sendMessage("&a - Corpse");
                             return true;
                         }
                         if (position == builder.getNpc().getPositionMemory()) {
-                            lobbyPlayer.sendMessage("&aEl npc ya se encuentra en este modo");
+                            lobbyPlayer.sendMessage(Lang.NPC_IS_READY_IN_THIS_MODE.toString());
                             return true;
                         }
 
                         builder.getNpc().setPositionStatus(position);
 
-                        lobbyPlayer.sendMessage("&aHas establecido la posición del npc a:&e " + position.name().toLowerCase());
+                        lobbyPlayer.sendMessage(Lang.ESTABLISHED_POSITION_OF_NPC.toString() + position.name().toLowerCase());
                         return true;
                     }
                     case "skin": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir el Usuario o UUID de un Jugador");
+                            lobbyPlayer.sendMessage(Lang.ENTER_PLAYERS_USER_OR_UUID.toString());
                             lobbyPlayer.sendMessage("  &7/mcnpc skin Username/UUID");
                             return true;
                         }
                         String name = args[1];
                         builder.getNpc().setReady(false);
-                        lobbyPlayer.sendMessage("&6Estableciendo skin al NPC, por favor espere...");
+                        lobbyPlayer.sendMessage(Lang.ESTABLISHING_SKIN_NPC.toString());
                         if (GoldenLobby.getInstance().isSkinExternal()) {
                             SkinFetcher.fetchSkinFromIdAsync(name, new SkinFetcher.Callback() {
                                 @Override
@@ -383,15 +385,15 @@ public class NpcServerCommand extends BaseCommand {
                                     builder.getNpc().setSkin(skinData);
                                     builder.getNpc().destroyForUpdate();
                                     builder.getNpc().setReady(true);
-                                    lobbyPlayer.sendMessage("&aHas establecido la Skin al NPC");
+                                    lobbyPlayer.sendMessage(Lang.YOU_ESTABLISHED_SKIN_NPC.toString());
                                 }
 
                                 @Override
                                 public void failed() {
-                                    lobbyPlayer.sendMessage("&cHa ocurrido un error al hacer fetch del Skin", "" +
-                                                    "&ePosibles problemas:",
-                                            " &7- No existe el Nombre, UUID en Mojang",
-                                            " &7- No se pudo establecer conexión con la api externa");
+                                    lobbyPlayer.sendMessage(Lang.ERROR_OCURRED_WHILE_FETCHING_SKING.toString(), "" +
+                                                    "&ePossible problems:",
+                                            "&7- There is no Name, UUID in Mojang",
+                                            "&7- Could not establish connection with external api");
                                     builder.getNpc().setReady(true);
                                 }
                             });
@@ -402,15 +404,15 @@ public class NpcServerCommand extends BaseCommand {
                                     builder.getNpc().setSkin(skinData);
                                     builder.getNpc().destroyForUpdate();
                                     builder.getNpc().setReady(true);
-                                    lobbyPlayer.sendMessage("&aHas establecido la Skin al NPC");
+                                    lobbyPlayer.sendMessage(Lang.YOU_ESTABLISHED_SKIN_NPC.toString());
                                 }
 
                                 @Override
                                 public void failed() {
-                                    lobbyPlayer.sendMessage("&cHa ocurrido un error al hacer fetch del Skin", "" +
-                                                    "&ePosibles problemas:",
-                                            " &7- No existe el Nombre, UUID en Mojang",
-                                            " &7- No se pudo establecer conexión con Mojang (Limite excedido)");
+                                    lobbyPlayer.sendMessage(Lang.ERROR_OCURRED_WHILE_FETCHING_SKING.toString(), "" +
+                                                    "&ePossible problems:",
+                                            "&7- There is no Name, UUID in Mojang",
+                                            "&7- Could not establish connection with external api");
                                     builder.getNpc().setReady(true);
                                 }
                             });
@@ -419,47 +421,48 @@ public class NpcServerCommand extends BaseCommand {
                     }
                     case "addline": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir texto en el argumento");
+                            lobbyPlayer.sendMessage(Lang.YOU_MUST_WRITE_TEXT_ARGUMENTS.toString());
                             lobbyPlayer.sendMessage("  &7/mcnpc addline (texto)");
                             return true;
                         }
                         String linea = Utils.concatArgs(args, 1);
                         builder.addLine(linea);
-                        lobbyPlayer.sendMessage("&aHas agregado una nueva linea al NPC: " + linea);
+                        lobbyPlayer.sendMessage(Lang.YOU_ADDED_NEW_LINE.toString() + linea);
                         builder.getNpc().setText(builder.getHologram());
                         return true;
                     }
+
                     case "removeline": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir la linea que deseas remover");
+                            lobbyPlayer.sendMessage(Lang.YOU_MUST_WRITE_LINEA_TO_REMOVE.toString());
                             lobbyPlayer.sendMessage("  &7/mcnpc removeline linea");
                             return true;
                         }
                         String linea = args[1];
                         if (builder.removeLine(linea)) {
-                            lobbyPlayer.sendMessage("&aHas eliminado la linea: " + linea);
+                            lobbyPlayer.sendMessage(Lang.YOU_REMOVE_LINE.toString() + linea);
                             builder.getNpc().setText(builder.getHologram());
                         } else {
-                            lobbyPlayer.sendMessage("&cNo se ha podido eliminar la linea: " + linea);
+                            lobbyPlayer.sendMessage(Lang.LINEA_COULD_NOT_REMOVE.toString() + linea);
                         }
                         return true;
                     }
                     case "move": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         builder.getNpc().setReady(false);
                         lobbyPlayer.sendMessage(
-                                "&aHas movido el NPC &e" + builder.getNpc().getName() + "&a a tu localización");
+                                Lang.YOU_HAVE_REMOVED_NPC.toString() + builder.getNpc().getName() + Lang.YOU_LOCATION.toString());
                         builder.getNpc().destroyForUpdate();
                         builder.getNpc().setLocation(player.getLocation());
                         builder.getNpc().create();
@@ -468,7 +471,7 @@ public class NpcServerCommand extends BaseCommand {
                     }
                     case "delete": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         NPC npc = builder.getNpc();
@@ -480,16 +483,16 @@ public class NpcServerCommand extends BaseCommand {
                                     public void onSuccess() {
                                         builder.getNpc().destroy();
                                         builder.setEditing(null);
-                                        lobbyPlayer.sendMessage("&cSe ha removido el NPC!");
-                                        lobbyPlayer.sendMessage("&aHas salido del modo edición del NPC");
+                                        lobbyPlayer.sendMessage(Lang.NPC_HAS_BEEN_REMOVED.toString());
+                                        lobbyPlayer.sendMessage(Lang.YOU_LEFT_NPC_EDITING_MODE.toString());
                                     }
 
                                     @Override
                                     public void onError() {
                                         builder.getNpc().destroy();
                                         builder.setEditing(null);
-                                        lobbyPlayer.sendMessage("&cNo se ha podido eliminar el NPC!");
-                                        lobbyPlayer.sendMessage("&aHas salido del modo edición del NPC");
+                                        lobbyPlayer.sendMessage(Lang.NPC_COULD_NOT_REMOVED.toString());
+                                        lobbyPlayer.sendMessage(Lang.YOU_LEFT_NPC_EDITING_MODE.toString());
                                     }
                                 });
 
@@ -497,148 +500,152 @@ public class NpcServerCommand extends BaseCommand {
                     }
                     case "mode": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes especificar el modo del NPC: ");
-                            lobbyPlayer.sendMessage("  &7- COMMAND (Para ejecutar comandos)");
-                            lobbyPlayer.sendMessage("  &7- STAFF (Busca y encuentra el Staff)");
+                            lobbyPlayer.sendMessage(Lang.YOU_SPECIFY_MODE_NPC.toString());
+                            lobbyPlayer.sendMessage("  &7- COMMAND (To execute commands.)");
+                            lobbyPlayer.sendMessage("  &7- STAFF (Search and Find Staff)");
                             return true;
                         }
                         NPCMode modo = NPCMode.from(args[1]);
                         if (modo == null) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes especificar el modo del NPC válido:");
-                            lobbyPlayer.sendMessage("  &7- COMMAND (Para ejecutar comandos)");
-                            lobbyPlayer.sendMessage("  &7- STAFF (Busca y encuentra el Staff)");
+                            lobbyPlayer.sendMessage(Lang.YOU_SPECIFY_VALID_NPC.toString());
+                            lobbyPlayer.sendMessage("  &7- COMMAND (To execute commands.)");
+                            lobbyPlayer.sendMessage("  &7- STAFF (Search and Find Staff)");
                             return true;
                         }
                         builder.getNpc().setMode(modo);
                         lobbyPlayer.sendMessage(
-                                "&aHas cambiado el modo del NPC a: &e" + builder.getNpc().getNPCMode().name());
+                                Lang.YOU_HAVE_SPECIFY_CHANGED_MODE.toString() + builder.getNpc().getNPCMode().name());
                         return true;
                     }
                     case "addcommand": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir el comando en el argumento");
-                            lobbyPlayer.sendMessage(" &6 - server:servidorBungee &7(Envia a un servidor)");
-                            lobbyPlayer.sendMessage(" &6 - msg:Texto a mostrar &7(Muestra un mensaje al jugador)");
+                            lobbyPlayer.sendMessage(" &c[*] You must type the command in the argument");
+                            lobbyPlayer.sendMessage(" &6 - server:servidorBungee &7(Send to a server)");
+                            lobbyPlayer.sendMessage(" &6 - msg:Texto a mostrar &7(Displays a message to the player)");
                             lobbyPlayer.sendMessage(
-                                    " &6 - consola:eco give {player} 100 &7(Ejecuta un comando desde consola)");
+                                    " &6 - consola:eco give {player} 100 &7(Execute a command from the console)");
                             lobbyPlayer.sendMessage(
-                                    " &6 - player:open inventory &7(Ejecuta el comando desde el jugador)");
+                                    " &6 - player:open inventory &7(Execute the command from the player)");
                             lobbyPlayer.sendMessage("  &7/mcnpc addcommand [tipo]:[extra]");
                             return true;
                         }
                         String linea = Utils.concatArgs(args, 1);
                         builder.addCommand(linea);
-                        lobbyPlayer.sendMessage("&aHas agregado un comando al NPC: " + linea);
+                        lobbyPlayer.sendMessage(Lang.YOU_HAVE_ADDED_COMMAND_NPC.toString() + linea);
                         builder.getNpc().setCommand(builder.getCommands());
                         return true;
                     }
+
                     case "addrewardcommand": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
+
                         if (!builder.getNpc().getNPCMode().equals(NPCMode.STAFF)) {
-                            lobbyPlayer.sendMessage("&cNo puedes utilizar este comando en modo distinto a STAFF");
+                            lobbyPlayer.sendMessage(Lang.YOU_CANNOT_USE_OTHER_STAFF.toString());
                             return true;
                         }
+
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage(" &c[*] Debes escribir el comando en el argumento");
-                            lobbyPlayer.sendMessage(" &6 - server:servidorBungee &7(Envia a un servidor)");
-                            lobbyPlayer.sendMessage(" &6 - msg:Texto a mostrar &7(Muestra un mensaje al jugador)");
+                            lobbyPlayer.sendMessage(" &c[*] You must type the command in the argument");
+                            lobbyPlayer.sendMessage(" &6 - server:servidorBungee &7(Send to a server)");
+                            lobbyPlayer.sendMessage(" &6 - msg:Texto a mostrar &7(Displays a message to the player)");
                             lobbyPlayer.sendMessage(
-                                    " &6 - consola:eco give {player} 100 &7(Ejecuta un comando desde consola)");
+                                    " &6 - consola:eco give {player} 100 &7(Execute a command from the console)");
                             lobbyPlayer.sendMessage(
-                                    " &6 - player:open inventory &7(Ejecuta el comando desde el jugador)");
-                            lobbyPlayer.sendMessage("  &7/mcnpc addcommand [tipo]:[extra]");
+                                    " &6 - player:open inventory &7(Execute the command from the player)");
+                            lobbyPlayer.sendMessage("  &7/mcnpc addcommand [type]:[extra]");
                             return true;
                         }
+
                         String linea = Utils.concatArgs(args, 1);
                         builder.addRewardCommands(linea);
-                        lobbyPlayer.sendMessage("&aHas agregado un comando de recompensa al NPC: " + linea);
+                        lobbyPlayer.sendMessage(Lang.YOU_HAVE_REWARD_COMMAND.toString() + linea);
                         builder.getNpc().setRewardCommands(builder.getRewardCommands());
                         return true;
                     }
                     case "removecommand": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (args.length == 1) {
                             lobbyPlayer
-                                    .sendMessage(" &c[*] Debes escribir la linea del comando que deseas remover");
-                            lobbyPlayer.sendMessage("  &7/mcnpc removecommand linea");
+                                    .sendMessage(Lang.YOU_MUST_WANT_REMOVE.toString());
+                            lobbyPlayer.sendMessage("  &7/mcnpc removecommand line");
                             return true;
                         }
                         String linea = args[1];
                         if (builder.removeCommand(linea)) {
-                            lobbyPlayer.sendMessage("&aHas eliminado el comando en la linea: " + linea);
+                            lobbyPlayer.sendMessage("&aYou have deleted the command in the: " + linea);
                             builder.getNpc().setCommand(builder.getCommands());
                         } else {
-                            lobbyPlayer.sendMessage("&cNo se ha podido eliminar el comando en la linea: " + linea);
+                            lobbyPlayer.sendMessage("&cCould not remove the command in the line: " + linea);
                         }
                         return true;
                     }
                     case "removerewardcommand": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (!builder.getNpc().getNPCMode().equals(NPCMode.STAFF)) {
-                            lobbyPlayer.sendMessage("&cNo puedes utilizar este comando en modo distinto a STAFF");
+                            lobbyPlayer.sendMessage(Lang.YOU_CANNOT_USE_OTHER_STAFF.toString());
                             return true;
                         }
                         if (args.length == 1) {
                             lobbyPlayer
-                                    .sendMessage(" &c[*] Debes escribir la linea del comando que deseas remover");
-                            lobbyPlayer.sendMessage("  &7/mcnpc removecommand linea");
+                                    .sendMessage(" &c[*] You must type the command line you want to remove");
+                            lobbyPlayer.sendMessage("  &7/mcnpc removecommand line");
                             return true;
                         }
                         String linea = args[1];
                         if (builder.removeRewardCommands(linea)) {
                             lobbyPlayer
-                                    .sendMessage("&aHas eliminado el comando de recompensa en la linea: " + linea);
+                                    .sendMessage("&aYou have removed the reward command in the: " + linea);
                             builder.getNpc().setCommand(builder.getCommands());
                         } else {
                             lobbyPlayer.sendMessage(
-                                    "&cNo se ha podido eliminar el comando de recompensa en la linea: " + linea);
+                                    "&cCould not remove the reward command in the line: " + linea);
                         }
                         return true;
                     }
                     case "done": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo estás editando ningun NPC");
+                            lobbyPlayer.sendMessage(Lang.YOU_NOT_EDITING_ANY_NPC.toString());
                             return true;
                         }
                         if (!builder.getNpc().isReady()) {
                             lobbyPlayer.sendMessage(
-                                    "&cNo puede guardar un npc mientras está realizando una operación");
+                                    "&cYou cannot save an npc while you are performing an operation");
                             return true;
                         }
                         lobbyPlayer.sendMessage(
-                                "&e+ Guardando configuración " + builder.getNpc().getName() + " espere...");
+                                "&e+ Saving configuration " + builder.getNpc().getName() + " wait...");
                         plugin.createConfigNPC(builder.getNpc(), player.getName(), new CallBack.SingleCallBack() {
                             @Override
                             public void onSuccess() {
                                 builder.getNpc().setEditing(false);
                                 lobbyPlayer.sendMessage(
-                                        "&e+ Se han guardado los datos del NPC: &6" + builder.getNpc().getName());
-                                lobbyPlayer.sendMessage("&aHas salido del modo edición del NPC");
+                                        "&e+ NPC data has been saved: &6" + builder.getNpc().getName());
+                                lobbyPlayer.sendMessage("&aYou have left the NPC editing mode");
                                 builder.setEditing(null);
                             }
 
                             @Override
                             public void onError() {
                                 lobbyPlayer.sendMessage(
-                                        "&cHa ocurrido un error mientras se guardaba la configuración");
-                                lobbyPlayer.sendMessage("&aHas salido del modo edición del NPC");
+                                        "&cAn error occurred while saving the configuration");
+                                lobbyPlayer.sendMessage("&aYou have left the NPC editing mode");
                                 builder.setEditing(null);
                             }
                         });
@@ -646,22 +653,22 @@ public class NpcServerCommand extends BaseCommand {
                     }
                     case "sync": {
                         if (builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNo puedes recargar los NPC si estás en modo Edición de NPC");
+                            lobbyPlayer.sendMessage("&cYou cannot reload NPCs if you are in NPC Edit mode");
                             return true;
                         }
                         if (args.length == 1) {
-                            lobbyPlayer.sendMessage("&a¡Sincronizando servidores!");
+                            lobbyPlayer.sendMessage("&a¡Synchronizing servers!");
                             plugin.reloadNPC(new CallBack.SingleCallBack() {
                                 @Override
                                 public void onSuccess() {
                                     plugin.sendSync(SubChannel.SubOperation.GET_FROM_DB);
-                                    sender.sendMessage(Utils.chatColor("&aSincronización completada!"));
+                                    sender.sendMessage(Utils.chatColor("&aSynchronization completed!"));
                                 }
 
                                 @Override
                                 public void onError() {
                                     sender.sendMessage(Utils.chatColor(
-                                            "&cHa ocurrido un error mientras se recargaba la configuración y los NPC's"));
+                                            "&cAn error occurred while reloading the configuration and NPC's"));
                                 }
                             }, SubChannel.SubOperation.GET_FROM_DB);
 
@@ -681,23 +688,23 @@ public class NpcServerCommand extends BaseCommand {
                     }
                     case "lookatplayer": {
                         if (!builder.isEditing()) {
-                            lobbyPlayer.sendMessage("&cNecesitas editar un npc para ejecutar este comando");
+                            lobbyPlayer.sendMessage("&cYou need to edit an npc to execute this command");
                             return true;
                         }
                         NPC npc = builder.getNpc();
                         if (args.length > 1) {
                             String argumento = args[1];
                             if (argumento.toLowerCase().equals("true")) {
-                                lobbyPlayer.sendMessage("&aHas habilitado mirar al jugador, npc: " + npc.getName());
+                                lobbyPlayer.sendMessage("&aYou have enabled look at the player, npc: " + npc.getName());
                                 npc.setLookAtPlayer(true);
                             } else {
                                 lobbyPlayer
-                                        .sendMessage("&cHas desabilitado mirar al jugador, npc: " + npc.getName());
+                                        .sendMessage("&cYou have disabled looking at the player, npc: " + npc.getName());
                                 npc.setLookAtPlayer(false);
                             }
                             return true;
                         }
-                        lobbyPlayer.sendMessage("Faltan argumentos: /mcnpc lookatplayer [true|false]");
+                        lobbyPlayer.sendMessage("Arguments are missing: /mcnpc lookatplayer [true|false]");
                         return true;
                     }
                     case "reset": {
@@ -706,7 +713,7 @@ public class NpcServerCommand extends BaseCommand {
                             Player playerArg = Bukkit.getPlayer(nombre);
                             if (playerArg == null) {
                                 lobbyPlayer.sendMessage(
-                                        "&cNo puedes reiniciar estadisticas desde el jugado de un usuario fuera de linea");
+                                        "&cYou cannot reset statistics from an offline user's game");
                                 return true;
                             }
                             LobbyPlayer player1 = LobbyPlayerMap.getJugador(playerArg);
@@ -716,23 +723,23 @@ public class NpcServerCommand extends BaseCommand {
                                             @Override
                                             public void onSuccess() {
                                                 lobbyPlayer.sendMessage(
-                                                        "&aHas reseteado las estadisticas de historia para: " + nombre);
+                                                        "&aYou have reset the history statistics for: " + nombre);
                                             }
 
                                             @Override
                                             public void onError() {
                                                 lobbyPlayer.sendMessage(
-                                                        "&cHa ocurrido un error al intentar eliminar estadisticas de historia para: " + nombre + " [DB]");
+                                                        "&cAn error has occurred when trying to remove history statistics for: " + nombre + " [DB]");
                                             }
                                         });
                                 return true;
                             }
                             lobbyPlayer.sendMessage(
-                                    "&cHa ocurrido un error al intentar eliminar estadisticas de historia para: " + nombre);
+                                    "&cAn error has occurred when trying to remove history statistics for: " + nombre);
                             return true;
                         }
                         lobbyPlayer.sendMessage(
-                                "&cDebes especificar el nombre del jugador al que reiniciarás la estadistica de historia");
+                                "&cYou must specify the name of the player for whom you will restart the history statistics");
                         return true;
                     }
 
@@ -741,9 +748,9 @@ public class NpcServerCommand extends BaseCommand {
                             sendHelpEditing(lobbyPlayer);
                             return true;
                         }
-                        lobbyPlayer.sendMessage("&cNo has especificado una opción",
-                                " &e- create (ModeNPC) (nombreId)",
-                                " &e- edit [nombreId]", "");
+                        lobbyPlayer.sendMessage("&cYou have not specified an option",
+                                " &e- create (ModeNPC) (nameId)",
+                                " &e- edit [nameId]", "");
                         return true;
                     }
                 }
@@ -755,27 +762,27 @@ public class NpcServerCommand extends BaseCommand {
     }
 
     public void rebaseSync(CommandSender sender) {
-        sender.sendMessage(Utils.chatColor("&6Resubiendo los npcs de este servidor a la base de datos"));
+        sender.sendMessage(Utils.chatColor("&6Uploading the npcs of this server to the database"));
         plugin.getNpcdb().rebaseConfiguration(sender.getName(), new CallBack.SingleCallBack() {
             @Override
             public void onSuccess() {
-                sender.sendMessage(Utils.chatColor("&aLos npcs han sido resubidos"));
+                sender.sendMessage(Utils.chatColor("&aThe npcs have been resubmitted"));
                 plugin.sendSync(SubChannel.SubOperation.PURGE_AND_GET_FROM_DB);
             }
 
             @Override
             public void onError() {
-                sender.sendMessage(Utils.chatColor("&cError al resubir los npcs"));
+                sender.sendMessage(Utils.chatColor("&cError when uploading the npcs"));
             }
         });
     }
 
     public void purgeSync(CommandSender sender) {
-        sender.sendMessage(Utils.chatColor("&aEliminando npcs no registrados en la base de datos"));
+        sender.sendMessage(Utils.chatColor("&aRemoving npcs not registered in the database"));
         plugin.purgefiles();
-        sender.sendMessage(Utils.chatColor("&aSincronizando con los demas servidores"));
+        sender.sendMessage(Utils.chatColor("&aSynchronizing with other servers"));
         plugin.sendSync(SubChannel.SubOperation.PURGE_AND_GET_FROM_DB);
-        sender.sendMessage(Utils.chatColor("&aSincronización ejecutada"));
+        sender.sendMessage(Utils.chatColor("&aSynchronization executed"));
     }
 
     public boolean isReadyNPCs() {
@@ -795,50 +802,50 @@ public class NpcServerCommand extends BaseCommand {
         );
         lobbyPlayer.sendMessageWithSuggest(
                 new MessageSuggest(
-                        "  &7 - /mcnpc addline (texto)",
+                        "  &7 - /mcnpc addline (text)",
                         "/mcnpc addline ",
-                        "&eAgrega una linea de texto sobre el NPC"),
+                        "&eAdd a line of text about the NPC"),
                 new MessageSuggest(
-                        "  &7 - /mcnpc removeline (linea)",
+                        "  &7 - /mcnpc removeline (line)",
                         "/mcnpc removeline ",
-                        " &eElimina una linea de texto del NPC"),
+                        " &eRemove a line of text from the NPC"),
                 new MessageSuggest(
                         "  &7 - /mcnpc skin (Username/UUID)",
                         "/mcnpc skin ",
-                        "&eEstablecer una skin al NPC"),
+                        "&eEstablish a skin to the NPC"),
                 new MessageSuggest(
                         "  &7 - /mcnpc addcommand (Username/UUID)",
                         "/mcnpc addcommand ",
-                        "&eAgregar un comando al NPC"),
+                        "&eAdding a command to the NPC"),
                 new MessageSuggest(
-                        "  &7 - /mcnpc removecommand (linea)",
+                        "  &7 - /mcnpc removecommand (line)",
                         "/mcnpc removecommand ",
-                        "&eRemueve un comando al NPC en linea especifica"),
+                        "&eRemove a command to the specific NPC in line"),
                 new MessageSuggest(
-                        "  &7 - /mcnpc addrewardcommand (comando)",
+                        "  &7 - /mcnpc addrewardcommand (command)",
                         "/mcnpc addrewardcommand ",
-                        "&eAgrega un comando de recompensa al npc"),
+                        "&eAdd a reward command to the npc"),
                 new MessageSuggest(
-                        "  &7 - /mcnpc removerewardcommand (linea)",
+                        "  &7 - /mcnpc removerewardcommand (line)",
                         "/mcnpc removerewardcommand ",
-                        "&eRemueve un comando de recompensa al npc"),
+                        "&eRemove a reward command to the npc"),
                 new MessageSuggest(
                         "  &7 - /mcnpc commands",
                         "/mcnpc commands ",
-                        "&eMuestra la lista de comandos del npc agregados"),
+                        "&eDisplays the list of added npc commands"),
                 new MessageSuggest(
                         "  &7 - /mcnpc rewardcommands",
                         "/mcnpc rewardcommands ",
-                        "&eMuestra la lista de comandos de recompensa del npc agregados"),
+                        "&eDisplays the list of added npc reward commands"),
 
                 new MessageSuggest(
                         "  &7 - /mcnpc move",
                         "/mcnpc move",
-                        "&eMueves al NPC a tu posición actual"),
+                        "&eYou move the NPC to your current position"),
                 new MessageSuggest(
                         "  &7 - /mcnpc done",
                         "/mcnpc done",
-                        "&eGuarda las propiedades del npc y cierra el modo edición")
+                        "&eSave the npc properties and close the edit mode")
 
         );
         lobbyPlayer.sendMessage("");

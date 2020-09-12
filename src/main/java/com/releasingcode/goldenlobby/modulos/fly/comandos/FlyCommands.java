@@ -25,17 +25,21 @@ public class FlyCommands extends BaseCommand {
                 return true;
             }
             if (!player.isFlying()) {
+
                 lobbyPlayer.setFlyer(true);
                 player.setAllowFlight(true);
                 player.setFlying(true);
                 player.setMetadata("userFlying", new FixedMetadataValue(GoldenLobby.getInstance(), null));
                 player.removeMetadata("doubleJump", GoldenLobby.getInstance());
-                lobbyPlayer.sendMessage("${lobbymc.flight.player.enabled}");
+                lobbyPlayer.sendMessage(Lang.FLY_ACTIVE.toString());
+
             } else {
+
                 lobbyPlayer.setFlyer(false);
                 player.removeMetadata("userFlying", GoldenLobby.getInstance());
                 player.setFlying(false);
-                lobbyPlayer.sendMessage("${lobbymc.flight.player.disabled}");
+                lobbyPlayer.sendMessage(Lang.FLY_DISABLED.toString());
+
             }
         } else if (!sender.hasPermission("goldenlobby.benefits.fly")) {
             sender.sendMessage(Lang.NO_PERMISSION.toString());

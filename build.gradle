@@ -63,6 +63,7 @@ dependencies {
     compileOnly(name: 'spigot-1.14.2', ext: 'jar')
     compileOnly(name: 'spigot-1.15', ext: 'jar')
     compileOnly(name: 'spigot-1.15.2', ext: 'jar')
+    compileOnly(name: 'spigot-1.16.1', ext: 'jar')
     compileOnly(name: 'Vault', ext: 'jar')
     implementation group: 'redis.clients', name: 'jedis', version: '3.3.0'
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '2.6.1'

@@ -1,0 +1,23 @@
+#Activate the plugin's TabList
+enable: true
+
+#To edit the top of the TabList
+header: |-
+  &c&lWelcome to server
+  &a&lWelcome to server
+  &e&lWelcome to server
+  &6&lGoldenLobby: &aEnjoy the Plugin
+  &6&lGoldenLobby: &cEnjoy the Plugin
+
+footer: |-
+  &bTwitter: www.twitter.com
+  &aTwitter: www.twitter.com
+  &eFacebook: www.facebook.com
+  &9Facebook: www.facebook.com
+  &cShop: www.shop.com
+  &6Shop: www.shop.com
+
+animation:
+  interval: 20
+
+
