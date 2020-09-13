@@ -1,0 +1,13 @@
+# Placas de donde se puede saltar
+enabled-plates:
+  wood: true
+  stone: true
+  gold: true
+  iron: true
+
+# Fuerza de los impulsos
+horizontal-impulse: 200
+vertical-impulse: 100
+
+# Sonido a reproducir (Dejar vacío para desactivar)
+launch-sound: 'BLOCK_STONE_BUTTON_CLICK_OFF'

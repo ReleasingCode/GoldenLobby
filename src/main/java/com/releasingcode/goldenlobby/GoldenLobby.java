@@ -20,6 +20,7 @@ import com.releasingcode.goldenlobby.modulos.bossbar.BossBarPlugin;
 import com.releasingcode.goldenlobby.modulos.cooldown.CooldownPlugin;
 import com.releasingcode.goldenlobby.modulos.fly.FlyPlugin;
 import com.releasingcode.goldenlobby.modulos.inventarios.InventarioPlugin;
+import com.releasingcode.goldenlobby.modulos.launchpad.LaunchPadPlugin;
 import com.releasingcode.goldenlobby.modulos.npcserver.NPCServerPlugin;
 import com.releasingcode.goldenlobby.modulos.onjoinitems.OnJoinItemsPlugin;
 import com.releasingcode.goldenlobby.modulos.playerhider.PlayerHidePlugin;
@@ -204,6 +205,7 @@ public class GoldenLobby extends LobbyMCPlugin {
         cargarComponente(BossBarPlugin.class);
         cargarComponente(OnJoinItemsPlugin.class);
         cargarComponente(TabListPlugin.class);
+        cargarComponente(LaunchPadPlugin.class);
 
         if (mysqlEnable && dbConfigFile.getConfig() != null) {
             this.dbConfig = new DatabaseConfig(dbConfigFile.getConfig());
